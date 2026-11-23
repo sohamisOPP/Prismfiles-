@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Lenis CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
 
   <style>
     :root {
@@ -27,14 +30,14 @@
       --text-secondary: #8E8E96;
       --text-muted: #54545C;
 
-      /* Calm Instrument Accents (Pass 2) */
+      /* Calm Instrument Accents */
       --accent-primary: #0A84FF;
       --accent-selection: rgba(255, 255, 255, 0.08);
       --accent-emerald: #30D158;
       --accent-amber: #D4A017;
       --accent-danger: #FF453A;
 
-      /* Nested Radius Math (Pass 7: controls 8px, cards 12px, panels 16px) */
+      /* Nested Radius Math */
       --radius-sm: 6px;
       --radius-md: 8px;
       --radius-lg: 12px;
@@ -52,22 +55,41 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* Lenis Smooth Scroll Configuration */
+    html.lenis, html.lenis body {
+      height: auto;
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis.lenis-smooth iframe {
+      pointer-events: none;
+    }
+
     body {
       background-color: var(--bg-black);
       color: var(--text-primary);
       font-family: var(--font-sans);
       line-height: 1.5;
       overflow-x: hidden;
+      selection-background-color: var(--accent-selection);
     }
 
-    /* Quiet Ambient Dot Grid (Zero Colored Radial Halos) */
+    /* Quiet Ambient Dot Grid */
     .bg-grid-overlay {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
       background-size: 24px 24px;
+      will-change: transform;
     }
 
     a {
@@ -75,15 +97,16 @@
       text-decoration: none;
     }
 
-    /* Quiet Instrument Header (Pass 1 & 6) */
+    /* Header */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
       background: rgba(10, 10, 12, 0.88);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-subtle);
+      transition: border-color 0.2s ease;
     }
 
     .nav-container {
@@ -103,6 +126,11 @@
       font-weight: 600;
       font-size: 1rem;
       letter-spacing: -0.01em;
+      transition: opacity 0.15s ease;
+    }
+
+    .brand-logo:hover {
+      opacity: 0.88;
     }
 
     .brand-logo-img {
@@ -121,11 +149,6 @@
       flex-shrink: 0;
     }
 
-    .prism-icon {
-      width: 22px;
-      height: 22px;
-    }
-
     .nav-links {
       display: flex;
       align-items: center;
@@ -136,11 +159,27 @@
     }
 
     .nav-links a {
+      position: relative;
       transition: color 0.15s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background: var(--text-primary);
+      transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .nav-links a:hover {
       color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .nav-actions {
@@ -152,15 +191,16 @@
     .btn-header-cta {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       background: var(--bg-surface-raised);
       border: 1px solid var(--border-hairline);
       color: var(--text-primary);
-      padding: 6px 14px;
+      padding: 7px 14px;
       font-size: 0.825rem;
       font-weight: 500;
       border-radius: var(--radius-md);
-      transition: background-color 0.15s ease, border-color 0.15s ease;
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+      cursor: pointer;
     }
 
     .btn-header-cta:hover {
@@ -168,17 +208,27 @@
       border-color: var(--text-secondary);
     }
 
-    /* Hero Section (Pass 1, 4 & 6) */
+    /* React Bits: Magnetic Button Component */
+    .magnetic-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform;
+      user-select: none;
+    }
+
+    /* Hero Section */
     .hero-section {
       position: relative;
       z-index: 10;
-      padding: 72px 24px 64px;
+      padding: 80px 24px 68px;
       max-width: 1152px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 48px;
       align-items: center;
+      perspective: 1200px;
     }
 
     .hero-tag {
@@ -189,6 +239,11 @@
       font-size: 0.75rem;
       color: var(--text-secondary);
       margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      width: fit-content;
     }
 
     .status-dot {
@@ -196,15 +251,18 @@
       height: 6px;
       border-radius: 50%;
       background: var(--accent-emerald);
+      box-shadow: 0 0 8px rgba(48, 209, 88, 0.4);
     }
 
+    /* React Bits: Decrypted Text Element */
     .hero-title {
-      font-size: 2.75rem;
+      font-size: 2.85rem;
       font-weight: 600;
-      line-height: 1.18;
+      line-height: 1.15;
       letter-spacing: -0.03em;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       color: var(--text-primary);
+      min-height: 110px;
     }
 
     .hero-description {
@@ -219,7 +277,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 24px;
     }
 
@@ -233,15 +291,17 @@
       border-radius: var(--radius-md);
       font-size: 0.95rem;
       font-weight: 600;
-      transition: background-color 0.15s ease, transform 0.1s ease;
+      transition: background-color 0.15s ease, box-shadow 0.2s ease;
+      cursor: pointer;
     }
 
     .btn-primary-download:hover {
-      background: #E8E8EC;
+      background: #EAEAEF;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.12);
     }
 
     .btn-primary-download:active {
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
 
     .btn-secondary-link {
@@ -256,6 +316,7 @@
       font-size: 0.95rem;
       font-weight: 500;
       transition: background-color 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
     }
 
     .btn-secondary-link:hover {
@@ -277,12 +338,14 @@
       font-weight: 500;
     }
 
-    /* Clean Phone Mockup (Pass 7 & 8: The Moments) */
+    /* Phone Mockup 3D Container */
     .mockup-container {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
 
     .phone-frame {
@@ -291,11 +354,13 @@
       background: #000000;
       border-radius: 36px;
       border: 3px solid #222226;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.08) inset;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
 
     .phone-speaker {
@@ -370,7 +435,7 @@
       display: flex;
     }
 
-    /* The Donut Radial Wheel Moment (Pass 8) */
+    /* Interactive Donut Wheel Canvas */
     .donut-wheel-preview {
       flex: 1;
       display: flex;
@@ -384,8 +449,13 @@
       width: 240px;
       height: 240px;
       position: relative;
-      cursor: pointer;
+      cursor: grab;
       user-select: none;
+      touch-action: none;
+    }
+
+    .wheel-canvas-container:active {
+      cursor: grabbing;
     }
 
     .wheel-center-info {
@@ -399,7 +469,19 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      transition: transform 0.12s ease, background-color 0.15s ease;
+    }
+
+    .wheel-center-info:hover {
+      background: #202024;
+      transform: scale(1.03);
+    }
+
+    .wheel-center-info:active {
+      transform: scale(0.97);
     }
 
     .wheel-center-format {
@@ -423,7 +505,7 @@
       text-align: center;
     }
 
-    /* The 3D Cushion Treemap Moment (Pass 8) */
+    /* 3D Cushion Treemap Canvas */
     .treemap-preview {
       flex: 1;
       display: flex;
@@ -445,6 +527,7 @@
       border-radius: var(--radius-sm);
       background: #000000;
       border: 1px solid var(--border-hairline);
+      cursor: crosshair;
     }
 
     .treemap-tooltip {
@@ -456,7 +539,7 @@
       min-height: 16px;
     }
 
-    /* Console File List Preview (Pass 5: Strict Tabular Rows) */
+    /* Console File List Preview */
     .filelist-preview {
       flex: 1;
       display: flex;
@@ -473,6 +556,13 @@
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-hairline);
       height: 44px;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+      cursor: default;
+    }
+
+    .filelist-row:hover {
+      background: #18181C;
+      border-color: var(--border-subtle);
     }
 
     .filelist-row-icon {
@@ -508,11 +598,12 @@
       margin-top: 2px;
     }
 
-    /* Core Architecture Bento Grid (Pass 1 & 7) */
+    /* Section Layouts */
     .section-container {
       max-width: 1152px;
       margin: 0 auto;
-      padding: 80px 24px;
+      padding: 96px 24px;
+      position: relative;
     }
 
     .section-header {
@@ -529,7 +620,7 @@
     }
 
     .section-title {
-      font-size: 2rem;
+      font-size: 2.15rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       margin-bottom: 12px;
@@ -542,25 +633,81 @@
       line-height: 1.6;
     }
 
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .bento-card {
+    /* =========================================================
+       React Bits: Spotlight Card Effect (.spotlight-card)
+       Instrument-grade dark radial cursor glow with hairline ring
+       ========================================================= */
+    .spotlight-card {
+      position: relative;
       background: var(--bg-surface);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-lg);
       padding: 24px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: border-color 0.15s ease;
+      transition: border-color 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .bento-card:hover {
-      border-color: var(--text-secondary);
+    /* Subtle radial interior illumination */
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        500px circle at var(--mouse-x, -9999px) var(--mouse-y, -9999px),
+        rgba(255, 255, 255, 0.045),
+        transparent 50%
+      );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Subtle radial border stroke highlight */
+    .spotlight-card::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(
+        320px circle at var(--mouse-x, -9999px) var(--mouse-y, -9999px),
+        rgba(255, 255, 255, 0.28),
+        transparent 60%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .spotlight-card:hover::before,
+    .spotlight-card:hover::after {
+      opacity: 1;
+    }
+
+    .spotlight-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .spotlight-card > * {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Bento Grid Layout */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
 
     .bento-card.span-2 {
@@ -568,8 +715,8 @@
     }
 
     .card-icon-wrap {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: var(--radius-sm);
       background: var(--bg-surface-raised);
       border: 1px solid var(--border-hairline);
@@ -603,12 +750,12 @@
       color: var(--text-secondary);
       background: var(--bg-surface-raised);
       border: 1px solid var(--border-hairline);
-      padding: 4px 8px;
+      padding: 5px 9px;
       border-radius: var(--radius-sm);
       width: fit-content;
     }
 
-    /* Download Showcase Hub (Pass 4 & 5) */
+    /* Download Showcase Hub */
     .download-section {
       background: #08080A;
       border-top: 1px solid var(--border-subtle);
@@ -620,21 +767,6 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-bottom: 48px;
-    }
-
-    .download-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: border-color 0.15s ease;
-    }
-
-    .download-card:hover {
-      border-color: var(--text-secondary);
     }
 
     .download-card.recommended {
@@ -652,7 +784,7 @@
       color: var(--accent-emerald);
       background: rgba(48, 209, 88, 0.1);
       border: 1px solid rgba(48, 209, 88, 0.25);
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: var(--radius-sm);
     }
 
@@ -688,8 +820,9 @@
       border-radius: var(--radius-md);
       font-size: 0.875rem;
       font-weight: 500;
-      transition: background-color 0.15s ease, border-color 0.15s ease;
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
       margin-top: auto;
+      cursor: pointer;
     }
 
     .download-card.recommended .btn-card-download {
@@ -704,7 +837,11 @@
     }
 
     .download-card.recommended .btn-card-download:hover {
-      background: #E8E8EC;
+      background: #EAEAEF;
+    }
+
+    .btn-card-download:active {
+      transform: scale(0.98);
     }
 
     .hash-copy-row {
@@ -718,6 +855,7 @@
       font-size: 0.725rem;
       color: var(--text-muted);
       cursor: pointer;
+      transition: color 0.15s ease;
     }
 
     .hash-copy-row:hover {
@@ -736,6 +874,10 @@
       display: flex;
       gap: 16px;
       align-items: flex-start;
+      background: var(--bg-surface);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-hairline);
     }
 
     .step-number {
@@ -766,7 +908,7 @@
       line-height: 1.5;
     }
 
-    /* Comparison Table (Pass 5: Strict Tabular Rhythm) */
+    /* Comparison Table */
     .comparison-table-wrap {
       margin-top: 48px;
       background: var(--bg-surface);
@@ -841,6 +983,10 @@
       gap: 24px;
     }
 
+    .footer-links a {
+      transition: color 0.15s ease;
+    }
+
     .footer-links a:hover {
       color: var(--text-primary);
     }
@@ -860,8 +1006,9 @@
       z-index: 1000;
       opacity: 0;
       transform: translateY(8px);
-      transition: opacity 0.15s ease, transform 0.15s ease;
+      transition: opacity 0.2s ease, transform 0.2s ease;
       pointer-events: none;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
     }
 
     .toast.show {
@@ -892,6 +1039,7 @@
     @media (max-width: 640px) {
       .hero-title {
         font-size: 2.15rem;
+        min-height: 80px;
       }
       .download-grid {
         grid-template-columns: 1fr;
@@ -922,7 +1070,7 @@
       </nav>
 
       <div class="nav-actions">
-        <a href="#downloads" class="btn-header-cta">
+        <a href="#downloads" class="btn-header-cta magnetic-btn">
           <img src="assets/icon.png" alt="PrismFiles logo" class="btn-logo-img" width="16" height="16">
           <span>PrismFiles</span>
         </a>
@@ -938,7 +1086,8 @@
         <span>100% air-gapped • Zero telemetry • Rust NDK</span>
       </div>
 
-      <h1 class="hero-title">
+      <!-- React Bits: Decrypted Text Effect Target -->
+      <h1 class="hero-title" id="hero-title" data-decrypt="The instrument-grade mobile file system">
         The instrument-grade mobile file system
       </h1>
 
@@ -947,12 +1096,12 @@
       </p>
 
       <div class="hero-actions">
-        <a id="hero-main-download-btn" href="PrismFiles.apk" download class="btn-primary-download">
+        <a id="hero-main-download-btn" href="PrismFiles.apk" download class="btn-primary-download magnetic-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span id="hero-download-text">Download APK (v1.0.0)</span>
         </a>
 
-        <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener" class="btn-secondary-link">
+        <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener" class="btn-secondary-link magnetic-btn">
           <span>Source code</span>
         </a>
       </div>
@@ -964,7 +1113,7 @@
       </div>
     </div>
 
-    <!-- Phone Mockup (The Moments) -->
+    <!-- Phone Mockup (3D Interactive Tilt & Moments) -->
     <div class="mockup-container" id="interactive-demo">
       <div class="phone-frame">
         <div class="phone-speaker"></div>
@@ -981,12 +1130,12 @@
             <button class="phone-tab-btn" onclick="switchPhoneTab('files')">Files</button>
           </div>
 
-          <!-- Tab 1: Interactive Donut Wheel Moment -->
+          <!-- Tab 1: Interactive Donut Wheel Moment with GSAP Rotary Physics -->
           <div id="tab-donut" class="tab-view active">
             <div class="donut-wheel-preview">
               <div class="wheel-canvas-container" id="wheel-container">
                 <canvas id="wheel-canvas" width="240" height="240"></canvas>
-                <div class="wheel-center-info" id="wheel-center-btn">
+                <div class="wheel-center-info magnetic-btn" id="wheel-center-btn" title="Tap to convert">
                   <div class="wheel-center-format" id="wheel-center-format">WEBP</div>
                   <div class="wheel-center-hint">Tap to convert</div>
                 </div>
@@ -1000,7 +1149,7 @@
             <div class="treemap-preview">
               <div class="treemap-stats-header">
                 <span>Storage analyzer</span>
-                <span>64.8 GB free</span>
+                <span><span class="counter-val" data-count="64.8" data-decimals="1" data-suffix=" GB free">64.8 GB free</span></span>
               </div>
               <canvas id="treemap-canvas" width="288" height="250"></canvas>
               <div class="treemap-tooltip" id="treemap-tooltip">Hover over tiles to inspect storage</div>
@@ -1053,7 +1202,7 @@
     </div>
   </section>
 
-  <!-- Core Architecture Bento Grid -->
+  <!-- Core Architecture Bento Grid (React Bits: Spotlight Cards) -->
   <section class="section-container" id="features">
     <div class="section-header">
       <div class="section-tag">Engineering foundation</div>
@@ -1065,7 +1214,7 @@
 
     <div class="bento-grid">
       <!-- Bento 1 -->
-      <div class="bento-card">
+      <div class="bento-card spotlight-card">
         <div>
           <div class="card-icon-wrap">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -1079,7 +1228,7 @@
       </div>
 
       <!-- Bento 2 -->
-      <div class="bento-card">
+      <div class="bento-card spotlight-card">
         <div>
           <div class="card-icon-wrap">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -1093,7 +1242,7 @@
       </div>
 
       <!-- Bento 3 -->
-      <div class="bento-card">
+      <div class="bento-card spotlight-card">
         <div>
           <div class="card-icon-wrap">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
@@ -1103,11 +1252,11 @@
             17 specialized conversion profiles. Single-thumb rotary selector with upright typography and tactile haptic ticks.
           </p>
         </div>
-        <div class="card-metric-badge">17 wheel profiles</div>
+        <div class="card-metric-badge"><span class="counter-val" data-count="17" data-suffix=" wheel profiles">17 wheel profiles</span></div>
       </div>
 
       <!-- Bento 4 (Span 2) -->
-      <div class="bento-card span-2">
+      <div class="bento-card span-2 spotlight-card">
         <div>
           <div class="card-icon-wrap">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
@@ -1121,7 +1270,7 @@
       </div>
 
       <!-- Bento 5 -->
-      <div class="bento-card">
+      <div class="bento-card spotlight-card">
         <div>
           <div class="card-icon-wrap">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
@@ -1136,7 +1285,7 @@
     </div>
   </section>
 
-  <!-- Download Hub Section -->
+  <!-- Download Hub Section (React Bits: Spotlight Cards) -->
   <section class="section-container download-section" id="downloads">
     <div class="section-header">
       <div class="section-tag">Direct release</div>
@@ -1149,12 +1298,12 @@
     <!-- Download Cards Grid -->
     <div class="download-grid">
       <!-- Universal -->
-      <div class="download-card recommended">
+      <div class="download-card recommended spotlight-card">
         <div class="badge-recommended">Recommended</div>
         <div class="card-arch-name">Universal APK</div>
         <div class="card-arch-desc">Works on all Android devices, all chipsets, and all processors.</div>
-        <div class="card-arch-size">43.8 MB • v1.0.0</div>
-        <a href="PrismFiles.apk" download class="btn-card-download">
+        <div class="card-arch-size"><span class="counter-val" data-count="43.8" data-decimals="1" data-suffix=" MB">43.8 MB</span> • v1.0.0</div>
+        <a href="PrismFiles.apk" download class="btn-card-download magnetic-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download universal</span>
         </a>
@@ -1165,11 +1314,11 @@
       </div>
 
       <!-- ARM64 -->
-      <div class="download-card">
+      <div class="download-card spotlight-card">
         <div class="card-arch-name">ARM64-v8a</div>
         <div class="card-arch-desc">Optimized for modern 64-bit Android smartphones and tablets. 63% smaller.</div>
-        <div class="card-arch-size">16.2 MB • v1.0.0</div>
-        <a href="PrismFiles-arm64-v8a.apk" download class="btn-card-download">
+        <div class="card-arch-size"><span class="counter-val" data-count="16.2" data-decimals="1" data-suffix=" MB">16.2 MB</span> • v1.0.0</div>
+        <a href="PrismFiles-arm64-v8a.apk" download class="btn-card-download magnetic-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download ARM64</span>
         </a>
@@ -1180,11 +1329,11 @@
       </div>
 
       <!-- ARMeabi-v7a -->
-      <div class="download-card">
+      <div class="download-card spotlight-card">
         <div class="card-arch-name">ARMeabi-v7a</div>
         <div class="card-arch-desc">For legacy 32-bit Android phones and low-resource devices.</div>
-        <div class="card-arch-size">13.4 MB • v1.0.0</div>
-        <a href="PrismFiles-armeabi-v7a.apk" download class="btn-card-download">
+        <div class="card-arch-size"><span class="counter-val" data-count="13.4" data-decimals="1" data-suffix=" MB">13.4 MB</span> • v1.0.0</div>
+        <a href="PrismFiles-armeabi-v7a.apk" download class="btn-card-download magnetic-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download ARMv7</span>
         </a>
@@ -1195,11 +1344,11 @@
       </div>
 
       <!-- x86_64 -->
-      <div class="download-card">
+      <div class="download-card spotlight-card">
         <div class="card-arch-name">x86_64</div>
         <div class="card-arch-desc">For Android emulators, ChromeOS Chromebooks, and x86 tablets.</div>
-        <div class="card-arch-size">18.1 MB • v1.0.0</div>
-        <a href="PrismFiles-x86_64.apk" download class="btn-card-download">
+        <div class="card-arch-size"><span class="counter-val" data-count="18.1" data-decimals="1" data-suffix=" MB">18.1 MB</span> • v1.0.0</div>
+        <a href="PrismFiles-x86_64.apk" download class="btn-card-download magnetic-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download x86_64</span>
         </a>
@@ -1323,9 +1472,281 @@
   <!-- Toast Component -->
   <div class="toast" id="toast">Checksum copied to clipboard</div>
 
-  <!-- Interactive Demo Scripts -->
+  <!-- External Libraries: Lenis Smooth Scroll + GSAP Core + ScrollTrigger -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Interactive Demo, GSAP Timelines, and React Bits Micro-Interactions -->
   <script>
-    // Tab Switching inside phone mockup
+    // ========================================================
+    // 1. Lenis Smooth Inertia Scroll + GSAP ScrollTrigger Sync
+    // ========================================================
+    gsap.registerPlugin(ScrollTrigger);
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.5,
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // Smooth anchor link routing via Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#' || !href) return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          lenis.scrollTo(target, { offset: -60, duration: 1.15 });
+        }
+      });
+    });
+
+    // Parallax scrub on background dot grid
+    gsap.to('.bg-grid-overlay', {
+      scrollTrigger: {
+        trigger: 'body',
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1.2,
+      },
+      backgroundPositionY: '96px',
+      ease: 'none'
+    });
+
+    // ========================================================
+    // 2. React Bits: Spotlight Card Effect
+    // ========================================================
+    function initSpotlightCards() {
+      const cards = document.querySelectorAll('.spotlight-card');
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.setProperty('--mouse-x', `-9999px`);
+          card.style.setProperty('--mouse-y', `-9999px`);
+        });
+      });
+    }
+    initSpotlightCards();
+
+    // ========================================================
+    // 3. React Bits: Decrypted Text Scramble Reveal
+    // ========================================================
+    function initDecryptedText() {
+      const el = document.getElementById('hero-title');
+      if (!el) return;
+      const targetText = el.getAttribute('data-decrypt') || el.textContent.trim();
+      const glyphs = '01XZ*/_+▪▫#%&-=~!';
+      let progress = 0;
+      const len = targetText.length;
+
+      // Scramble timer
+      const interval = setInterval(() => {
+        el.textContent = targetText
+          .split('')
+          .map((ch, idx) => {
+            if (ch === ' ') return ' ';
+            if (idx < progress) return targetText[idx];
+            return glyphs[Math.floor(Math.random() * glyphs.length)];
+          })
+          .join('');
+
+        progress += 0.8; // speed
+        if (progress >= len) {
+          clearInterval(interval);
+          el.textContent = targetText;
+        }
+      }, 30);
+    }
+
+    // ========================================================
+    // 4. React Bits: Magnetic Elements (Buttons & Center Dial)
+    // ========================================================
+    function initMagneticButtons() {
+      if (window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+          const xTo = gsap.quickTo(btn, "x", { duration: 0.35, ease: "power3.out" });
+          const yTo = gsap.quickTo(btn, "y", { duration: 0.35, ease: "power3.out" });
+
+          btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dx = (e.clientX - centerX) * 0.28;
+            const dy = (e.clientY - centerY) * 0.28;
+            xTo(dx);
+            yTo(dy);
+          });
+
+          btn.addEventListener('mouseleave', () => {
+            xTo(0);
+            yTo(0);
+          });
+        });
+      }
+    }
+    initMagneticButtons();
+
+    // ========================================================
+    // 5. GSAP Entrance Timelines & ScrollTrigger Batches
+    // ========================================================
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    heroTl
+      .from('.hero-tag', { opacity: 0, y: -16, duration: 0.6 })
+      .add(() => { initDecryptedText(); }, '-=0.2')
+      .from('.hero-description', { opacity: 0, y: 20, duration: 0.8 }, '-=0.3')
+      .from('.hero-actions', { opacity: 0, y: 16, duration: 0.6 }, '-=0.5')
+      .from('.arch-detect-pill', { opacity: 0, y: 12, duration: 0.5 }, '-=0.4')
+      .from('.mockup-container', { 
+        opacity: 0, 
+        y: 40, 
+        scale: 0.94, 
+        rotationY: -12, 
+        rotationX: 8, 
+        duration: 1.2, 
+        ease: 'expo.out' 
+      }, '-=0.9');
+
+    // Phone Frame Interactive 3D Cursor Tilt
+    const mockupContainer = document.querySelector('.mockup-container');
+    const phoneFrame = document.querySelector('.phone-frame');
+    if (mockupContainer && phoneFrame && window.innerWidth > 960) {
+      const tiltX = gsap.quickTo(phoneFrame, "rotationY", { duration: 0.8, ease: "power3.out" });
+      const tiltY = gsap.quickTo(phoneFrame, "rotationX", { duration: 0.8, ease: "power3.out" });
+
+      mockupContainer.addEventListener('mousemove', (e) => {
+        const rect = mockupContainer.getBoundingClientRect();
+        const normX = (e.clientX - rect.left) / rect.width - 0.5;
+        const normY = (e.clientY - rect.top) / rect.height - 0.5;
+        tiltX(normX * 16);
+        tiltY(-normY * 16);
+      });
+
+      mockupContainer.addEventListener('mouseleave', () => {
+        tiltX(0);
+        tiltY(0);
+      });
+    }
+
+    // Gentle ambient floating breathing motion for the phone
+    gsap.to(phoneFrame, {
+      y: -8,
+      duration: 3.2,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut'
+    });
+
+    // Bento Grid ScrollTrigger Stagger
+    gsap.from('.bento-card', {
+      scrollTrigger: {
+        trigger: '.bento-grid',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+      opacity: 0,
+      y: 40,
+      scale: 0.96,
+      stagger: 0.1,
+      duration: 0.85,
+      ease: 'power3.out',
+      clearProps: 'transform,opacity'
+    });
+
+    // Download Cards ScrollTrigger Stagger
+    gsap.from('.download-card', {
+      scrollTrigger: {
+        trigger: '.download-grid',
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+      opacity: 0,
+      y: 36,
+      stagger: 0.08,
+      duration: 0.8,
+      ease: 'power3.out',
+      clearProps: 'transform,opacity'
+    });
+
+    // Steps Items Stagger
+    gsap.from('.step-item', {
+      scrollTrigger: {
+        trigger: '.steps-container',
+        start: 'top 88%',
+      },
+      opacity: 0,
+      x: -24,
+      stagger: 0.14,
+      duration: 0.7,
+      ease: 'power2.out',
+      clearProps: 'transform,opacity'
+    });
+
+    // Comparison Table Reveal
+    gsap.from('.comparison-table-wrap', {
+      scrollTrigger: {
+        trigger: '.comparison-table-wrap',
+        start: 'top 85%',
+      },
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: 'power2.out',
+      clearProps: 'transform,opacity'
+    });
+
+    // ========================================================
+    // 6. React Bits: CountUp Metric Numbers
+    // ========================================================
+    function initCountUp() {
+      document.querySelectorAll('.counter-val').forEach(counter => {
+        const target = parseFloat(counter.getAttribute('data-count'));
+        const suffix = counter.getAttribute('data-suffix') || '';
+        const decimals = parseInt(counter.getAttribute('data-decimals') || '0', 10);
+        if (isNaN(target)) return;
+        const obj = { val: 0 };
+
+        gsap.to(obj, {
+          scrollTrigger: {
+            trigger: counter,
+            start: 'top 90%',
+            once: true
+          },
+          val: target,
+          duration: 1.8,
+          ease: 'power2.out',
+          onUpdate: () => {
+            counter.textContent = (decimals > 0 ? obj.val.toFixed(decimals) : Math.round(obj.val)) + suffix;
+          }
+        });
+      });
+    }
+    initCountUp();
+
+    // ========================================================
+    // 7. Tab Switching inside phone mockup (with GSAP Fade)
+    // ========================================================
     function switchPhoneTab(tabName) {
       document.querySelectorAll('.phone-tab-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active'));
@@ -1334,19 +1755,25 @@
       if (activeBtn) activeBtn.classList.add('active');
 
       const targetTab = document.getElementById('tab-' + tabName);
-      if (targetTab) targetTab.classList.add('active');
+      if (targetTab) {
+        targetTab.classList.add('active');
+        gsap.fromTo(targetTab, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' });
+      }
 
       if (tabName === 'treemap') {
         drawTreemap();
       }
     }
 
-    // Interactive Donut Wheel Canvas (Pass 8: The Moment)
+    // ========================================================
+    // 8. Interactive Donut Wheel Canvas + GSAP Rotary Physics
+    // ========================================================
     const wheelCanvas = document.getElementById('wheel-canvas');
     const wheelCtx = wheelCanvas.getContext('2d');
     const formats = ['WEBP', 'AVIF', 'PNG', 'JPEG', 'SVG', '7Z', 'ZIP', 'MP4', 'FLAC', 'PDF'];
     let currentRotation = 0;
     let selectedIndex = 0;
+    const wheelState = { rotation: 0 };
 
     function drawDonutWheel() {
       const cx = wheelCanvas.width / 2;
@@ -1390,12 +1817,103 @@
       }
     }
 
-    function updateWheelSelection(idx) {
+    function selectWheelIndexWithPhysics(idx) {
       selectedIndex = (idx % formats.length + formats.length) % formats.length;
       document.getElementById('wheel-center-format').textContent = formats[selectedIndex];
-      drawDonutWheel();
+
+      // Subtle haptic dial scale pulse
+      gsap.fromTo('#wheel-center-btn', 
+        { scale: 0.95 }, 
+        { scale: 1, duration: 0.3, ease: 'back.out(2)' }
+      );
+
+      // Smooth inertia spin to align sector
+      const sweep = (2 * Math.PI) / formats.length;
+      const targetAngle = -selectedIndex * sweep - sweep / 2 + Math.PI / 2;
+      
+      gsap.to(wheelState, {
+        rotation: targetAngle,
+        duration: 0.65,
+        ease: 'power3.out',
+        onUpdate: () => {
+          currentRotation = wheelState.rotation;
+          drawDonutWheel();
+        }
+      });
     }
 
+    // Dragging & Rotary Interaction
+    let isDragging = false;
+    let dragStartAngle = 0;
+    let initialRotation = 0;
+
+    function getAngleFromEvent(e) {
+      const rect = wheelCanvas.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+      return Math.atan2(clientY - cy, clientX - cx);
+    }
+
+    wheelCanvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      gsap.killTweensOf(wheelState);
+      dragStartAngle = getAngleFromEvent(e);
+      initialRotation = currentRotation;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const angle = getAngleFromEvent(e);
+      const delta = angle - dragStartAngle;
+      currentRotation = initialRotation + delta;
+      wheelState.rotation = currentRotation;
+      
+      // Compute closest index
+      const sweep = (2 * Math.PI) / formats.length;
+      let norm = (-currentRotation + Math.PI / 2) % (Math.PI * 2);
+      if (norm < 0) norm += Math.PI * 2;
+      const approxIdx = Math.floor(norm / sweep) % formats.length;
+      if (approxIdx !== selectedIndex) {
+        selectedIndex = approxIdx;
+        document.getElementById('wheel-center-format').textContent = formats[selectedIndex];
+      }
+      drawDonutWheel();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        selectWheelIndexWithPhysics(selectedIndex);
+      }
+    });
+
+    // Touch support for drag
+    wheelCanvas.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      gsap.killTweensOf(wheelState);
+      dragStartAngle = getAngleFromEvent(e);
+      initialRotation = currentRotation;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const angle = getAngleFromEvent(e);
+      const delta = angle - dragStartAngle;
+      currentRotation = initialRotation + delta;
+      wheelState.rotation = currentRotation;
+      drawDonutWheel();
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      if (isDragging) {
+        isDragging = false;
+        selectWheelIndexWithPhysics(selectedIndex);
+      }
+    });
+
+    // Click direct sector
     wheelCanvas.addEventListener('click', (e) => {
       const rect = wheelCanvas.getBoundingClientRect();
       const x = e.clientX - rect.left - wheelCanvas.width / 2;
@@ -1407,13 +1925,15 @@
         while (angle < 0) angle += Math.PI * 2;
         const sweep = (2 * Math.PI) / formats.length;
         const clickedIdx = Math.floor(angle / sweep);
-        updateWheelSelection(clickedIdx);
+        selectWheelIndexWithPhysics(clickedIdx);
       }
     });
 
     drawDonutWheel();
 
-    // Interactive 3D Cushion Treemap Canvas (Pass 8: The Moment)
+    // ========================================================
+    // 9. Interactive 3D Cushion Treemap Canvas
+    // ========================================================
     const treemapCanvas = document.getElementById('treemap-canvas');
     const tCtx = treemapCanvas.getContext('2d');
     const treemapNodes = [
@@ -1431,7 +1951,7 @@
       treemapNodes.forEach((n, idx) => {
         const isHover = (idx === hoverIdx);
         const grad = tCtx.createLinearGradient(n.x, n.y, n.x + n.w, n.y + n.h);
-        grad.addColorStop(0, isHover ? '#3A546A' : n.color);
+        grad.addColorStop(0, isHover ? '#3E5C74' : n.color);
         grad.addColorStop(1, '#0A0A0E');
 
         tCtx.fillStyle = grad;
@@ -1483,16 +2003,20 @@
 
     drawTreemap();
 
-    // Clipboard Copy Helper
+    // ========================================================
+    // 10. Clipboard Copy Helper
+    // ========================================================
     function copyHash(hash) {
       navigator.clipboard.writeText(hash).then(() => {
         const toast = document.getElementById('toast');
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
+        setTimeout(() => toast.classList.remove('show'), 2200);
       });
     }
 
-    // Architecture Detection
+    // ========================================================
+    // 11. Android Architecture Detection
+    // ========================================================
     function detectArchitecture() {
       const ua = navigator.userAgent.toLowerCase();
       const archText = document.getElementById('detected-arch-text');
