@@ -449,7 +449,6 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transform-style: preserve-3d;
       will-change: transform;
     }
 
@@ -542,6 +541,7 @@
       position: relative;
       cursor: grab;
       user-select: none;
+      -webkit-user-select: none;
       touch-action: none;
     }
 
@@ -1252,7 +1252,7 @@
           <!-- Tab 1: Clean Interactive Donut Wheel Moment -->
           <div id="tab-donut" class="tab-view active">
             <div class="donut-wheel-preview">
-              <div class="wheel-canvas-container" id="wheel-container">
+              <div class="wheel-canvas-container" id="wheel-container" data-lenis-prevent>
                 <canvas id="wheel-canvas" width="240" height="240"></canvas>
                 <div class="wheel-center-info" id="wheel-center-btn" title="Tap to convert">
                   <div class="wheel-center-format" id="wheel-center-format">WEBP</div>
@@ -2553,21 +2553,12 @@
       wheelCtx.restore();
     }
 
-    function rotateToSector(targetIdx, duration = 0.45) {
-      selectedIndex = (targetIdx % count + count) % count;
-      if (centerFormatEl) centerFormatEl.textContent = formats[selectedIndex];
-
-      const targetAngle = getTargetRotation(selectedIndex);
-      const diff = (targetAngle - currentRotation) % (Math.PI * 2);
-      let shortestDiff = diff;
-      if (shortestDiff > Math.PI) shortestDiff -= Math.PI * 2;
-      if (shortestDiff < -Math.PI) shortestDiff += Math.PI * 2;
-      const finalAngle = currentRotation + shortestDiff;
-
+    function animateWheelTo(finalAngle, duration = 0.45) {
       if (wheelTween) wheelTween.kill();
+      wheelState.rotation = currentRotation;
       wheelTween = gsap.to(wheelState, {
         rotation: finalAngle,
-        duration: duration,
+        duration,
         ease: 'power3.out',
         onUpdate: () => {
           currentRotation = wheelState.rotation;
@@ -2581,68 +2572,42 @@
       });
     }
 
-    // Pointer Events on Container (Unified Drag & Click)
-    if (wheelContainer) {
-      wheelContainer.addEventListener('pointerdown', (e) => {
-        const center = getCanvasCenter();
-        const dist = Math.hypot(e.clientX - center.x, e.clientY - center.y);
-        
-        // If clicked on center button, let button click handle it
-        if (dist < center.radius * 0.44) return;
+    function rotateToSector(targetIdx, duration = 0.45) {
+      selectedIndex = (targetIdx % count + count) % count;
+      if (centerFormatEl) centerFormatEl.textContent = formats[selectedIndex];
 
-        e.preventDefault();
-        isDragging = true;
-        hasMoved = false;
-        isInteractingWithPhone = true;
-        if (wheelTween) wheelTween.kill();
+      const targetAngle = getTargetRotation(selectedIndex);
+      let shortestDiff = (targetAngle - currentRotation) % (Math.PI * 2);
+      if (shortestDiff > Math.PI) shortestDiff -= Math.PI * 2;
+      if (shortestDiff < -Math.PI) shortestDiff += Math.PI * 2;
+      animateWheelTo(currentRotation + shortestDiff, duration);
+    }
 
-        lastAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
-        lastTime = performance.now();
-        angularVelocity = 0;
-        try { wheelContainer.setPointerCapture(e.pointerId); } catch (err) {}
-      });
+    let startX = 0;
+    let startY = 0;
+    let activePointerId = null;
 
-      wheelContainer.addEventListener('pointermove', (e) => {
-        const center = getCanvasCenter();
-        const dist = Math.hypot(e.clientX - center.x, e.clientY - center.y);
+    function handleDragMove(e) {
+      if (!isDragging || (activePointerId !== null && e.pointerId !== activePointerId)) return;
+      e.preventDefault();
 
-        if (!isDragging) {
-          // Hover detection
-          if (dist >= center.radius * 0.44 && dist <= center.radius * 1.05) {
-            const angle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
-            let rel = angle - currentRotation;
-            rel = ((rel % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-            const hov = Math.floor(rel / sweep) % count;
-            if (hov !== hoveredIndex) {
-              hoveredIndex = hov;
-              drawDonutWheel();
-            }
-          } else if (hoveredIndex !== -1) {
-            hoveredIndex = -1;
-            drawDonutWheel();
-          }
-          return;
-        }
+      const center = getCanvasCenter();
+      const currentAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+      const now = performance.now();
+      const dt = Math.max(0.004, (now - lastTime) / 1000);
 
-        e.preventDefault();
-        const currentAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
-        const now = performance.now();
-        const dt = Math.max(0.001, (now - lastTime) / 1000);
+      let dAngle = currentAngle - lastAngle;
+      while (dAngle < -Math.PI) dAngle += Math.PI * 2;
+      while (dAngle > Math.PI) dAngle -= Math.PI * 2;
 
-        let dAngle = currentAngle - lastAngle;
-        while (dAngle < -Math.PI) dAngle += Math.PI * 2;
-        while (dAngle > Math.PI) dAngle -= Math.PI * 2;
+      if (!hasMoved && Math.hypot(e.clientX - startX, e.clientY - startY) > 6) {
+        hasMoved = true;
+      }
 
-        if (Math.abs(dAngle) > 0.005) {
-          hasMoved = true;
-        }
-
+      if (hasMoved) {
         currentRotation += dAngle;
         wheelState.rotation = currentRotation;
-
         angularVelocity = angularVelocity * 0.4 + (dAngle / dt) * 0.6;
-        lastAngle = currentAngle;
-        lastTime = now;
 
         const topIdx = getSectorAtAngle(-Math.PI / 2, currentRotation);
         if (topIdx !== selectedIndex) {
@@ -2651,45 +2616,115 @@
           playTick();
         }
         drawDonutWheel();
+      }
+
+      lastAngle = currentAngle;
+      lastTime = now;
+    }
+
+    function finishDrag(e, cancelled = false) {
+      if (!isDragging) return;
+      isDragging = false;
+      isInteractingWithPhone = false;
+      activePointerId = null;
+
+      window.removeEventListener('pointermove', handleDragMove);
+      window.removeEventListener('pointerup', handleDragUp);
+      window.removeEventListener('pointercancel', handleDragCancel);
+
+      if (e && wheelContainer.hasPointerCapture?.(e.pointerId)) {
+        try { wheelContainer.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+
+      if (cancelled) {
+        rotateToSector(selectedIndex, 0.35);
+        return;
+      }
+
+      if (!hasMoved && e) {
+        const center = getCanvasCenter();
+        const clickAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+        const clickedIdx = getSectorAtAngle(clickAngle, currentRotation);
+        playTick();
+        rotateToSector(clickedIdx, 0.45);
+      } else {
+        // Clear stale velocity if user paused before releasing
+        if (performance.now() - lastTime > 80) angularVelocity = 0;
+
+        if (Math.abs(angularVelocity) > 0.8) {
+          const flingDist = Math.max(-Math.PI * 3, Math.min(Math.PI * 3, angularVelocity * 0.25));
+          const projectedRot = currentRotation + flingDist;
+          const targetIdx = getSectorAtAngle(-Math.PI / 2, projectedRot);
+          selectedIndex = targetIdx;
+          if (centerFormatEl) centerFormatEl.textContent = formats[selectedIndex];
+
+          // Snap to nearest equivalent angle around projectedRot (no backward wrap)
+          const baseTarget = getTargetRotation(targetIdx);
+          const turns = Math.round((projectedRot - baseTarget) / (Math.PI * 2));
+          const finalAngle = baseTarget + turns * Math.PI * 2;
+          animateWheelTo(finalAngle, Math.min(1.0, Math.max(0.35, Math.abs(angularVelocity) * 0.08)));
+        } else {
+          rotateToSector(selectedIndex, 0.35);
+        }
+      }
+    }
+
+    function handleDragUp(e) { finishDrag(e, false); }
+    function handleDragCancel(e) { finishDrag(e, true); }
+
+    if (wheelContainer) {
+      wheelContainer.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0 && e.pointerType === 'mouse') return;
+        const center = getCanvasCenter();
+        const dist = Math.hypot(e.clientX - center.x, e.clientY - center.y);
+        if (dist < center.radius * 0.44) return;
+
+        e.preventDefault();
+        isDragging = true;
+        hasMoved = false;
+        isInteractingWithPhone = true;
+        activePointerId = e.pointerId;
+        startX = e.clientX;
+        startY = e.clientY;
+        if (wheelTween) wheelTween.kill();
+
+        lastAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+        lastTime = performance.now();
+        angularVelocity = 0;
+
+        try { wheelContainer.setPointerCapture(e.pointerId); } catch (err) {}
+        window.addEventListener('pointermove', handleDragMove, { passive: false });
+        window.addEventListener('pointerup', handleDragUp);
+        window.addEventListener('pointercancel', handleDragCancel);
       });
 
-      wheelContainer.addEventListener('pointerup', (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        isInteractingWithPhone = false;
-        try { wheelContainer.releasePointerCapture(e.pointerId); } catch (err) {}
-
-        if (!hasMoved) {
-          // Direct tap/click on a sector
-          const center = getCanvasCenter();
-          const clickAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
-          let rel = clickAngle - currentRotation;
-          rel = ((rel % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-          const clickedIdx = Math.floor(rel / sweep) % count;
-          playTick();
-          rotateToSector(clickedIdx, 0.45);
-        } else {
-          // Inertia fling momentum
-          if (Math.abs(angularVelocity) > 0.8) {
-            const flingDist = angularVelocity * 0.28;
-            const projectedRot = currentRotation + flingDist;
-            const targetIdx = getSectorAtAngle(-Math.PI / 2, projectedRot);
-            rotateToSector(targetIdx, Math.min(1.0, Math.max(0.35, Math.abs(angularVelocity) * 0.1)));
-          } else {
-            rotateToSector(selectedIndex, 0.35);
+      wheelContainer.addEventListener('pointermove', (e) => {
+        if (isDragging) return;
+        const center = getCanvasCenter();
+        const dist = Math.hypot(e.clientX - center.x, e.clientY - center.y);
+        if (dist >= center.radius * 0.44 && dist <= center.radius * 1.05) {
+          const angle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+          const hov = getSectorAtAngle(angle, currentRotation);
+          if (hov !== hoveredIndex) {
+            hoveredIndex = hov;
+            drawDonutWheel();
           }
+        } else if (hoveredIndex !== -1) {
+          hoveredIndex = -1;
+          drawDonutWheel();
         }
       });
 
-      wheelContainer.addEventListener('pointercancel', () => {
-        isDragging = false;
-        isInteractingWithPhone = false;
-        rotateToSector(selectedIndex, 0.35);
+      wheelContainer.addEventListener('pointerleave', () => {
+        if (!isDragging && hoveredIndex !== -1) {
+          hoveredIndex = -1;
+          drawDonutWheel();
+        }
       });
 
-      // Mouse wheel / scroll to cycle formats
       wheelContainer.addEventListener('wheel', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const step = e.deltaY > 0 ? 1 : -1;
         const target = (selectedIndex + step + count) % count;
         playTick();
