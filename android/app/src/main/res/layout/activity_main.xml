@@ -19,11 +19,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- Compact One-Line Top Toolbar (#141414) -->
+            <!-- Compact One-Line Top Toolbar (#121212) -->
             <LinearLayout
                 android:id="@+id/top_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="48dp"
                 android:background="@color/toolbar_surface"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -49,8 +49,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingStart="6dp"
-                    android:paddingEnd="4dp">
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
 
                     <TextView
                         android:id="@+id/tv_app_title"
@@ -59,14 +59,13 @@
                         android:fontFamily="sans-serif-medium"
                         android:text="PrismFiles"
                         android:textColor="@color/text_primary"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="6dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:text="/"
                         android:textColor="@color/text_muted"
                         android:textSize="15sp" />
@@ -83,8 +82,8 @@
                         tools:text="Download" />
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_arrow_drop"
                         app:tint="@color/text_muted" />
                 </LinearLayout>
@@ -143,7 +142,7 @@
             <LinearLayout
                 android:id="@+id/search_bar_container"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:background="@color/toolbar_surface"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -157,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="Search files..."
+                    android:hint="Search"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:maxLines="1"
@@ -181,7 +180,7 @@
                 android:id="@+id/selection_action_bar"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="#1A1A1A"
+                android:background="@color/surface_raised"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="12dp"
@@ -206,7 +205,8 @@
                     android:paddingStart="8dp"
                     android:textColor="@color/text_primary"
                     android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="normal"
                     tools:text="3 selected" />
 
                 <!-- Select All -->
@@ -292,7 +292,7 @@
                 android:contentDescription="Actions"
                 android:src="@drawable/ic_add"
                 app:backgroundTint="@color/monochrome_white"
-                app:elevation="6dp"
+                app:elevation="3dp"
                 app:tint="@color/amoled_black" />
 
             <!-- Live Item Count Badge on Paste Button -->
@@ -324,7 +324,7 @@
         <!-- Drawer Header -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="64dp"
             android:background="@color/amoled_black"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -336,8 +336,9 @@
                 android:layout_height="wrap_content"
                 android:text="PrismFiles"
                 android:textColor="@color/text_primary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <View
@@ -370,16 +371,16 @@
             android:paddingEnd="16dp">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_more"
-                app:tint="@color/text_primary" />
+                app:tint="@color/text_secondary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Utilities &amp; Tools"
+                android:text="Utilities"
                 android:textColor="@color/text_primary"
                 android:textSize="14sp" />
         </LinearLayout>

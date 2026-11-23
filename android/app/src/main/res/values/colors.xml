@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Graphite Neutral Ramp (AMOLED Dark) -->
     <color name="amoled_black">#000000</color>
-    <color name="toolbar_surface">#141414</color>
-    <color name="divider_line">#222222</color>
-    <color name="monochrome_white">#FFFFFF</color>
-    <color name="monochrome_white_dim">#26FFFFFF</color>
-    <color name="electric_violet">#FFFFFF</color>
-    <color name="electric_violet_dim">#26FFFFFF</color>
-    <color name="glass_surface">#CC141414</color>
-    <color name="glass_border">#33FFFFFF</color>
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#9E9E9E</color>
-    <color name="text_muted">#666666</color>
-    <color name="selected_row_bg">#26FFFFFF</color>
+    <color name="toolbar_surface">#121212</color>
+    <color name="surface_raised">#181818</color>
+    <color name="surface_hover">#222222</color>
+    <color name="divider_line">#1C1C1E</color>
+    <color name="border_hairline">#262628</color>
 
-    <!-- Flat color-coded file icon tints (monochrome archive & code) -->
-    <color name="icon_folder">#F39C12</color>
-    <color name="icon_archive">#E0E0E0</color>
-    <color name="icon_apk">#00B894</color>
-    <color name="icon_image">#00CEC9</color>
-    <color name="icon_audio">#E84393</color>
-    <color name="icon_video">#E17055</color>
-    <color name="icon_document">#0984E3</color>
-    <color name="icon_code">#B0BEC5</color>
-    <color name="icon_specialized">#FDCB6E</color>
-    <color name="icon_generic">#7F8C8D</color>
+    <!-- Quiet Chrome Accents -->
+    <color name="monochrome_white">#F0F0F0</color>
+    <color name="monochrome_white_dim">#1FFFFFFF</color>
+    <color name="accent_primary">#0A84FF</color>
+    <color name="accent_selection">#1AFFFFFF</color>
+
+    <!-- Dialog & Sheet Surfaces (Quiet Matte, Zero AI Glass Slop) -->
+    <color name="dialog_surface">#161616</color>
+    <color name="dialog_border">#282828</color>
+    <color name="glass_surface">#F2161616</color>
+    <color name="glass_border">#282828</color>
+
+    <!-- Functional Semantic Accents -->
+    <color name="accent_danger">#FF453A</color>
+
+    <!-- Three Strict Text Roles -->
+    <color name="text_primary">#F0F0F0</color>
+    <color name="text_secondary">#8E8E93</color>
+    <color name="text_muted">#545458</color>
+    <color name="selected_row_bg">#18FFFFFF</color>
+
+    <!-- Instrument-Grade Low-Saturation File Icon Tints -->
+    <color name="icon_folder">#D4A017</color>
+    <color name="icon_archive">#D1D1D6</color>
+    <color name="icon_apk">#30D158</color>
+    <color name="icon_image">#64D2FF</color>
+    <color name="icon_audio">#FF375F</color>
+    <color name="icon_video">#FF9F0A</color>
+    <color name="icon_document">#0A84FF</color>
+    <color name="icon_code">#98989D</color>
+    <color name="icon_specialized">#BF5AF2</color>
+    <color name="icon_generic">#636366</color>
 </resources>

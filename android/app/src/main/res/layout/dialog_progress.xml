@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_glass_dialog"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/tv_dialog_task_title"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_primary"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
         tools:text="Creating 7z Archive..." />
 
     <TextView
@@ -31,7 +31,7 @@
         android:id="@+id/pb_dialog_task"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="4dp"
         android:layout_marginTop="12dp"
         android:max="100"
         android:progress="0"
@@ -41,7 +41,7 @@
         android:id="@+id/tv_dialog_task_stats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/text_muted"
         android:textSize="11sp"
         android:fontFamily="monospace"
@@ -51,7 +51,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         android:gravity="end"
         android:orientation="horizontal">
 
@@ -79,6 +79,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="Cancel"
-            android:textColor="#D63031" />
+            android:textColor="@color/accent_danger" />
     </LinearLayout>
 </LinearLayout>

@@ -9,16 +9,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Compress to Archive"
+        android:text="Create archive"
         android:textColor="@color/text_primary"
         android:textSize="17sp"
-        android:textStyle="bold" />
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="normal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Archive Name"
+        android:layout_marginTop="16dp"
+        android:text="Name"
         android:textColor="@color/text_secondary"
         android:textSize="12sp" />
 
@@ -27,9 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:background="#222222"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:background="@color/surface_hover"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:maxLines="1"
         android:textColor="@color/text_primary"
         android:textSize="14sp" />
@@ -38,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Archive Format"
+        android:text="Format"
         android:textColor="@color/text_secondary"
         android:textSize="12sp" />
 
@@ -47,13 +48,13 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:background="#222222" />
+        android:background="@color/surface_hover" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Compression Profile"
+        android:text="Compression level"
         android:textColor="@color/text_secondary"
         android:textSize="12sp" />
 
@@ -62,13 +63,13 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:background="#222222" />
+        android:background="@color/surface_hover" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Password (AES-256-GCM, Optional)"
+        android:text="Password (optional)"
         android:textColor="@color/text_secondary"
         android:textSize="12sp" />
 
@@ -77,10 +78,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:background="#222222"
+        android:background="@color/surface_hover"
         android:inputType="textPassword"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:maxLines="1"
         android:textColor="@color/text_primary"
         android:textSize="14sp" />
@@ -89,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Split into Volumes (Optional)"
+        android:text="Split volume (optional)"
         android:textColor="@color/text_secondary"
         android:textSize="12sp" />
 
@@ -98,7 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:background="#222222" />
+        android:background="@color/surface_hover" />
 
     <!-- Action Buttons -->
     <LinearLayout
@@ -112,7 +113,7 @@
             android:id="@+id/btn_compress_cancel"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Cancel"
             android:textColor="@color/text_secondary" />
 
@@ -120,7 +121,7 @@
             android:id="@+id/btn_compress_confirm"
             style="@style/Widget.Material3.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:backgroundTint="@color/monochrome_white"
             android:text="Compress"

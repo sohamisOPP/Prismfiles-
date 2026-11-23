@@ -375,7 +375,7 @@ class ViewerActivity : AppCompatActivity() {
                     }
                     val offset = obj.optLong("offset", 0L)
                     val totalSize = obj.optLong("total_size", rawBytes.size.toLong())
-                    sb.append(String.format("File: %s | Size: %d bytes\n\n", File(path).name, totalSize))
+                    sb.append(String.format("File: %s   Size: %d bytes\n\n", File(path).name, totalSize))
                     for (i in rawBytes.indices step 16) {
                         val lineOffset = offset + i
                         val chunkEnd = minOf(i + 16, rawBytes.size)

@@ -39,21 +39,21 @@
     </style>
 
     <style name="Widget.PrismFiles.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
-        <item name="backgroundTint">@color/glass_surface</item>
+        <item name="backgroundTint">@color/dialog_surface</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.PrismFiles.Sheet</item>
     </style>
 
     <style name="ShapeAppearance.PrismFiles.Sheet" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopLeft">16dp</item>
-        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">12dp</item>
+        <item name="cornerSizeTopRight">12dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
     <style name="Theme.PrismFiles.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="android:windowBackground">@drawable/bg_glass_dialog</item>
-        <item name="colorSurface">@color/glass_surface</item>
+        <item name="colorSurface">@color/dialog_surface</item>
         <item name="colorPrimary">@color/monochrome_white</item>
         <item name="colorOnPrimary">@color/amoled_black</item>
         <item name="android:textColorPrimary">@color/text_primary</item>

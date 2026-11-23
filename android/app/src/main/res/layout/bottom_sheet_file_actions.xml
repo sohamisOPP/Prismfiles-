@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_glass_dialog"
@@ -17,7 +16,7 @@
         android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="8dp">
+        android:paddingBottom="12dp">
 
         <ImageView
             android:id="@+id/sheet_file_icon"
@@ -40,17 +39,20 @@
                 android:ellipsize="middle"
                 android:textColor="@color/text_primary"
                 android:textSize="15sp"
-                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="normal"
                 tools:text="sample_archive.7z" />
 
             <TextView
                 android:id="@+id/sheet_file_meta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:maxLines="1"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp"
-                tools:text="14.2 MB | 2026-11-14 18:22" />
+                android:fontFamily="monospace"
+                tools:text="14.2 MB   2026-11-14 18:22" />
         </LinearLayout>
     </LinearLayout>
 
@@ -59,19 +61,19 @@
         android:layout_height="1dp"
         android:background="@color/divider_line" />
 
-    <!-- Action Rows -->
+    <!-- Action Rows (48dp height, sentence case) -->
     <LinearLayout
         android:id="@+id/action_open_view"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View / Open In-App"
+            android:text="Open"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -79,16 +81,16 @@
     <LinearLayout
         android:id="@+id/action_open_external"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:id="@+id/tv_action_open_external"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Open with... / Install"
+            android:text="Open with"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -96,32 +98,32 @@
     <LinearLayout
         android:id="@+id/action_convert"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Convert (Radial Wheel)..."
+            android:text="Convert format"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:fontFamily="sans-serif-medium" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/action_extract_here"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Extract Here"
+            android:text="Extract here"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -129,15 +131,15 @@
     <LinearLayout
         android:id="@+id/action_extract_to"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Extract to Folder..."
+            android:text="Extract to folder"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -145,15 +147,15 @@
     <LinearLayout
         android:id="@+id/action_test_archive"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Test Archive Integrity"
+            android:text="Test integrity"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -161,15 +163,15 @@
     <LinearLayout
         android:id="@+id/action_compress"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Compress..."
+            android:text="Compress"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -177,11 +179,11 @@
     <LinearLayout
         android:id="@+id/action_copy"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -193,11 +195,11 @@
     <LinearLayout
         android:id="@+id/action_cut"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -209,11 +211,11 @@
     <LinearLayout
         android:id="@+id/action_rename"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -225,15 +227,15 @@
     <LinearLayout
         android:id="@+id/action_checksum"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Compute Checksums (BLAKE3/SHA)"
+            android:text="Checksums (BLAKE3, SHA-256)"
             android:textColor="@color/text_primary"
             android:textSize="14sp" />
     </LinearLayout>
@@ -241,32 +243,32 @@
     <LinearLayout
         android:id="@+id/action_shred"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shred (DoD 5220.22-M 3-Pass)"
-            android:textColor="#E17055"
+            android:text="Secure shred (DoD 5220.22-M)"
+            android:textColor="#FF453A"
             android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/action_delete"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete"
-            android:textColor="#D63031"
+            android:textColor="#FF453A"
             android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

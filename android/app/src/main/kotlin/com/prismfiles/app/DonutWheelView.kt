@@ -45,34 +45,35 @@ class DonutWheelView @JvmOverloads constructor(
 
     private val sectorBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 2f
-        color = Color.parseColor("#222222")
+        strokeWidth = 1.5f
+        color = Color.parseColor("#262628")
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
-        textSize = 24f
+        color = Color.parseColor("#F0F0F0")
+        textSize = 22f
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD)
         textAlign = Paint.Align.CENTER
     }
 
     private val sliceSubPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#A0A0A0")
-        textSize = 17f
+        color = Color.parseColor("#8E8E93")
+        textSize = 15f
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
         textAlign = Paint.Align.CENTER
     }
 
     private val centerTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
-        textSize = 36f
+        color = Color.parseColor("#F0F0F0")
+        textSize = 34f
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD)
         textAlign = Paint.Align.CENTER
     }
 
     private val centerSubPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#9E9E9E")
-        textSize = 22f
+        color = Color.parseColor("#8E8E93")
+        textSize = 18f
+        typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
         textAlign = Paint.Align.CENTER
     }
 
@@ -254,8 +255,8 @@ class DonutWheelView @JvmOverloads constructor(
             val isSelected = (i == selectedIdx)
             val isEven = (i % 2 == 0)
 
-            sectorPaint.color = if (isSelected) Color.parseColor("#2E2E32")
-                else (if (isEven) Color.parseColor("#1C1C1E") else Color.parseColor("#121212"))
+            sectorPaint.color = if (isSelected) Color.parseColor("#262628")
+                else (if (isEven) Color.parseColor("#161616") else Color.parseColor("#101010"))
 
             val path = Path()
             path.arcTo(ringRect, startAngle, sweep)
@@ -264,11 +265,11 @@ class DonutWheelView @JvmOverloads constructor(
             canvas.drawPath(path, sectorPaint)
 
             if (isSelected) {
-                sectorBorderPaint.color = Color.WHITE
-                sectorBorderPaint.strokeWidth = 3f
+                sectorBorderPaint.color = Color.parseColor("#F0F0F0")
+                sectorBorderPaint.strokeWidth = 2f
             } else {
-                sectorBorderPaint.color = Color.parseColor("#222222")
-                sectorBorderPaint.strokeWidth = 1.5f
+                sectorBorderPaint.color = Color.parseColor("#262628")
+                sectorBorderPaint.strokeWidth = 1f
             }
             canvas.drawPath(path, sectorBorderPaint)
 
@@ -283,12 +284,12 @@ class DonutWheelView @JvmOverloads constructor(
             val hasSubtitle = !slice.subtitle.isNullOrEmpty()
 
             textPaint.textSize = when {
-                slice.label.length > 12 -> 17f
-                slice.label.length > 8 -> 19f
-                count > 10 -> 21f
-                else -> 24f
+                slice.label.length > 12 -> 16f
+                slice.label.length > 8 -> 18f
+                count > 10 -> 20f
+                else -> 22f
             }
-            textPaint.color = if (isSelected) Color.WHITE else Color.parseColor("#D0D0D0")
+            textPaint.color = if (isSelected) Color.parseColor("#F0F0F0") else Color.parseColor("#8E8E93")
 
             val sub = slice.subtitle
             if (sub != null) {
@@ -327,35 +328,35 @@ class DonutWheelView @JvmOverloads constructor(
             }
         }
 
-        // Center circle (translucent glass AMOLED)
+        // Center circle (quiet matte console surface)
         val centerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.parseColor("#0A0A0A")
+            color = Color.parseColor("#161616")
         }
         canvas.drawCircle(cx, cy, innerR - 4f, centerPaint)
 
         val centerBorder = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
-            strokeWidth = 3f
-            color = Color.WHITE
+            strokeWidth = 2f
+            color = Color.parseColor("#F0F0F0")
         }
         canvas.drawCircle(cx, cy, innerR - 4f, centerBorder)
 
-        // Center text: Format label on top, action subtitle below (as it was originally)
+        // Center text: Format label on top, action subtitle below
         val selSlice = getSelectedSlice() ?: (if (slices.isNotEmpty()) slices[0] else null)
         val selLabel = selSlice?.label ?: ""
         val selFmt = selSlice?.targetFormat ?: ""
         val isCompress = selFmt.lowercase() in listOf("zip", "7z", "tar.gz", "tar.xz", "tar.bz2", "gz", "xz")
         val isExtract = selFmt.lowercase() == "extract" || selSlice?.actionType == "extract"
 
-        centerTextPaint.textSize = if (selLabel.length > 8) 28f else 38f
+        centerTextPaint.textSize = if (selLabel.length > 8) 26f else 34f
         canvas.drawText(selLabel.uppercase(), cx, cy - 6f, centerTextPaint)
 
         val subText = when {
-            isExtract -> "TAP TO EXTRACT"
-            isCompress -> "TAP TO COMPRESS"
-            selSlice?.isAction == true -> "TAP TO EXECUTE"
-            else -> "TAP TO CONVERT"
+            isExtract -> "Tap to extract"
+            isCompress -> "Tap to compress"
+            selSlice?.isAction == true -> "Tap to execute"
+            else -> "Tap to convert"
         }
-        canvas.drawText(subText, cx, cy + 30f, centerSubPaint)
+        canvas.drawText(subText, cx, cy + 28f, centerSubPaint)
     }
 }

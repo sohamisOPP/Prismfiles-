@@ -8,10 +8,10 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <!-- Top Toolbar -->
+    <!-- Top Toolbar (48dp height on 4px grid) -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="48dp"
         android:background="@color/toolbar_surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -34,10 +34,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
-            android:text="PrismFiles Utilities"
+            android:text="Utilities"
             android:textColor="@color/text_primary"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal" />
     </LinearLayout>
 
     <View
@@ -59,10 +60,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Local Wi-Fi File Sharing Server"
+                android:text="Wi-Fi transfer"
                 android:textColor="@color/text_primary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:fontFamily="sans-serif-medium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,13 +71,13 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_glass_dialog"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/tv_wifi_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Server: Stopped"
+                    android:text="Server: Inactive"
                     android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
@@ -96,19 +97,19 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:background="#FFFFFF"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btn_toggle_wifi"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:layout_marginTop="12dp"
                     android:backgroundTint="@color/monochrome_white"
-                    android:text="Start Wi-Fi Transfer Server"
+                    android:text="Start server"
                     android:textColor="@color/amoled_black" />
             </LinearLayout>
 
@@ -117,10 +118,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Cushion Treemap Disk Analyzer"
+                android:text="Storage treemap"
                 android:textColor="@color/text_primary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:fontFamily="sans-serif-medium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -128,13 +129,13 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_glass_dialog"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/tv_treemap_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Analyze storage space usage with interactive hierarchical cushion treemap."
+                    android:text="Inspect storage consumption with a hierarchical 3D cushion treemap."
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
@@ -142,10 +143,10 @@
                     android:id="@+id/btn_run_treemap"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/toolbar_surface"
-                    android:text="Analyze Storage Treemap"
+                    android:backgroundTint="@color/surface_raised"
+                    android:text="Open treemap"
                     android:textColor="@color/text_primary" />
             </LinearLayout>
 
@@ -154,10 +155,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="APK &amp; Split-XAPK Manifest Inspector"
+                android:text="APK manifest inspector"
                 android:textColor="@color/text_primary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:fontFamily="sans-serif-medium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,7 +166,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_glass_dialog"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="16dp">
 
                 <TextView
                     android:id="@+id/tv_apk_info"
@@ -179,10 +180,10 @@
                     android:id="@+id/btn_inspect_apk"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/toolbar_surface"
-                    android:text="Select APK / XAPK..."
+                    android:backgroundTint="@color/surface_raised"
+                    android:text="Choose APK"
                     android:textColor="@color/text_primary" />
             </LinearLayout>
 
@@ -191,10 +192,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Regex Batch Renaming"
+                android:text="Batch rename"
                 android:textColor="@color/text_primary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:fontFamily="sans-serif-medium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,12 +203,12 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_glass_dialog"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Batch rename files using regex find/replace with live preview and undo history."
+                    android:text="Rename multiple files using regex search and replace with preview."
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
@@ -216,10 +217,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
-                    android:background="#222222"
-                    android:hint="Regex Pattern (e.g. IMG_(\\d+))"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:background="@color/surface_hover"
+                    android:hint="Pattern (e.g. IMG_(\\d+))"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:textColor="@color/text_primary"
                     android:textColorHint="@color/text_muted"
                     android:textSize="13sp" />
@@ -228,11 +229,11 @@
                     android:id="@+id/et_rename_replace"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="6dp"
-                    android:background="#222222"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/surface_hover"
                     android:hint="Replacement (e.g. Photo_$1)"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:textColor="@color/text_primary"
                     android:textColorHint="@color/text_muted"
                     android:textSize="13sp" />
@@ -240,16 +241,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/btn_preview_rename"
                         style="@style/Widget.Material3.Button"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="44dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/toolbar_surface"
+                        android:backgroundTint="@color/surface_raised"
                         android:text="Preview"
                         android:textColor="@color/text_primary" />
 
@@ -257,11 +258,11 @@
                         android:id="@+id/btn_apply_rename"
                         style="@style/Widget.Material3.Button"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="44dp"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:backgroundTint="@color/monochrome_white"
-                        android:text="Execute"
+                        android:text="Rename"
                         android:textColor="@color/amoled_black" />
                 </LinearLayout>
             </LinearLayout>

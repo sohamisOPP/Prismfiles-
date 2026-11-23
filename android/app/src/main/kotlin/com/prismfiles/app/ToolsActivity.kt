@@ -82,9 +82,9 @@ class ToolsActivity : AppCompatActivity() {
                 parsed.onSuccess { (running, ports, urls) ->
                     isWifiRunning = running
                     if (running) {
-                        tvWifiStatus.text = "Server: RUNNING"
-                        tvWifiStatus.setTextColor(Color.parseColor("#00B894"))
-                        btnToggleWifi.text = "Stop Wi-Fi Transfer Server"
+                        tvWifiStatus.text = "Server: Running"
+                        tvWifiStatus.setTextColor(ContextCompat.getColor(this@ToolsActivity, R.color.icon_apk))
+                        btnToggleWifi.text = "Stop server"
                         val sb = StringBuilder()
                         for (u in urls) sb.append(u).append("\n")
                         tvWifiUrls.text = sb.toString().trim()
@@ -94,9 +94,9 @@ class ToolsActivity : AppCompatActivity() {
                         }
                     } else {
                         tvWifiStatus.text = "Server: Stopped"
-                        tvWifiStatus.setTextColor(Color.WHITE)
-                        btnToggleWifi.text = "Start Wi-Fi Transfer Server"
-                        tvWifiUrls.text = "HTTP Port: 8080 | FTP Port: 2121"
+                        tvWifiStatus.setTextColor(ContextCompat.getColor(this@ToolsActivity, R.color.text_muted))
+                        btnToggleWifi.text = "Start server"
+                        tvWifiUrls.text = "HTTP 8080   FTP 2121"
                         ivWifiQr.visibility = View.GONE
                     }
                 }
@@ -218,7 +218,7 @@ class ToolsActivity : AppCompatActivity() {
                 if (perms != null) {
                     for (i in 0 until perms.length()) permsList.add(perms.getString(i))
                 }
-                "Package: $pkg\nVersion: $verName ($verCode)\nMin SDK: $minSdk | Target SDK: $targetSdk\n\nPermissions (${permsList.size}):\n" + permsList.take(15).joinToString("\n")
+                "Package: $pkg\nVersion: $verName ($verCode)\nMin SDK: $minSdk   Target SDK: $targetSdk\n\nPermissions (${permsList.size}):\n" + permsList.take(15).joinToString("\n")
             }
             withContext(Dispatchers.Main) {
                 parsed.onSuccess { info ->

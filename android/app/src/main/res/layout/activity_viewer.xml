@@ -8,10 +8,10 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <!-- Top Toolbar -->
+    <!-- Top Toolbar (48dp on 4px grid) -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="48dp"
         android:background="@color/toolbar_surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -38,8 +38,9 @@
             android:ellipsize="middle"
             android:maxLines="1"
             android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
             tools:text="sample_document.pdf" />
 
         <ImageView

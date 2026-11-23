@@ -1569,8 +1569,8 @@ class MainActivity : AppCompatActivity() {
                 if (snap != null) {
                     val p = (snap.percent * 100f).toInt().coerceIn(0, 100)
                     pb.progress = p
-                    tvItem.text = "Current: ${snap.currentFile}"
-                    tvStats.text = "$p% | ${snap.itemsProcessed} / ${snap.totalItems} items | ${formatBytes(snap.bytesProcessed)} / ${formatBytes(snap.totalBytes)}"
+                    tvItem.text = snap.currentFile
+                    tvStats.text = "$p%   ${snap.itemsProcessed}/${snap.totalItems} items   ${formatBytes(snap.bytesProcessed)} / ${formatBytes(snap.totalBytes)}"
 
                     if (snap.state == "Completed") {
                         dialog.dismiss()
@@ -1801,7 +1801,7 @@ data class RowItem(
             } else {
                 formatSize(e.size)
             }
-            val metaStr = if (dateStr.isNotEmpty()) "$sizeStr | $dateStr" else sizeStr
+            val metaStr = if (dateStr.isNotEmpty()) "$sizeStr   $dateStr" else sizeStr
             return RowItem(
                 name = e.name,
                 path = e.path,
@@ -1818,7 +1818,7 @@ data class RowItem(
 
         fun fromVirtualEntry(v: VirtualEntryItem, archivePath: String, innerDir: String): RowItem {
             val sizeStr = if (v.isDir) "Virtual Folder" else formatSize(v.size)
-            val metaStr = "$sizeStr | ${v.method}"
+            val metaStr = "$sizeStr   ${v.method}"
             val sub = if (innerDir.isEmpty()) v.name else "$innerDir/${v.name}"
             return RowItem(
                 name = v.name,
@@ -1899,12 +1899,12 @@ class FileListAdapter(
         if (item.isParentRow) {
             holder.fileIcon.scaleType = ImageView.ScaleType.FIT_CENTER
             holder.fileIcon.setImageResource(R.drawable.ic_parent_dir)
-            holder.fileIcon.setColorFilter(Color.parseColor("#F39C12"))
+            holder.fileIcon.setColorFilter(ContextCompat.getColor(holder.itemView.context, R.color.icon_folder))
             holder.btnRowMore.visibility = View.GONE
         } else if (item.isDir) {
             holder.fileIcon.scaleType = ImageView.ScaleType.FIT_CENTER
             holder.fileIcon.setImageResource(R.drawable.ic_folder)
-            holder.fileIcon.setColorFilter(Color.parseColor("#F39C12"))
+            holder.fileIcon.setColorFilter(ContextCompat.getColor(holder.itemView.context, R.color.icon_folder))
             holder.btnRowMore.visibility = View.VISIBLE
         } else {
             val isMedia = (item.category == "image" || item.category == "video") && item.virtualFullPath == null
@@ -1917,18 +1917,18 @@ class FileListAdapter(
             } else {
                 holder.fileIcon.scaleType = ImageView.ScaleType.FIT_CENTER
                 holder.fileIcon.setImageResource(R.drawable.ic_file)
-                val color = when (item.category) {
-                    "archive" -> Color.parseColor("#E0E0E0")
-                    "apk" -> Color.parseColor("#00B894")
-                    "image" -> Color.parseColor("#00CEC9")
-                    "audio" -> Color.parseColor("#E84393")
-                    "video" -> Color.parseColor("#E17055")
-                    "document" -> Color.parseColor("#0984E3")
-                    "code" -> Color.parseColor("#B0BEC5")
-                    "specialized" -> Color.parseColor("#FDCB6E")
-                    else -> Color.parseColor("#7F8C8D")
+                val colorRes = when (item.category) {
+                    "archive" -> R.color.icon_archive
+                    "apk" -> R.color.icon_apk
+                    "image" -> R.color.icon_image
+                    "audio" -> R.color.icon_audio
+                    "video" -> R.color.icon_video
+                    "document" -> R.color.icon_document
+                    "code" -> R.color.icon_code
+                    "specialized" -> R.color.icon_specialized
+                    else -> R.color.icon_generic
                 }
-                holder.fileIcon.setColorFilter(color)
+                holder.fileIcon.setColorFilter(ContextCompat.getColor(holder.itemView.context, colorRes))
 
                 if (isMedia) {
                     val filePath = item.path

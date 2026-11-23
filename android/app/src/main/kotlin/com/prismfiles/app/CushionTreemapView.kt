@@ -31,20 +31,20 @@ class CushionTreemapView @JvmOverloads constructor(
     private var selectedNode: TreemapNodeUi? = null
     var onNodeSelected: ((TreemapNodeUi) -> Unit)? = null
 
-    // High-contrast AMOLED category palette
+    // Calibrated instrument-grade category palette (quiet precision, zero rainbow pastel slop)
     private val palette = intArrayOf(
-        Color.parseColor("#1E88E5"), // Blue
-        Color.parseColor("#00897B"), // Teal
-        Color.parseColor("#8E24AA"), // Purple
-        Color.parseColor("#E64A19"), // Orange
-        Color.parseColor("#3949AB"), // Indigo
-        Color.parseColor("#FFA000"), // Amber
-        Color.parseColor("#00ACC1"), // Cyan
-        Color.parseColor("#D81B60"), // Pink
-        Color.parseColor("#43A047"), // Green
-        Color.parseColor("#6D4C41"), // Brown
-        Color.parseColor("#546E7A"), // Slate
-        Color.parseColor("#7B1FA2")  // Deep Purple
+        Color.parseColor("#2C4251"), // Slate Steel
+        Color.parseColor("#1C3F3A"), // Quiet Pine
+        Color.parseColor("#38324F"), // Deep Indigo Plum
+        Color.parseColor("#4D3B2F"), // Muted Amber Umber
+        Color.parseColor("#26384C"), // Deep Cobalt
+        Color.parseColor("#2F433E"), // Sage Graphite
+        Color.parseColor("#42323D"), // Muted Wine Slate
+        Color.parseColor("#3B3B42"), // Titanium Neutral
+        Color.parseColor("#2A3C38"), // Jade Dark
+        Color.parseColor("#3D352E"), // Dark Sand
+        Color.parseColor("#303846"), // Navy Grey
+        Color.parseColor("#453036")  // Deep Crimson Charcoal
     )
 
     private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -52,24 +52,25 @@ class CushionTreemapView @JvmOverloads constructor(
     }
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 2.5f
-        color = Color.BLACK
+        strokeWidth = 1.5f
+        color = Color.parseColor("#0A0A0A")
     }
     private val selectStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 5f
-        color = Color.WHITE
+        strokeWidth = 2.5f
+        color = Color.parseColor("#F0F0F0")
     }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
-        textSize = 28f
-        typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-        setShadowLayer(4f, 1f, 1f, Color.BLACK)
+        color = Color.parseColor("#F0F0F0")
+        textSize = 24f
+        typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
+        setShadowLayer(3f, 1f, 1f, Color.BLACK)
     }
     private val subTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#E0E0E0")
-        textSize = 21f
-        setShadowLayer(3f, 1f, 1f, Color.BLACK)
+        color = Color.parseColor("#8E8E93")
+        textSize = 18f
+        typeface = Typeface.MONOSPACE
+        setShadowLayer(2f, 1f, 1f, Color.BLACK)
     }
 
     private var baseWidth = 1000f
@@ -120,15 +121,15 @@ class CushionTreemapView @JvmOverloads constructor(
             )
             fillPaint.shader = shader
             val rectF = RectF(left + 1f, top + 1f, right - 1f, bottom - 1f)
-            canvas.drawRoundRect(rectF, 6f, 6f, fillPaint)
+            canvas.drawRoundRect(rectF, 4f, 4f, fillPaint)
             fillPaint.shader = null
 
             // Outer gap divider border
-            canvas.drawRoundRect(rectF, 6f, 6f, strokePaint)
+            canvas.drawRoundRect(rectF, 4f, 4f, strokePaint)
 
             // Highlight border if selected
             if (selectedNode?.path == n.path) {
-                canvas.drawRoundRect(rectF, 6f, 6f, selectStrokePaint)
+                canvas.drawRoundRect(rectF, 4f, 4f, selectStrokePaint)
             }
 
             // Text labels (fits within rectangle)
