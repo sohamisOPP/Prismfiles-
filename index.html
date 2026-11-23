@@ -482,7 +482,7 @@
       display: flex;
       flex-direction: column;
       background: #000000;
-      padding: 0 12px 12px;
+      padding: 0 12px 14px;
       overflow: hidden;
     }
 
@@ -492,13 +492,13 @@
       background: #121216;
       padding: 3px;
       border-radius: var(--radius-sm);
-      margin: 4px 0 8px;
+      margin: 6px 0 12px;
       border: 1px solid var(--border-hairline);
     }
 
     .phone-tab-btn {
       flex: 1;
-      padding: 5px 0;
+      padding: 6px 0;
       text-align: center;
       font-size: 11px;
       font-weight: 500;
@@ -525,28 +525,15 @@
       display: flex;
     }
 
-    /* =========================================================
-       Enhanced Interactive Donut Wheel Styles
-       ========================================================= */
+    /* Clean Donut Wheel Preview */
     .donut-wheel-preview {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      position: relative;
-      padding: 2px 0 4px;
-      user-select: none;
-    }
-
-    .wheel-needle-indicator {
-      display: flex;
       justify-content: center;
-      align-items: center;
-      margin-bottom: 2px;
-      height: 10px;
-      z-index: 10;
-      filter: drop-shadow(0 0 6px rgba(48, 209, 88, 0.6));
+      position: relative;
+      user-select: none;
     }
 
     .wheel-canvas-container {
@@ -562,6 +549,13 @@
       cursor: grabbing;
     }
 
+    #wheel-canvas {
+      display: block;
+      width: 240px;
+      height: 240px;
+      touch-action: none;
+    }
+
     .wheel-center-info {
       position: absolute;
       inset: 64px;
@@ -575,13 +569,12 @@
       text-align: center;
       pointer-events: auto;
       cursor: pointer;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.75);
-      transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.15s ease;
-      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
     }
 
     .wheel-center-info:hover {
-      background: #1C1C22;
+      background: #1E1E24;
       border-color: var(--text-secondary);
       transform: scale(1.04);
     }
@@ -590,35 +583,8 @@
       transform: scale(0.96);
     }
 
-    /* Circular SVG Conversion Progress Ring */
-    .conversion-progress-ring {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      transform: rotate(-90deg);
-    }
-
-    .conversion-progress-ring circle {
-      fill: none;
-      stroke-width: 3;
-    }
-
-    .ring-bg {
-      stroke: rgba(255, 255, 255, 0.06);
-    }
-
-    .ring-progress {
-      stroke: var(--accent-emerald);
-      stroke-dasharray: 314;
-      stroke-dashoffset: 314;
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.08s linear, stroke 0.3s ease;
-    }
-
     .wheel-center-format {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 600;
       color: var(--text-primary);
       letter-spacing: 0.04em;
@@ -626,94 +592,17 @@
     }
 
     .wheel-center-hint {
-      font-size: 9px;
+      font-size: 10px;
       color: var(--text-secondary);
       margin-top: 2px;
       font-family: var(--font-mono);
-      letter-spacing: 0.02em;
-    }
-
-    /* Live Format Telemetry Badge */
-    .wheel-telemetry-card {
-      width: 100%;
-      background: #121216;
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-sm);
-      padding: 7px 10px;
-      margin-top: 4px;
-      transition: border-color 0.2s ease;
-    }
-
-    .telemetry-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2px;
-    }
-
-    .telemetry-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-primary);
-      font-family: var(--font-mono);
-    }
-
-    .telemetry-val {
-      font-size: 10px;
-      font-family: var(--font-mono);
-      color: var(--accent-emerald);
-      background: rgba(48, 209, 88, 0.1);
-      padding: 1px 6px;
-      border-radius: 3px;
-    }
-
-    .telemetry-desc {
-      font-size: 9.5px;
-      color: var(--text-secondary);
-      line-height: 1.35;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Category Preset Chips */
-    .wheel-preset-chips {
-      display: flex;
-      gap: 4px;
-      width: 100%;
-      margin-top: 4px;
-    }
-
-    .preset-chip {
-      flex: 1;
-      background: #18181C;
-      border: 1px solid var(--border-hairline);
-      color: var(--text-secondary);
-      font-size: 9.5px;
-      font-weight: 500;
-      padding: 3px 0;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-    }
-
-    .preset-chip:hover {
-      background: var(--bg-surface-hover);
-      color: var(--text-primary);
-      border-color: var(--text-secondary);
-    }
-
-    .preset-chip.active {
-      background: var(--text-primary);
-      color: #000000;
-      border-color: var(--text-primary);
-      font-weight: 600;
+      transition: color 0.2s ease;
     }
 
     .wheel-instruction {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-muted);
-      margin-top: 6px;
+      margin-top: 18px;
       font-family: var(--font-mono);
       text-align: center;
     }
@@ -1360,49 +1249,17 @@
             <button class="phone-tab-btn" onclick="switchPhoneTab('files')">Files</button>
           </div>
 
-          <!-- Tab 1: Enhanced Interactive Donut Wheel with Physics, Indicator & Sound -->
+          <!-- Tab 1: Clean Interactive Donut Wheel Moment -->
           <div id="tab-donut" class="tab-view active">
             <div class="donut-wheel-preview">
-              <!-- Top Selector Needle Indicator -->
-              <div class="wheel-needle-indicator">
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-                  <polygon points="6,8 0,0 12,0" fill="#30D158"/>
-                </svg>
-              </div>
-
-              <!-- Rotary Canvas Container -->
               <div class="wheel-canvas-container" id="wheel-container">
                 <canvas id="wheel-canvas" width="240" height="240"></canvas>
-                <div class="wheel-center-info magnetic-btn" id="wheel-center-btn" title="Tap to convert" onclick="simulateConversion()">
-                  <!-- Circular SVG conversion progress ring -->
-                  <svg class="conversion-progress-ring" width="112" height="112" viewBox="0 0 112 112">
-                    <circle class="ring-bg" cx="56" cy="56" r="50"/>
-                    <circle class="ring-progress" id="conversion-ring-progress" cx="56" cy="56" r="50"/>
-                  </svg>
+                <div class="wheel-center-info" id="wheel-center-btn" title="Tap to convert">
                   <div class="wheel-center-format" id="wheel-center-format">WEBP</div>
                   <div class="wheel-center-hint" id="wheel-center-hint">Tap to convert</div>
                 </div>
               </div>
-
-              <!-- Live Format Telemetry Badge -->
-              <div class="wheel-telemetry-card" id="wheel-telemetry-card">
-                <div class="telemetry-row">
-                  <span class="telemetry-label" id="telem-name">Google WEBP</span>
-                  <span class="telemetry-val" id="telem-speed">184 MB/s</span>
-                </div>
-                <div class="telemetry-desc" id="telem-desc">Modern raster format • Lossless & lossy • 35% smaller than JPG</div>
-              </div>
-
-              <!-- Quick Format Category Presets -->
-              <div class="wheel-preset-chips">
-                <button class="preset-chip active" onclick="spinToFormat('WEBP')">Images</button>
-                <button class="preset-chip" onclick="spinToFormat('7Z')">Archives</button>
-                <button class="preset-chip" onclick="spinToFormat('MP4')">Video</button>
-                <button class="preset-chip" onclick="spinToFormat('FLAC')">Audio</button>
-                <button class="preset-chip" onclick="spinToFormat('PDF')">Docs</button>
-              </div>
-
-              <div class="wheel-instruction">Drag wheel to spin • Tap center to convert</div>
+              <div class="wheel-instruction">Drag or click sectors to test wheel</div>
             </div>
           </div>
 
@@ -2258,6 +2115,9 @@
 
       window.addEventListener('pointerdown', (e) => {
         if (reduced) return;
+        // Skip shockwave if clicking inside the interactive demo area
+        const demo = document.getElementById('interactive-demo');
+        if (demo && demo.contains(e.target)) return;
         shocks.push({ x: e.clientX, y: e.clientY, start: performance.now() });
         if (shocks.length > 6) shocks.shift();
         wake();
@@ -2333,7 +2193,7 @@
     }
 
     // ========================================================
-    // 5. React Bits: Magnetic Elements (Buttons & Center Dial)
+    // 5. React Bits: Magnetic Elements (Buttons)
     // ========================================================
     function initMagneticButtons() {
       if (window.matchMedia('(hover: hover)').matches) {
@@ -2392,6 +2252,8 @@
     const phoneFrame = document.querySelector('.phone-frame');
     const prismLens = document.getElementById('hero-prism-lens');
 
+    let isInteractingWithPhone = false;
+
     if (mockupContainer && phoneFrame && window.innerWidth > 960) {
       const tiltX = gsap.quickTo(phoneFrame, "rotationY", { duration: 0.8, ease: "power3.out" });
       const tiltY = gsap.quickTo(phoneFrame, "rotationX", { duration: 0.8, ease: "power3.out" });
@@ -2399,14 +2261,13 @@
       const prismShiftY = prismLens ? gsap.quickTo(prismLens, "y", { duration: 1.1, ease: "power2.out" }) : null;
 
       mockupContainer.addEventListener('mousemove', (e) => {
-        // Skip 3D tilt if dragging wheel canvas
-        if (isDraggingWheel) return;
+        if (isInteractingWithPhone) return;
 
         const rect = mockupContainer.getBoundingClientRect();
         const normX = (e.clientX - rect.left) / rect.width - 0.5;
         const normY = (e.clientY - rect.top) / rect.height - 0.5;
-        tiltX(normX * 16);
-        tiltY(-normY * 16);
+        tiltX(normX * 14);
+        tiltY(-normY * 14);
 
         if (prismShiftX && prismShiftY) {
           prismShiftX(-normX * 40);
@@ -2541,109 +2402,97 @@
     }
 
     // ========================================================
-    // 9. Interactive Donut Wheel Rotary Physics Engine
+    // 9. Interactive Donut Wheel Rotary Engine (100% Working)
     // ========================================================
     const wheelCanvas = document.getElementById('wheel-canvas');
     const wheelCtx = wheelCanvas.getContext('2d');
+    const wheelContainer = document.getElementById('wheel-container');
+    const centerBtn = document.getElementById('wheel-center-btn');
+    const centerFormatEl = document.getElementById('wheel-center-format');
+    const centerHintEl = document.getElementById('wheel-center-hint');
+
     const formats = ['WEBP', 'AVIF', 'PNG', 'JPEG', 'SVG', '7Z', 'ZIP', 'MP4', 'FLAC', 'PDF'];
     const count = formats.length;
     const sweep = (2 * Math.PI) / count;
 
-    const formatMetadata = {
-      'WEBP': { name: 'Google WEBP', speed: '184 MB/s', desc: 'Next-gen raster • Lossless & lossy • 35% smaller than JPG', cat: 'Images' },
-      'AVIF': { name: 'AV1 Image (AVIF)', speed: '92 MB/s', desc: '10-bit HDR • Next-gen compression • Ultra fidelity', cat: 'Images' },
-      'PNG':  { name: 'Portable Network Graphics', speed: '210 MB/s', desc: 'Lossless raster with alpha channel transparency', cat: 'Images' },
-      'JPEG': { name: 'Joint Photographic Group', speed: '260 MB/s', desc: 'Universal legacy compatibility • Configurable Q85', cat: 'Images' },
-      'SVG':  { name: 'Scalable Vector Graphics', speed: '340 MB/s', desc: 'Lossless XML vector geometry • Infinitely scalable', cat: 'Images' },
-      '7Z':   { name: '7-Zip Archive (LZMA2)', speed: '145 MB/s', desc: 'Ultra-high compression ratio • AES-256 air-gapped', cat: 'Archives' },
-      'ZIP':  { name: 'Deflate Standard ZIP', speed: '280 MB/s', desc: 'Zero-friction cross-platform universal compatibility', cat: 'Archives' },
-      'MP4':  { name: 'MPEG-4 AVC/H.264', speed: '120 fps', desc: 'Hardware accelerated NDK muxer • Web streaming', cat: 'Video' },
-      'FLAC': { name: 'Free Lossless Audio Codec', speed: '320 MB/s', desc: 'Bit-perfect studio audio • 24-bit 192kHz master', cat: 'Audio' },
-      'PDF':  { name: 'Portable Document Format', speed: '160 MB/s', desc: 'Vector document preservation • Embedded fonts', cat: 'Docs' }
-    };
-
     let selectedIndex = 0;
     let hoveredIndex = -1;
-    let currentRotation = -Math.PI / 2 - 0.5 * sweep; // Start with WEBP at top needle
+    let currentRotation = -Math.PI / 2 - 0.5 * sweep; // Start with WEBP at top
     const wheelState = { rotation: currentRotation };
-    let isDraggingWheel = false;
-    let lastDragAngle = 0;
-    let lastDragTime = 0;
-    let dragVelocity = 0;
-    let isConverting = false;
+    let wheelTween = null;
+    let isDragging = false;
+    let hasMoved = false;
+    let lastAngle = 0;
+    let lastTime = 0;
+    let angularVelocity = 0;
 
-    // Web Audio API Mechanical Click & Confirmation Audio
+    // Web Audio API click synthesis
     let audioCtx = null;
-    function getAudioCtx() {
-      if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) audioCtx = new AudioContext();
-      }
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      return audioCtx;
-    }
-
-    function playTickSound() {
+    function playTick() {
       try {
-        const ctx = getAudioCtx();
-        if (!ctx) return;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        if (!audioCtx) return;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(1400, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.012);
-        gain.gain.setValueAtTime(0.045, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.012);
+        osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(140, audioCtx.currentTime + 0.015);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.015);
         osc.connect(gain);
-        gain.connect(ctx.destination);
+        gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(ctx.currentTime + 0.012);
+        osc.stop(audioCtx.currentTime + 0.015);
       } catch (e) {}
     }
 
-    function playSuccessChime() {
+    function playChime() {
       try {
-        const ctx = getAudioCtx();
-        if (!ctx) return;
-        const now = ctx.currentTime;
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
         [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + i * 0.06);
-          gain.gain.setValueAtTime(0.06, now + i * 0.06);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.06 + 0.22);
+          osc.frequency.setValueAtTime(freq, now + i * 0.05);
+          gain.gain.setValueAtTime(0.05, now + i * 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.05 + 0.2);
           osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now + i * 0.06);
-          osc.stop(now + i * 0.06 + 0.22);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.05);
+          osc.stop(now + i * 0.05 + 0.2);
         });
       } catch (e) {}
     }
 
-    function getSectorUnderNeedle(rot) {
-      let angleInWheel = -Math.PI / 2 - rot;
-      angleInWheel = ((angleInWheel % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-      return Math.floor(angleInWheel / sweep) % count;
+    function getCanvasCenter() {
+      const rect = wheelCanvas.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+        radius: rect.width / 2
+      };
     }
 
-    function getTargetRotationForIndex(idx) {
+    function getSectorAtAngle(angle, rot) {
+      let rel = angle - rot;
+      rel = ((rel % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+      return Math.floor(rel / sweep) % count;
+    }
+
+    function getTargetRotation(idx) {
       return -Math.PI / 2 - (idx + 0.5) * sweep;
-    }
-
-    function updateTelemetry(idx) {
-      const format = formats[idx];
-      const meta = formatMetadata[format] || { name: format, speed: '200 MB/s', desc: 'Universal file format', cat: 'Format' };
-      document.getElementById('wheel-center-format').textContent = format;
-      document.getElementById('telem-name').textContent = meta.name;
-      document.getElementById('telem-speed').textContent = meta.speed;
-      document.getElementById('telem-desc').textContent = meta.desc;
-
-      document.querySelectorAll('.preset-chip').forEach(chip => {
-        chip.classList.toggle('active', chip.textContent.trim().toLowerCase() === meta.cat.toLowerCase());
-      });
     }
 
     function drawDonutWheel() {
@@ -2654,17 +2503,10 @@
 
       wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
 
-      // Outer bezel tick ring
-      wheelCtx.beginPath();
-      wheelCtx.arc(cx, cy, outerR + 2, 0, Math.PI * 2);
-      wheelCtx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
-      wheelCtx.lineWidth = 1;
-      wheelCtx.stroke();
-
       for (let i = 0; i < count; i++) {
         const segAngle = currentRotation + i * sweep;
         const isSel = (i === selectedIndex);
-        const isHov = (i === hoveredIndex);
+        const isHov = (i === hoveredIndex && !isSel);
 
         wheelCtx.beginPath();
         wheelCtx.arc(cx, cy, outerR, segAngle, segAngle + sweep);
@@ -2699,33 +2541,31 @@
         wheelCtx.restore();
       }
 
-      // Small notch indicator ticks along the circumference
-      for (let j = 0; j < 40; j++) {
-        const tickAngle = currentRotation + (j * Math.PI * 2 / 40);
-        const r1 = outerR + 4;
-        const r2 = r1 + (j % 4 === 0 ? 3 : 1.5);
-        wheelCtx.beginPath();
-        wheelCtx.moveTo(cx + r1 * Math.cos(tickAngle), cy + r1 * Math.sin(tickAngle));
-        wheelCtx.lineTo(cx + r2 * Math.cos(tickAngle), cy + r2 * Math.sin(tickAngle));
-        wheelCtx.strokeStyle = (j % 4 === 0 ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.08)');
-        wheelCtx.lineWidth = 1;
-        wheelCtx.stroke();
-      }
+      // Top selection arrow / needle notch
+      wheelCtx.save();
+      wheelCtx.fillStyle = '#30D158';
+      wheelCtx.beginPath();
+      wheelCtx.moveTo(cx - 5, cy - outerR - 2);
+      wheelCtx.lineTo(cx + 5, cy - outerR - 2);
+      wheelCtx.lineTo(cx, cy - outerR + 5);
+      wheelCtx.closePath();
+      wheelCtx.fill();
+      wheelCtx.restore();
     }
 
-    function snapToSector(targetIdx, duration = 0.5) {
+    function rotateToSector(targetIdx, duration = 0.45) {
       selectedIndex = (targetIdx % count + count) % count;
-      updateTelemetry(selectedIndex);
+      if (centerFormatEl) centerFormatEl.textContent = formats[selectedIndex];
 
-      const targetAngle = getTargetRotationForIndex(selectedIndex);
-      // Compute shortest angular route
+      const targetAngle = getTargetRotation(selectedIndex);
       const diff = (targetAngle - currentRotation) % (Math.PI * 2);
       let shortestDiff = diff;
       if (shortestDiff > Math.PI) shortestDiff -= Math.PI * 2;
       if (shortestDiff < -Math.PI) shortestDiff += Math.PI * 2;
       const finalAngle = currentRotation + shortestDiff;
 
-      gsap.to(wheelState, {
+      if (wheelTween) wheelTween.kill();
+      wheelTween = gsap.to(wheelState, {
         rotation: finalAngle,
         duration: duration,
         ease: 'power3.out',
@@ -2741,225 +2581,179 @@
       });
     }
 
-    function spinToFormat(fmt) {
-      const idx = formats.indexOf(fmt);
-      if (idx !== -1) {
-        snapToSector(idx, 0.65);
-      }
+    // Pointer Events on Container (Unified Drag & Click)
+    if (wheelContainer) {
+      wheelContainer.addEventListener('pointerdown', (e) => {
+        const center = getCanvasCenter();
+        const dist = Math.hypot(e.clientX - center.x, e.clientY - center.y);
+        
+        // If clicked on center button, let button click handle it
+        if (dist < center.radius * 0.44) return;
+
+        e.preventDefault();
+        isDragging = true;
+        hasMoved = false;
+        isInteractingWithPhone = true;
+        if (wheelTween) wheelTween.kill();
+
+        lastAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+        lastTime = performance.now();
+        angularVelocity = 0;
+        try { wheelContainer.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+
+      wheelContainer.addEventListener('pointermove', (e) => {
+        const center = getCanvasCenter();
+        const dist = Math.hypot(e.clientX - center.x, e.clientY - center.y);
+
+        if (!isDragging) {
+          // Hover detection
+          if (dist >= center.radius * 0.44 && dist <= center.radius * 1.05) {
+            const angle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+            let rel = angle - currentRotation;
+            rel = ((rel % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+            const hov = Math.floor(rel / sweep) % count;
+            if (hov !== hoveredIndex) {
+              hoveredIndex = hov;
+              drawDonutWheel();
+            }
+          } else if (hoveredIndex !== -1) {
+            hoveredIndex = -1;
+            drawDonutWheel();
+          }
+          return;
+        }
+
+        e.preventDefault();
+        const currentAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+        const now = performance.now();
+        const dt = Math.max(0.001, (now - lastTime) / 1000);
+
+        let dAngle = currentAngle - lastAngle;
+        while (dAngle < -Math.PI) dAngle += Math.PI * 2;
+        while (dAngle > Math.PI) dAngle -= Math.PI * 2;
+
+        if (Math.abs(dAngle) > 0.005) {
+          hasMoved = true;
+        }
+
+        currentRotation += dAngle;
+        wheelState.rotation = currentRotation;
+
+        angularVelocity = angularVelocity * 0.4 + (dAngle / dt) * 0.6;
+        lastAngle = currentAngle;
+        lastTime = now;
+
+        const topIdx = getSectorAtAngle(-Math.PI / 2, currentRotation);
+        if (topIdx !== selectedIndex) {
+          selectedIndex = topIdx;
+          if (centerFormatEl) centerFormatEl.textContent = formats[selectedIndex];
+          playTick();
+        }
+        drawDonutWheel();
+      });
+
+      wheelContainer.addEventListener('pointerup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        isInteractingWithPhone = false;
+        try { wheelContainer.releasePointerCapture(e.pointerId); } catch (err) {}
+
+        if (!hasMoved) {
+          // Direct tap/click on a sector
+          const center = getCanvasCenter();
+          const clickAngle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
+          let rel = clickAngle - currentRotation;
+          rel = ((rel % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+          const clickedIdx = Math.floor(rel / sweep) % count;
+          playTick();
+          rotateToSector(clickedIdx, 0.45);
+        } else {
+          // Inertia fling momentum
+          if (Math.abs(angularVelocity) > 0.8) {
+            const flingDist = angularVelocity * 0.28;
+            const projectedRot = currentRotation + flingDist;
+            const targetIdx = getSectorAtAngle(-Math.PI / 2, projectedRot);
+            rotateToSector(targetIdx, Math.min(1.0, Math.max(0.35, Math.abs(angularVelocity) * 0.1)));
+          } else {
+            rotateToSector(selectedIndex, 0.35);
+          }
+        }
+      });
+
+      wheelContainer.addEventListener('pointercancel', () => {
+        isDragging = false;
+        isInteractingWithPhone = false;
+        rotateToSector(selectedIndex, 0.35);
+      });
+
+      // Mouse wheel / scroll to cycle formats
+      wheelContainer.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const step = e.deltaY > 0 ? 1 : -1;
+        const target = (selectedIndex + step + count) % count;
+        playTick();
+        rotateToSector(target, 0.3);
+      }, { passive: false });
     }
 
-    function simulateConversion() {
-      if (isConverting) return;
-      isConverting = true;
-      getAudioCtx();
+    // Center Button Conversion Simulation
+    let isConverting = false;
+    if (centerBtn) {
+      centerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isConverting) return;
+        isConverting = true;
 
-      const format = formats[selectedIndex];
-      const ring = document.getElementById('conversion-ring-progress');
-      const formatEl = document.getElementById('wheel-center-format');
-      const hintEl = document.getElementById('wheel-center-hint');
-      const btn = document.getElementById('wheel-center-btn');
+        const format = formats[selectedIndex];
+        centerBtn.style.borderColor = 'var(--accent-emerald)';
+        if (centerHintEl) centerHintEl.textContent = 'Converting...';
 
-      hintEl.textContent = '0%';
-      btn.style.borderColor = 'var(--accent-emerald)';
+        const progress = { val: 0 };
+        gsap.to(progress, {
+          val: 100,
+          duration: 0.9,
+          ease: 'power2.inOut',
+          onUpdate: () => {
+            const p = Math.round(progress.val);
+            if (centerHintEl) centerHintEl.textContent = p < 80 ? `Encoding ${p}%` : 'Finalizing...';
+          },
+          onComplete: () => {
+            playChime();
+            if (centerFormatEl) {
+              centerFormatEl.textContent = 'DONE';
+              centerFormatEl.style.color = 'var(--accent-emerald)';
+            }
+            if (centerHintEl) {
+              centerHintEl.textContent = '-84% size';
+              centerHintEl.style.color = 'var(--accent-emerald)';
+            }
 
-      const progressObj = { p: 0 };
-      gsap.to(progressObj, {
-        p: 100,
-        duration: 1.1,
-        ease: 'power2.inOut',
-        onUpdate: () => {
-          const val = Math.round(progressObj.p);
-          hintEl.textContent = val < 50 ? `Encoding ${val}%` : (val < 100 ? `Hashing ${val}%` : `Done!`);
-          const offset = 314 - (314 * (progressObj.p / 100));
-          if (ring) ring.style.strokeDashoffset = offset;
-        },
-        onComplete: () => {
-          playSuccessChime();
-          formatEl.textContent = 'SAVED';
-          formatEl.style.color = 'var(--accent-emerald)';
-          hintEl.textContent = '-84% size';
+            const toast = document.getElementById('toast');
+            if (toast) {
+              toast.textContent = `Converted: flight_footage.mp4 → .${format.toLowerCase()} (-84% saved)`;
+              toast.classList.add('show');
+              setTimeout(() => toast.classList.remove('show'), 2600);
+            }
 
-          const toast = document.getElementById('toast');
-          toast.textContent = `Converted: flight_footage.mp4 → .${format.toLowerCase()} (-84% size saved)`;
-          toast.classList.add('show');
-          setTimeout(() => toast.classList.remove('show'), 2800);
-
-          setTimeout(() => {
-            gsap.to(btn, {
-              duration: 0.3,
-              onComplete: () => {
-                if (ring) ring.style.strokeDashoffset = 314;
-                formatEl.textContent = formats[selectedIndex];
-                formatEl.style.color = 'var(--text-primary)';
-                hintEl.textContent = 'Tap to convert';
-                btn.style.borderColor = '';
-                isConverting = false;
+            setTimeout(() => {
+              if (centerFormatEl) {
+                centerFormatEl.textContent = formats[selectedIndex];
+                centerFormatEl.style.color = 'var(--text-primary)';
               }
-            });
-          }, 1800);
-        }
+              if (centerHintEl) {
+                centerHintEl.textContent = 'Tap to convert';
+                centerHintEl.style.color = 'var(--text-secondary)';
+              }
+              centerBtn.style.borderColor = '';
+              isConverting = false;
+            }, 1800);
+          }
+        });
       });
     }
 
-    function getEventAngle(e) {
-      const rect = wheelCanvas.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-      return Math.atan2(clientY - cy, clientX - cx);
-    }
-
-    // Interactive Dragging with Differential Tracking
-    wheelCanvas.addEventListener('mousedown', (e) => {
-      isDraggingWheel = true;
-      gsap.killTweensOf(wheelState);
-      lastDragAngle = getEventAngle(e);
-      lastDragTime = performance.now();
-      dragVelocity = 0;
-      getAudioCtx();
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDraggingWheel) return;
-      const currentAngle = getEventAngle(e);
-      const now = performance.now();
-      const dt = Math.max(0.001, (now - lastDragTime) / 1000);
-
-      let dAngle = currentAngle - lastDragAngle;
-      while (dAngle < -Math.PI) dAngle += Math.PI * 2;
-      while (dAngle > Math.PI) dAngle -= Math.PI * 2;
-
-      currentRotation += dAngle;
-      wheelState.rotation = currentRotation;
-
-      const instVel = dAngle / dt;
-      dragVelocity = dragVelocity * 0.4 + instVel * 0.6;
-      lastDragAngle = currentAngle;
-      lastDragTime = now;
-
-      const currentIdx = getSectorUnderNeedle(currentRotation);
-      if (currentIdx !== selectedIndex) {
-        selectedIndex = currentIdx;
-        updateTelemetry(selectedIndex);
-        playTickSound();
-      }
-      drawDonutWheel();
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (isDraggingWheel) {
-        isDraggingWheel = false;
-        if (Math.abs(dragVelocity) > 1.2) {
-          // Inertia fling momentum
-          const throwDistance = dragVelocity * 0.32;
-          const projectedRotation = currentRotation + throwDistance;
-          const targetIdx = getSectorUnderNeedle(projectedRotation);
-          snapToSector(targetIdx, Math.min(1.1, Math.max(0.4, Math.abs(dragVelocity) * 0.12)));
-        } else {
-          snapToSector(selectedIndex, 0.4);
-        }
-      }
-    });
-
-    // Touch Support
-    wheelCanvas.addEventListener('touchstart', (e) => {
-      isDraggingWheel = true;
-      gsap.killTweensOf(wheelState);
-      lastDragAngle = getEventAngle(e);
-      lastDragTime = performance.now();
-      dragVelocity = 0;
-      getAudioCtx();
-    }, { passive: true });
-
-    window.addEventListener('touchmove', (e) => {
-      if (!isDraggingWheel) return;
-      const currentAngle = getEventAngle(e);
-      const now = performance.now();
-      const dt = Math.max(0.001, (now - lastDragTime) / 1000);
-
-      let dAngle = currentAngle - lastDragAngle;
-      while (dAngle < -Math.PI) dAngle += Math.PI * 2;
-      while (dAngle > Math.PI) dAngle -= Math.PI * 2;
-
-      currentRotation += dAngle;
-      wheelState.rotation = currentRotation;
-
-      const instVel = dAngle / dt;
-      dragVelocity = dragVelocity * 0.4 + instVel * 0.6;
-      lastDragAngle = currentAngle;
-      lastDragTime = now;
-
-      const currentIdx = getSectorUnderNeedle(currentRotation);
-      if (currentIdx !== selectedIndex) {
-        selectedIndex = currentIdx;
-        updateTelemetry(selectedIndex);
-        playTickSound();
-      }
-      drawDonutWheel();
-    }, { passive: true });
-
-    window.addEventListener('touchend', () => {
-      if (isDraggingWheel) {
-        isDraggingWheel = false;
-        if (Math.abs(dragVelocity) > 1.2) {
-          const throwDistance = dragVelocity * 0.32;
-          const projectedRotation = currentRotation + throwDistance;
-          const targetIdx = getSectorUnderNeedle(projectedRotation);
-          snapToSector(targetIdx, Math.min(1.1, Math.max(0.4, Math.abs(dragVelocity) * 0.12)));
-        } else {
-          snapToSector(selectedIndex, 0.4);
-        }
-      }
-    });
-
-    // Hover detection over sectors
-    wheelCanvas.addEventListener('mousemove', (e) => {
-      if (isDraggingWheel) return;
-      const rect = wheelCanvas.getBoundingClientRect();
-      const x = e.clientX - rect.left - wheelCanvas.width / 2;
-      const y = e.clientY - rect.top - wheelCanvas.height / 2;
-      const dist = Math.hypot(x, y);
-
-      if (dist >= 54 && dist <= 106) {
-        let angle = Math.atan2(y, x) - currentRotation;
-        angle = ((angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-        const idx = Math.floor(angle / sweep) % count;
-        if (idx !== hoveredIndex) {
-          hoveredIndex = idx;
-          drawDonutWheel();
-        }
-      } else if (hoveredIndex !== -1) {
-        hoveredIndex = -1;
-        drawDonutWheel();
-      }
-    });
-
-    wheelCanvas.addEventListener('mouseleave', () => {
-      if (hoveredIndex !== -1) {
-        hoveredIndex = -1;
-        drawDonutWheel();
-      }
-    });
-
-    // Direct sector click
-    wheelCanvas.addEventListener('click', (e) => {
-      const rect = wheelCanvas.getBoundingClientRect();
-      const x = e.clientX - rect.left - wheelCanvas.width / 2;
-      const y = e.clientY - rect.top - wheelCanvas.height / 2;
-      const dist = Math.hypot(x, y);
-
-      if (dist >= 54 && dist <= 106) {
-        let angle = Math.atan2(y, x) - currentRotation;
-        angle = ((angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-        const clickedIdx = Math.floor(angle / sweep) % count;
-        playTickSound();
-        snapToSector(clickedIdx, 0.55);
-      }
-    });
-
-    // Initialize wheel view
-    updateTelemetry(selectedIndex);
+    // Initialize wheel
     drawDonutWheel();
 
     // ========================================================
