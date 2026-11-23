@@ -91,7 +91,6 @@
       pointer-events: none;
       z-index: 0;
       opacity: 0.95;
-      will-change: transform;
     }
 
     /* Quiet Ambient Dot Grid (Fallback if WebGL2 disabled) */
@@ -103,7 +102,6 @@
       background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
       background-size: 24px 24px;
       display: none;
-      will-change: transform;
     }
 
     /* Hero Prism Refraction Caustic Lens */
@@ -117,10 +115,9 @@
       pointer-events: none;
       z-index: 1;
       border-radius: 50%;
-      filter: blur(76px);
+      filter: blur(36px);
       opacity: 0.65;
-      will-change: transform, opacity;
-      transition: opacity 0.4s ease;
+      contain: paint layout;
     }
 
     .prism-conic-beam {
@@ -1599,27 +1596,34 @@
   <!-- Interactive Demo, GSAP Timelines, and React Bits Micro-Interactions -->
   <script>
     // ========================================================
-    // 1. Lenis Smooth Inertia Scroll + GSAP ScrollTrigger Sync
+    // 1. Lenis High-Performance Low-Latency Smooth Scroll
     // ========================================================
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.05,
-      touchMultiplier: 1.5,
+      lerp: 0.12,          // Crisp, instant 1:1 wheel response (eliminates floaty lag)
+      wheelMultiplier: 1.0, // Natural scroll sensitivity
+      syncTouch: false,    // Native hardware 120Hz compositor touch scrolling on mobile
+      smoothTouch: false,  // Zero touch drag lag
     });
 
-    lenis.on('scroll', ScrollTrigger.update);
+    let isWindowScrolling = false;
+    let windowScrollTimer = null;
+    lenis.on('scroll', () => {
+      ScrollTrigger.update();
+      isWindowScrolling = true;
+      clearTimeout(windowScrollTimer);
+      windowScrollTimer = setTimeout(() => {
+        isWindowScrolling = false;
+      }, 90);
+    });
 
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
 
-    gsap.ticker.lagSmoothing(0);
+    // Intelligent frame-drop smoothing to eliminate visual micro-stutter
+    gsap.ticker.lagSmoothing(500, 33);
 
     // Smooth anchor link routing via Lenis
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1629,7 +1633,7 @@
         const target = document.querySelector(href);
         if (target) {
           e.preventDefault();
-          lenis.scrollTo(target, { offset: -60, duration: 1.15 });
+          lenis.scrollTo(target, { offset: -60, duration: 0.7 });
         }
       });
     });
@@ -1879,7 +1883,7 @@
         const coupling = (Math.max(0, settings.tension) * 900) ** 2 / (grid.cell * grid.cell);
         const viscosity = Math.sqrt(coupling) * 0.06;
         const limit = Math.sqrt(stiffness + 8 * coupling) + damping + 8 * viscosity;
-        const steps = Math.min(24, Math.max(1, Math.ceil(dt / Math.min(1 / 120, 1.2 / limit))));
+        const steps = Math.min(2, Math.max(1, Math.ceil(dt / 0.016)));
         const h = dt / steps;
 
         for (let i = 0; i < grid.count; i++) {
@@ -2082,7 +2086,11 @@
 
       function frame(now) {
         raf = 0;
-        const dt = Math.min(0.05, (now - last) / 1000 || 0);
+        if (isWindowScrolling) {
+          // Pause background dot grid simulation while user is scrolling for maximum 60/120fps smoothness
+          return;
+        }
+        const dt = Math.min(0.033, (now - last) / 1000 || 0);
         last = now;
         step(dt, now);
         render(now);
@@ -2092,12 +2100,13 @@
       }
 
       function wake() {
-        if (raf) return;
+        if (raf || isWindowScrolling) return;
         last = performance.now();
         raf = requestAnimationFrame(frame);
       }
 
       window.addEventListener('pointermove', (e) => {
+        if (isWindowScrolling) return;
         const time = e.timeStamp || performance.now();
         if (pointer.inside && pointer.time) {
           const elapsed = Math.max(4, time - pointer.time) / 1000;
@@ -2114,7 +2123,7 @@
       }, { passive: true });
 
       window.addEventListener('pointerdown', (e) => {
-        if (reduced) return;
+        if (reduced || isWindowScrolling) return;
         // Skip shockwave if clicking inside the interactive demo area
         const demo = document.getElementById('interactive-demo');
         if (demo && demo.contains(e.target)) return;
@@ -2126,14 +2135,6 @@
       window.addEventListener('mouseleave', () => {
         pointer.inside = false;
         wake();
-      });
-
-      // Transmit Lenis scroll momentum into grid physics
-      lenis.on('scroll', (e) => {
-        if (Math.abs(e.velocity) > 0.4) {
-          pointer.vy += e.velocity * 35;
-          wake();
-        }
       });
 
       window.addEventListener('resize', resize);
@@ -2148,6 +2149,7 @@
       const cards = document.querySelectorAll('.spotlight-card');
       cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
+          if (isWindowScrolling) return;
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
@@ -2261,7 +2263,7 @@
       const prismShiftY = prismLens ? gsap.quickTo(prismLens, "y", { duration: 1.1, ease: "power2.out" }) : null;
 
       mockupContainer.addEventListener('mousemove', (e) => {
-        if (isInteractingWithPhone) return;
+        if (isInteractingWithPhone || isWindowScrolling) return;
 
         const rect = mockupContainer.getBoundingClientRect();
         const normX = (e.clientX - rect.left) / rect.width - 0.5;
