@@ -8,38 +8,36 @@
   <meta name="theme-color" content="#000000">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
+      /* Graphite Neutral Ramp (AMOLED Dark) */
       --bg-black: #000000;
-      --bg-base: #08080A;
-      --bg-surface: #101014;
-      --bg-surface-raised: #16161A;
-      --bg-surface-hover: #1E1E24;
-      --border-hairline: #24242A;
-      --border-subtle: #18181E;
-      --border-glow: rgba(10, 132, 255, 0.35);
+      --bg-base: #0A0A0C;
+      --bg-surface: #121214;
+      --bg-surface-raised: #18181C;
+      --bg-surface-hover: #202024;
+      --border-hairline: #26262A;
+      --border-subtle: #1A1A1E;
       
-      --text-primary: #F0F0F4;
-      --text-secondary: #8E8E98;
-      --text-muted: #54545E;
+      /* Three Strict Text Roles */
+      --text-primary: #F0F0F2;
+      --text-secondary: #8E8E96;
+      --text-muted: #54545C;
 
-      --accent-cyan: #0A84FF;
-      --accent-cyan-dim: rgba(10, 132, 255, 0.12);
+      /* Calm Instrument Accents (Pass 2) */
+      --accent-primary: #0A84FF;
+      --accent-selection: rgba(255, 255, 255, 0.08);
       --accent-emerald: #30D158;
-      --accent-emerald-dim: rgba(48, 209, 88, 0.12);
       --accent-amber: #D4A017;
-      --accent-amber-dim: rgba(212, 160, 23, 0.12);
-      --accent-purple: #BF5AF2;
-      --accent-purple-dim: rgba(191, 90, 242, 0.12);
       --accent-danger: #FF453A;
 
+      /* Nested Radius Math (Pass 7: controls 8px, cards 12px, panels 16px) */
       --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 16px;
-      --radius-xl: 24px;
-      --radius-full: 9999px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
 
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', "SF Mono", Menlo, Consolas, monospace;
@@ -59,21 +57,16 @@
       font-family: var(--font-sans);
       line-height: 1.5;
       overflow-x: hidden;
-      selection-background-color: var(--accent-cyan-dim);
-      selection-color: var(--text-primary);
     }
 
-    /* Ambient Background Grid & Radial Glow */
+    /* Quiet Ambient Dot Grid (Zero Colored Radial Halos) */
     .bg-grid-overlay {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      background-image: 
-        radial-gradient(circle at 50% -20%, rgba(10, 132, 255, 0.18), transparent 60%),
-        radial-gradient(circle at 80% 80%, rgba(191, 90, 242, 0.08), transparent 50%),
-        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 28px 28px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
 
     a {
@@ -81,46 +74,46 @@
       text-decoration: none;
     }
 
-    /* Sticky Instrument Header */
+    /* Quiet Instrument Header (Pass 1 & 6) */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      background: rgba(8, 8, 10, 0.75);
+      background: rgba(10, 10, 12, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
     }
 
     .nav-container {
-      max-width: 1200px;
+      max-width: 1152px;
       margin: 0 auto;
-      padding: 0.85rem 1.5rem;
+      padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      height: 56px;
     }
 
     .brand-logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: -0.02em;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
     }
 
     .prism-icon {
-      width: 28px;
-      height: 28px;
-      filter: drop-shadow(0 0 12px rgba(10, 132, 255, 0.5));
+      width: 22px;
+      height: 22px;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 2rem;
-      font-size: 0.9rem;
+      gap: 28px;
+      font-size: 0.875rem;
       color: var(--text-secondary);
       font-weight: 500;
     }
@@ -136,137 +129,116 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 12px;
     }
 
     .btn-header-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: var(--text-primary);
-      color: var(--bg-black);
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border-radius: var(--radius-full);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      gap: 6px;
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-primary);
+      padding: 6px 14px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
     .btn-header-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 14px rgba(240, 240, 244, 0.25);
+      background: var(--bg-surface-hover);
+      border-color: var(--text-secondary);
     }
 
-    /* Hero Section */
+    /* Hero Section (Pass 1, 4 & 6) */
     .hero-section {
       position: relative;
       z-index: 10;
-      padding: 5rem 1.5rem 4rem;
-      max-width: 1200px;
+      padding: 72px 24px 64px;
+      max-width: 1152px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 3.5rem;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
       align-items: center;
     }
 
-    .hero-badge {
+    .hero-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: var(--radius-full);
-      background: rgba(10, 132, 255, 0.08);
-      border: 1px solid rgba(10, 132, 255, 0.25);
+      gap: 8px;
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      color: var(--accent-cyan);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
     }
 
-    .pulse-dot {
-      width: 7px;
-      height: 7px;
+    .status-dot {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: var(--accent-cyan);
-      box-shadow: 0 0 8px var(--accent-cyan);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      background: var(--accent-emerald);
     }
 
     .hero-title {
-      font-size: 3.4rem;
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-title span.gradient-text {
-      background: linear-gradient(135deg, #FFFFFF 30%, #8E8E98 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-title span.laser-text {
-      background: linear-gradient(135deg, #0A84FF 20%, #64D2FF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 2.75rem;
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      color: var(--text-primary);
     }
 
     .hero-description {
-      font-size: 1.12rem;
+      font-size: 1.05rem;
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 2.25rem;
-      max-width: 560px;
+      margin-bottom: 32px;
+      max-width: 520px;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .btn-primary-download {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 8px;
       background: #FFFFFF;
       color: #000000;
-      padding: 0.95rem 1.85rem;
+      padding: 12px 24px;
       border-radius: var(--radius-md);
-      font-size: 1rem;
-      font-weight: 700;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background-color 0.15s ease, transform 0.1s ease;
     }
 
     .btn-primary-download:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(255, 255, 255, 0.25);
-      background: #F2F2F2;
+      background: #E8E8EC;
+    }
+
+    .btn-primary-download:active {
+      transform: scale(0.98);
     }
 
     .btn-secondary-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 8px;
       background: var(--bg-surface-raised);
       border: 1px solid var(--border-hairline);
       color: var(--text-primary);
-      padding: 0.95rem 1.6rem;
+      padding: 12px 20px;
       border-radius: var(--radius-md);
       font-size: 0.95rem;
-      font-weight: 600;
-      transition: all 0.2s ease;
+      font-weight: 500;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
     .btn-secondary-link:hover {
@@ -277,18 +249,18 @@
     .arch-detect-pill {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 8px;
       font-size: 0.8rem;
       color: var(--text-muted);
       font-family: var(--font-mono);
     }
 
     .arch-detect-pill .highlight {
-      color: var(--accent-emerald);
+      color: var(--text-secondary);
       font-weight: 500;
     }
 
-    /* Interactive Phone Mockup Showcase */
+    /* Clean Phone Mockup (Pass 7 & 8: The Moments) */
     .mockup-container {
       position: relative;
       display: flex;
@@ -297,15 +269,12 @@
     }
 
     .phone-frame {
-      width: 320px;
-      height: 640px;
+      width: 312px;
+      height: 600px;
       background: #000000;
-      border-radius: 46px;
-      border: 4px solid #28282E;
-      box-shadow: 
-        0 25px 60px -15px rgba(0, 0, 0, 0.9),
-        0 0 0 1px #16161A,
-        0 0 35px rgba(10, 132, 255, 0.15);
+      border-radius: 36px;
+      border: 3px solid #222226;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -314,30 +283,19 @@
 
     .phone-speaker {
       position: absolute;
-      top: 14px;
+      top: 12px;
       left: 50%;
       transform: translateX(-50%);
-      width: 72px;
-      height: 4px;
+      width: 56px;
+      height: 3px;
       background: #1C1C20;
-      border-radius: 4px;
-      z-index: 50;
-    }
-
-    .phone-camera {
-      position: absolute;
-      top: 13px;
-      left: calc(50% + 46px);
-      width: 7px;
-      height: 7px;
-      background: #141418;
-      border-radius: 50%;
+      border-radius: 2px;
       z-index: 50;
     }
 
     .phone-status-bar {
-      height: 38px;
-      padding: 10px 22px 0;
+      height: 36px;
+      padding: 8px 20px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -352,35 +310,36 @@
       display: flex;
       flex-direction: column;
       background: #000000;
-      padding: 0 14px 14px;
+      padding: 0 12px 12px;
       overflow: hidden;
     }
 
     .phone-tabs-bar {
       display: flex;
       gap: 4px;
-      background: #141418;
+      background: #121216;
       padding: 3px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       margin: 8px 0 12px;
+      border: 1px solid var(--border-hairline);
     }
 
     .phone-tab-btn {
       flex: 1;
       padding: 6px 0;
       text-align: center;
-      font-size: 10.5px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 500;
       color: var(--text-secondary);
-      border-radius: 6px;
+      border-radius: 4px;
       cursor: pointer;
       border: none;
       background: transparent;
-      transition: all 0.15s ease;
+      transition: background-color 0.15s ease, color 0.15s ease;
     }
 
     .phone-tab-btn.active {
-      background: #24242C;
+      background: var(--bg-surface-hover);
       color: var(--text-primary);
     }
 
@@ -394,7 +353,7 @@
       display: flex;
     }
 
-    /* Live Donut Wheel Simulation Inside Phone */
+    /* The Donut Radial Wheel Moment (Pass 8) */
     .donut-wheel-preview {
       flex: 1;
       display: flex;
@@ -405,37 +364,36 @@
     }
 
     .wheel-canvas-container {
-      width: 250px;
-      height: 250px;
+      width: 240px;
+      height: 240px;
       position: relative;
-      cursor: grab;
+      cursor: pointer;
       user-select: none;
     }
 
     .wheel-center-info {
       position: absolute;
-      inset: 65px;
+      inset: 64px;
       border-radius: 50%;
       background: #161616;
-      border: 2px solid var(--text-primary);
+      border: 1.5px solid var(--text-primary);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       pointer-events: none;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
     }
 
     .wheel-center-format {
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 17px;
+      font-weight: 600;
       color: var(--text-primary);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
 
     .wheel-center-hint {
-      font-size: 9px;
+      font-size: 10px;
       color: var(--text-secondary);
       margin-top: 2px;
     }
@@ -448,7 +406,7 @@
       text-align: center;
     }
 
-    /* Cushion Treemap Canvas Preview */
+    /* The 3D Cushion Treemap Moment (Pass 8) */
     .treemap-preview {
       flex: 1;
       display: flex;
@@ -458,7 +416,7 @@
     .treemap-stats-header {
       font-size: 11px;
       font-family: var(--font-mono);
-      color: var(--text-secondary);
+      color: var(--text-muted);
       margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
@@ -466,49 +424,50 @@
 
     #treemap-canvas {
       width: 100%;
-      height: 260px;
-      border-radius: 8px;
-      background: #0A0A0E;
+      height: 250px;
+      border-radius: var(--radius-sm);
+      background: #000000;
       border: 1px solid var(--border-hairline);
     }
 
     .treemap-tooltip {
       font-size: 11px;
       font-family: var(--font-mono);
-      color: var(--accent-cyan);
+      color: var(--text-secondary);
       margin-top: 8px;
       text-align: center;
       min-height: 16px;
     }
 
-    /* File List Preview */
+    /* Console File List Preview (Pass 5: Strict Tabular Rows) */
     .filelist-preview {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .filelist-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px;
-      background: #121216;
-      border-radius: 8px;
-      border: 1px solid #1C1C22;
-      font-size: 12px;
+      padding: 8px 10px;
+      background: #121214;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-hairline);
+      height: 44px;
     }
 
     .filelist-row-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 5px;
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 600;
     }
 
     .filelist-row-info {
@@ -517,7 +476,8 @@
     }
 
     .filelist-row-name {
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 500;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -531,37 +491,36 @@
       margin-top: 2px;
     }
 
-    /* Core Architecture Bento Grid */
+    /* Core Architecture Bento Grid (Pass 1 & 7) */
     .section-container {
-      max-width: 1200px;
+      max-width: 1152px;
       margin: 0 auto;
-      padding: 6rem 1.5rem;
+      padding: 80px 24px;
     }
 
     .section-header {
-      text-align: center;
-      max-width: 680px;
-      margin: 0 auto 4rem;
+      max-width: 640px;
+      margin-bottom: 48px;
     }
 
     .section-tag {
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      color: var(--accent-cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
     }
 
     .section-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--text-primary);
     }
 
     .section-subtitle {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--text-secondary);
       line-height: 1.6;
     }
@@ -569,25 +528,22 @@
     .bento-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 16px;
     }
 
     .bento-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-lg);
-      padding: 2rem;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-      position: relative;
-      overflow: hidden;
+      transition: border-color 0.15s ease;
     }
 
     .bento-card:hover {
-      border-color: rgba(240, 240, 244, 0.35);
-      transform: translateY(-2px);
+      border-color: var(--text-secondary);
     }
 
     .bento-card.span-2 {
@@ -595,27 +551,27 @@
     }
 
     .card-icon-wrap {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--radius-md);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
       background: var(--bg-surface-raised);
       border: 1px solid var(--border-hairline);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
-      color: var(--accent-cyan);
+      margin-bottom: 18px;
+      color: var(--text-primary);
     }
 
     .card-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.02em;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
     }
 
     .card-description {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: var(--text-secondary);
       line-height: 1.55;
     }
@@ -623,20 +579,21 @@
     .card-metric-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      margin-top: 1.5rem;
+      gap: 6px;
+      margin-top: 20px;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--accent-emerald);
-      background: var(--accent-emerald-dim);
-      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-hairline);
+      padding: 4px 8px;
       border-radius: var(--radius-sm);
       width: fit-content;
     }
 
-    /* Download Showcase Hub */
+    /* Download Showcase Hub (Pass 4 & 5) */
     .download-section {
-      background: linear-gradient(180deg, rgba(16, 16, 20, 0.4) 0%, rgba(8, 8, 10, 0.9) 100%);
+      background: #08080A;
       border-top: 1px solid var(--border-subtle);
       border-bottom: 1px solid var(--border-subtle);
     }
@@ -644,79 +601,77 @@
     .download-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      margin-bottom: 3.5rem;
+      gap: 16px;
+      margin-bottom: 48px;
     }
 
     .download-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-lg);
-      padding: 1.75rem;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: all 0.2s ease;
+      transition: border-color 0.15s ease;
     }
 
     .download-card:hover {
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 25px rgba(10, 132, 255, 0.12);
-      transform: translateY(-3px);
+      border-color: var(--text-secondary);
     }
 
     .download-card.recommended {
-      border-color: var(--accent-cyan);
-      background: linear-gradient(180deg, rgba(10, 132, 255, 0.05) 0%, var(--bg-surface) 100%);
+      border-color: var(--text-primary);
+      background: var(--bg-surface-raised);
     }
 
     .badge-recommended {
       position: absolute;
-      top: -10px;
-      right: 18px;
-      background: var(--accent-cyan);
-      color: #000000;
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
+      top: 12px;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent-emerald);
+      background: rgba(48, 209, 88, 0.1);
+      border: 1px solid rgba(48, 209, 88, 0.25);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
     }
 
     .card-arch-name {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.35rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
 
     .card-arch-desc {
       font-size: 0.85rem;
       color: var(--text-secondary);
-      margin-bottom: 1.25rem;
-      min-height: 38px;
+      margin-bottom: 16px;
+      min-height: 40px;
     }
 
     .card-arch-size {
       font-family: var(--font-mono);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 1.5rem;
+      margin-bottom: 20px;
     }
 
     .btn-card-download {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      background: var(--bg-surface-raised);
+      gap: 6px;
+      background: var(--bg-surface-hover);
       border: 1px solid var(--border-hairline);
       color: var(--text-primary);
-      padding: 0.75rem;
+      padding: 10px;
       border-radius: var(--radius-md);
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: all 0.15s ease;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
       margin-top: auto;
     }
 
@@ -724,21 +679,26 @@
       background: #FFFFFF;
       color: #000000;
       border: none;
+      font-weight: 600;
     }
 
     .btn-card-download:hover {
-      transform: translateY(-1px);
+      background: var(--bg-surface-raised);
+    }
+
+    .download-card.recommended .btn-card-download:hover {
+      background: #E8E8EC;
     }
 
     .hash-copy-row {
-      margin-top: 1rem;
-      padding-top: 0.75rem;
+      margin-top: 14px;
+      padding-top: 10px;
       border-top: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.725rem;
       color: var(--text-muted);
       cursor: pointer;
     }
@@ -747,51 +707,51 @@
       color: var(--text-secondary);
     }
 
-    /* Installation 3-Step Guide */
+    /* 3-Step Quick Install */
     .steps-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 4rem;
+      gap: 24px;
+      margin-top: 48px;
     }
 
     .step-item {
       display: flex;
-      gap: 1.25rem;
+      gap: 16px;
       align-items: flex-start;
     }
 
     .step-number {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
       background: var(--bg-surface-raised);
       border: 1px solid var(--border-hairline);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--accent-cyan);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
       flex-shrink: 0;
     }
 
     .step-content h4 {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      margin-bottom: 0.35rem;
+      margin-bottom: 4px;
     }
 
     .step-content p {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       color: var(--text-secondary);
       line-height: 1.5;
     }
 
-    /* Comparison Table */
+    /* Comparison Table (Pass 5: Strict Tabular Rhythm) */
     .comparison-table-wrap {
-      margin-top: 4rem;
+      margin-top: 48px;
       background: var(--bg-surface);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-lg);
@@ -802,21 +762,21 @@
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     table.comparison-table th, 
     table.comparison-table td {
-      padding: 1.15rem 1.5rem;
+      padding: 14px 20px;
       border-bottom: 1px solid var(--border-subtle);
     }
 
     table.comparison-table th {
-      font-size: 0.8rem;
-      text-transform: uppercase;
+      font-size: 0.75rem;
       font-family: var(--font-mono);
       color: var(--text-muted);
       background: var(--bg-surface-raised);
+      font-weight: 500;
     }
 
     table.comparison-table tr:last-child td {
@@ -825,43 +785,43 @@
 
     .check-yes {
       color: var(--accent-emerald);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .check-no {
-      color: var(--accent-danger);
+      color: var(--text-muted);
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border-subtle);
       background: var(--bg-black);
-      padding: 4rem 1.5rem 3rem;
+      padding: 48px 24px;
       font-size: 0.85rem;
       color: var(--text-muted);
     }
 
     .footer-container {
-      max-width: 1200px;
+      max-width: 1152px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 2rem;
+      gap: 24px;
     }
 
     .footer-brand {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 10px;
       color: var(--text-primary);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .footer-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 24px;
     }
 
     .footer-links a:hover {
@@ -871,19 +831,19 @@
     /* Toast Notification for Clipboard Copy */
     .toast {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #FFFFFF;
-      color: #000000;
-      padding: 0.75rem 1.25rem;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-primary);
+      padding: 10px 16px;
       border-radius: var(--radius-md);
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      font-size: 0.825rem;
+      font-family: var(--font-mono);
       z-index: 1000;
       opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(8px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
       pointer-events: none;
     }
 
@@ -896,20 +856,7 @@
     @media (max-width: 960px) {
       .hero-section {
         grid-template-columns: 1fr;
-        padding-top: 3rem;
-        text-align: center;
-      }
-      .hero-description {
-        margin: 0 auto 2rem;
-      }
-      .hero-actions {
-        justify-content: center;
-      }
-      .arch-detect-pill {
-        justify-content: center;
-      }
-      .mockup-container {
-        margin-top: 2rem;
+        padding-top: 48px;
       }
       .bento-grid {
         grid-template-columns: 1fr;
@@ -927,7 +874,7 @@
 
     @media (max-width: 640px) {
       .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.15rem;
       }
       .download-grid {
         grid-template-columns: 1fr;
@@ -946,16 +893,15 @@
     <div class="nav-container">
       <a href="#" class="brand-logo">
         <svg class="prism-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="16,2 30,26 2,26" stroke="#0A84FF" stroke-width="2" fill="rgba(10,132,255,0.08)"/>
-          <line x1="16" y1="2" x2="16" y2="26" stroke="#64D2FF" stroke-width="1.5" stroke-dasharray="2 2"/>
-          <polygon points="16,2 23,26 9,26" fill="rgba(191,90,242,0.15)"/>
+          <polygon points="16,3 29,27 3,27" stroke="#F0F0F2" stroke-width="1.75" fill="none"/>
+          <line x1="16" y1="3" x2="16" y2="27" stroke="#8E8E96" stroke-width="1.25" stroke-dasharray="2 2"/>
         </svg>
         <span>PrismFiles</span>
       </a>
 
       <nav class="nav-links">
         <a href="#features">Architecture</a>
-        <a href="#interactive-demo">Interactive Demo</a>
+        <a href="#interactive-demo">Interactive demo</a>
         <a href="#comparison">Security</a>
         <a href="#downloads">Downloads</a>
         <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener">GitHub</a>
@@ -963,7 +909,6 @@
 
       <div class="nav-actions">
         <a href="#downloads" class="btn-header-cta">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Get APK</span>
         </a>
       </div>
@@ -973,62 +918,59 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-content">
-      <div class="hero-badge">
-        <span class="pulse-dot"></span>
-        <span>100% AIR-GAPPED • ZERO TELEMETRY • RUST NDK</span>
+      <div class="hero-tag">
+        <span class="status-dot"></span>
+        <span>100% air-gapped • Zero telemetry • Rust NDK</span>
       </div>
 
       <h1 class="hero-title">
-        The <span class="laser-text">Instrument-Grade</span><br>
-        <span class="gradient-text">Mobile File System.</span>
+        The instrument-grade mobile file system
       </h1>
 
       <p class="hero-description">
-        A high-performance Android file manager, archive extractor, and universal multi-format conversion suite. Pure native Kotlin + Rust NDK, pitch-black AMOLED interface, and zero tracking permissions.
+        A high-performance Android file manager, archive extractor, and universal multi-format conversion suite. Pure native Kotlin and Rust NDK, pitch-black AMOLED interface, and zero tracking permissions.
       </p>
 
       <div class="hero-actions">
         <a id="hero-main-download-btn" href="PrismFiles.apk" download class="btn-primary-download">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span id="hero-download-text">Download APK (v1.0.0)</span>
         </a>
 
         <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener" class="btn-secondary-link">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>Source Code</span>
+          <span>Source code</span>
         </a>
       </div>
 
       <div class="arch-detect-pill">
         <span>Detected: </span>
-        <span id="detected-arch-text" class="highlight">Universal Android Package</span>
-        <span>• v1.0.0 • Verified Clean</span>
+        <span id="detected-arch-text" class="highlight">Universal Android package</span>
+        <span>• v1.0.0</span>
       </div>
     </div>
 
-    <!-- Interactive Phone Mockup -->
+    <!-- Phone Mockup (The Moments) -->
     <div class="mockup-container" id="interactive-demo">
       <div class="phone-frame">
         <div class="phone-speaker"></div>
-        <div class="phone-camera"></div>
 
         <div class="phone-status-bar">
           <span>09:41</span>
-          <span>100% 🔋</span>
+          <span>100%</span>
         </div>
 
         <div class="phone-screen-content">
           <div class="phone-tabs-bar">
-            <button class="phone-tab-btn active" onclick="switchPhoneTab('donut')">Donut Wheel</button>
-            <button class="phone-tab-btn" onclick="switchPhoneTab('treemap')">3D Treemap</button>
+            <button class="phone-tab-btn active" onclick="switchPhoneTab('donut')">Donut wheel</button>
+            <button class="phone-tab-btn" onclick="switchPhoneTab('treemap')">3D treemap</button>
             <button class="phone-tab-btn" onclick="switchPhoneTab('files')">Files</button>
           </div>
 
-          <!-- Tab 1: Interactive Donut Wheel -->
+          <!-- Tab 1: Interactive Donut Wheel Moment -->
           <div id="tab-donut" class="tab-view active">
             <div class="donut-wheel-preview">
               <div class="wheel-canvas-container" id="wheel-container">
-                <canvas id="wheel-canvas" width="250" height="250"></canvas>
+                <canvas id="wheel-canvas" width="240" height="240"></canvas>
                 <div class="wheel-center-info" id="wheel-center-btn">
                   <div class="wheel-center-format" id="wheel-center-format">WEBP</div>
                   <div class="wheel-center-hint">Tap to convert</div>
@@ -1038,14 +980,14 @@
             </div>
           </div>
 
-          <!-- Tab 2: 3D Cushion Treemap -->
+          <!-- Tab 2: 3D Cushion Treemap Moment -->
           <div id="tab-treemap" class="tab-view">
             <div class="treemap-preview">
               <div class="treemap-stats-header">
-                <span>STORAGE ANALYZER</span>
-                <span>64.8 GB FREE</span>
+                <span>Storage analyzer</span>
+                <span>64.8 GB free</span>
               </div>
-              <canvas id="treemap-canvas" width="290" height="260"></canvas>
+              <canvas id="treemap-canvas" width="288" height="250"></canvas>
               <div class="treemap-tooltip" id="treemap-tooltip">Hover over tiles to inspect storage</div>
             </div>
           </div>
@@ -1054,35 +996,35 @@
           <div id="tab-files" class="tab-view">
             <div class="filelist-preview">
               <div class="filelist-row">
-                <div class="filelist-row-icon" style="background:#2C220E; color:#D4A017;">..</div>
+                <div class="filelist-row-icon" style="background:#262010; color:#D4A017;">..</div>
                 <div class="filelist-row-info">
-                  <div class="filelist-row-name">Parent Directory</div>
+                  <div class="filelist-row-name">Parent directory</div>
                   <div class="filelist-row-meta">Folder   2026-11-23</div>
                 </div>
               </div>
               <div class="filelist-row">
-                <div class="filelist-row-icon" style="background:#261808; color:#FF9F0A;">MP4</div>
+                <div class="filelist-row-icon" style="background:#221810; color:#D4A017;">MP4</div>
                 <div class="filelist-row-info">
                   <div class="filelist-row-name">flight_footage_4k.mp4</div>
                   <div class="filelist-row-meta">1.4 GB   2026-11-20</div>
                 </div>
               </div>
               <div class="filelist-row">
-                <div class="filelist-row-icon" style="background:#0E2218; color:#30D158;">APK</div>
+                <div class="filelist-row-icon" style="background:#102214; color:#30D158;">APK</div>
                 <div class="filelist-row-info">
                   <div class="filelist-row-name">PrismFiles-arm64-v8a.apk</div>
                   <div class="filelist-row-meta">16.2 MB   2026-11-23</div>
                 </div>
               </div>
               <div class="filelist-row">
-                <div class="filelist-row-icon" style="background:#1C1C22; color:#D1D1D6;">7Z</div>
+                <div class="filelist-row-icon" style="background:#18181C; color:#D1D1D6;">7Z</div>
                 <div class="filelist-row-info">
                   <div class="filelist-row-name">encrypted_backup.7z</div>
                   <div class="filelist-row-meta">340 MB   2026-11-18</div>
                 </div>
               </div>
               <div class="filelist-row">
-                <div class="filelist-row-icon" style="background:#0E1B2C; color:#0A84FF;">PDF</div>
+                <div class="filelist-row-icon" style="background:#101824; color:#0A84FF;">PDF</div>
                 <div class="filelist-row-info">
                   <div class="filelist-row-name">confidential_spec.pdf</div>
                   <div class="filelist-row-meta">4.8 MB   2026-11-14</div>
@@ -1099,8 +1041,8 @@
   <!-- Core Architecture Bento Grid -->
   <section class="section-container" id="features">
     <div class="section-header">
-      <div class="section-tag">Engineering Foundation</div>
-      <h2 class="section-title">Built for Speed, Privacy, and Control.</h2>
+      <div class="section-tag">Engineering foundation</div>
+      <h2 class="section-title">Built for speed, privacy, and control</h2>
       <p class="section-subtitle">
         Unlike ad-riddled stock file explorers, PrismFiles is engineered as an offline instrument with zero tracking and low battery consumption.
       </p>
@@ -1111,70 +1053,70 @@
       <div class="bento-card">
         <div>
           <div class="card-icon-wrap">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <h3 class="card-title">100% Air-Gapped</h3>
+          <h3 class="card-title">Air-gapped by design</h3>
           <p class="card-description">
             Zero network permissions in AndroidManifest.xml. No tracking telemetry, no cloud accounts, and zero background network calls.
           </p>
         </div>
-        <div class="card-metric-badge">0KB Telemetry Sent</div>
+        <div class="card-metric-badge">0 KB telemetry</div>
       </div>
 
       <!-- Bento 2 -->
       <div class="bento-card">
         <div>
-          <div class="card-icon-wrap" style="color:var(--accent-emerald);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <div class="card-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
           </div>
-          <h3 class="card-title">Rust NDK Core</h3>
+          <h3 class="card-title">Rust NDK engine</h3>
           <p class="card-description">
-            Native C ABI bindings compiled with Rust. Instant BLAKE3/SHA-256 cryptographic verification and DoD 5220.22-M 3-pass file shredder.
+            Native C ABI bindings compiled with Rust. Instant cryptographic verification with BLAKE3 and SHA-256, plus DoD 5220.22-M 3-pass file shredder.
           </p>
         </div>
-        <div class="card-metric-badge" style="color:var(--accent-cyan); background:var(--accent-cyan-dim);">Native Parallel Engine</div>
+        <div class="card-metric-badge">Parallel native core</div>
       </div>
 
       <!-- Bento 3 -->
       <div class="bento-card">
         <div>
-          <div class="card-icon-wrap" style="color:var(--accent-purple);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+          <div class="card-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
           </div>
-          <h3 class="card-title">Donut Radial Wheel</h3>
+          <h3 class="card-title">Donut radial wheel</h3>
           <p class="card-description">
-            17 specialized conversion profiles. Single-thumb rotary selector with straight upright typography and tactile haptic ticks.
+            17 specialized conversion profiles. Single-thumb rotary selector with upright typography and tactile haptic ticks.
           </p>
         </div>
-        <div class="card-metric-badge" style="color:var(--accent-purple); background:var(--accent-purple-dim);">17 Wheel Profiles</div>
+        <div class="card-metric-badge">17 wheel profiles</div>
       </div>
 
       <!-- Bento 4 (Span 2) -->
       <div class="bento-card span-2">
         <div>
-          <div class="card-icon-wrap" style="color:var(--accent-amber);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <div class="card-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           </div>
-          <h3 class="card-title">3D Cushion Treemap Visualizer</h3>
+          <h3 class="card-title">3D cushion treemap visualizer</h3>
           <p class="card-description">
-            Hierarchical pseudo-shaded ridge illumination maps your device's disk usage recursively. Direct tap-to-drill navigation reveals space hogs in milliseconds without crawling through endless directories.
+            Hierarchical pseudo-shaded ridge illumination maps device storage recursively. Direct tap-to-drill navigation reveals space hogs in milliseconds without crawling through endless directories.
           </p>
         </div>
-        <div class="card-metric-badge" style="color:var(--accent-amber); background:var(--accent-amber-dim);">Volumetric Disk Audit</div>
+        <div class="card-metric-badge">Volumetric disk audit</div>
       </div>
 
       <!-- Bento 5 -->
       <div class="bento-card">
         <div>
           <div class="card-icon-wrap">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
           </div>
-          <h3 class="card-title">Local Wi-Fi Drop</h3>
+          <h3 class="card-title">Local Wi-Fi drop</h3>
           <p class="card-description">
             Instantly spin up a local HTTP and FTP server with QR code pairing. Share files across PCs, phones, and Macs over local LAN.
           </p>
         </div>
-        <div class="card-metric-badge">Zero Cloud Relay</div>
+        <div class="card-metric-badge">Zero cloud relay</div>
       </div>
     </div>
   </section>
@@ -1182,7 +1124,7 @@
   <!-- Download Hub Section -->
   <section class="section-container download-section" id="downloads">
     <div class="section-header">
-      <div class="section-tag">Direct Release</div>
+      <div class="section-tag">Direct release</div>
       <h2 class="section-title">Download PrismFiles for Android</h2>
       <p class="section-subtitle">
         Compatible with Android 7.0+ (Nougat through Android 15+ / API 24–35). Free and open-source under the MIT license.
@@ -1196,10 +1138,10 @@
         <div class="badge-recommended">Recommended</div>
         <div class="card-arch-name">Universal APK</div>
         <div class="card-arch-desc">Works on all Android devices, all chipsets, and all processors.</div>
-        <div class="card-arch-size">~43.8 MB • v1.0.0</div>
+        <div class="card-arch-size">43.8 MB • v1.0.0</div>
         <a href="PrismFiles.apk" download class="btn-card-download">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Download Universal</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download universal</span>
         </a>
         <div class="hash-copy-row" onclick="copyHash('99eb3b716b670bac3b198a90d46910c446df3586bd4facd8c062121f92f369f5')">
           <span>SHA-256: 99eb3b...9f5</span>
@@ -1210,10 +1152,10 @@
       <!-- ARM64 -->
       <div class="download-card">
         <div class="card-arch-name">ARM64-v8a</div>
-        <div class="card-arch-desc">Optimized for modern 64-bit Android smartphones & tablets. 63% smaller.</div>
-        <div class="card-arch-size">~16.2 MB • v1.0.0</div>
+        <div class="card-arch-desc">Optimized for modern 64-bit Android smartphones and tablets. 63% smaller.</div>
+        <div class="card-arch-size">16.2 MB • v1.0.0</div>
         <a href="PrismFiles-arm64-v8a.apk" download class="btn-card-download">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download ARM64</span>
         </a>
         <div class="hash-copy-row" onclick="copyHash('062c91252d6bb21d5d1034847108325ff99cffe291fd71595e189244cbd2ef4f')">
@@ -1226,9 +1168,9 @@
       <div class="download-card">
         <div class="card-arch-name">ARMeabi-v7a</div>
         <div class="card-arch-desc">For legacy 32-bit Android phones and low-resource devices.</div>
-        <div class="card-arch-size">~13.4 MB • v1.0.0</div>
+        <div class="card-arch-size">13.4 MB • v1.0.0</div>
         <a href="PrismFiles-armeabi-v7a.apk" download class="btn-card-download">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download ARMv7</span>
         </a>
         <div class="hash-copy-row" onclick="copyHash('741c669f14eda1998a908e15a1707db945854796d1b91901c0db11832c82aa44')">
@@ -1240,10 +1182,10 @@
       <!-- x86_64 -->
       <div class="download-card">
         <div class="card-arch-name">x86_64</div>
-        <div class="card-arch-desc">For Android emulators, ChromeOS Chromebooks, and x86 Android tablets.</div>
-        <div class="card-arch-size">~18.1 MB • v1.0.0</div>
+        <div class="card-arch-desc">For Android emulators, ChromeOS Chromebooks, and x86 tablets.</div>
+        <div class="card-arch-size">18.1 MB • v1.0.0</div>
         <a href="PrismFiles-x86_64.apk" download class="btn-card-download">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download x86_64</span>
         </a>
         <div class="hash-copy-row" onclick="copyHash('83b2f40838f826f1d8a2d6fc3ac53e7a9b07b751be87f88b4035805a425d7704')">
@@ -1256,7 +1198,7 @@
     <!-- 3-Step Quick Install -->
     <div class="steps-container">
       <div class="step-item">
-        <div class="step-number">01</div>
+        <div class="step-number">1</div>
         <div class="step-content">
           <h4>Download the APK</h4>
           <p>Choose the Universal APK or tap above on your Android browser.</p>
@@ -1264,15 +1206,15 @@
       </div>
 
       <div class="step-item">
-        <div class="step-number">02</div>
+        <div class="step-number">2</div>
         <div class="step-content">
-          <h4>Allow Installation</h4>
+          <h4>Allow installation</h4>
           <p>Tap the notification. If prompted, toggle "Allow from this source" in settings.</p>
         </div>
       </div>
 
       <div class="step-item">
-        <div class="step-number">03</div>
+        <div class="step-number">3</div>
         <div class="step-content">
           <h4>Launch PrismFiles</h4>
           <p>Grant storage management access to begin viewing, extracting, and converting.</p>
@@ -1284,9 +1226,9 @@
   <!-- Comparison Table -->
   <section class="section-container" id="comparison">
     <div class="section-header">
-      <div class="section-tag">Zero Bloat</div>
-      <h2 class="section-title">PrismFiles vs Traditional File Apps</h2>
-      <p class="section-subtitle">Why privacy advocates and power users switch to PrismFiles.</p>
+      <div class="section-tag">Comparison</div>
+      <h2 class="section-title">PrismFiles vs traditional file managers</h2>
+      <p class="section-subtitle">Why privacy advocates and power users choose PrismFiles.</p>
     </div>
 
     <div class="comparison-table-wrap">
@@ -1295,50 +1237,50 @@
           <tr>
             <th>Feature</th>
             <th>PrismFiles</th>
-            <th>Stock File Manager</th>
-            <th>Popular Commercial Apps</th>
+            <th>Stock file manager</th>
+            <th>Commercial ad apps</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Internet Permission</strong></td>
-            <td class="check-yes">None (0KB Leak)</td>
-            <td>Yes (Sync to cloud)</td>
+            <td><strong>Internet permission</strong></td>
+            <td class="check-yes">None (0 KB leak)</td>
+            <td>Yes (cloud sync)</td>
             <td class="check-no">Aggressive ad trackers</td>
           </tr>
           <tr>
-            <td><strong>Interface Theme</strong></td>
+            <td><strong>Interface theme</strong></td>
             <td class="check-yes">Pure #000000 AMOLED</td>
-            <td>Light / Gray dark</td>
-            <td>Cluttered with ads & promos</td>
+            <td>Light / grey dark</td>
+            <td>Cluttered with ads</td>
           </tr>
           <tr>
-            <td><strong>Multi-Format Converter</strong></td>
-            <td class="check-yes">Built-in (17 Profiles)</td>
+            <td><strong>Multi-format converter</strong></td>
+            <td class="check-yes">Built-in (17 profiles)</td>
             <td class="check-no">No</td>
-            <td>Requires paid subscription</td>
+            <td>Paid subscription required</td>
           </tr>
           <tr>
-            <td><strong>Disk Usage Treemap</strong></td>
-            <td class="check-yes">3D Cushion Treemap</td>
+            <td><strong>Disk usage treemap</strong></td>
+            <td class="check-yes">3D cushion treemap</td>
             <td>Basic bar graph</td>
-            <td>Slow storage crawler</td>
+            <td>Slow crawler</td>
           </tr>
           <tr>
-            <td><strong>Cryptographic Hashing</strong></td>
+            <td><strong>Cryptographic hashing</strong></td>
             <td class="check-yes">Rust NDK (BLAKE3/SHA)</td>
             <td class="check-no">No</td>
             <td class="check-no">No</td>
           </tr>
           <tr>
-            <td><strong>Archive Support</strong></td>
+            <td><strong>Archive support</strong></td>
             <td class="check-yes">ZIP, 7Z, TAR, XZ, BZ2</td>
             <td>ZIP only</td>
             <td>Locked behind paywall</td>
           </tr>
           <tr>
-            <td><strong>Secure Shredder</strong></td>
-            <td class="check-yes">DoD 5220.22-M 3-Pass</td>
+            <td><strong>Secure shredder</strong></td>
+            <td class="check-yes">DoD 5220.22-M 3-pass</td>
             <td class="check-no">No</td>
             <td class="check-no">No</td>
           </tr>
@@ -1352,13 +1294,13 @@
     <div class="footer-container">
       <div class="footer-brand">
         <svg class="prism-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="16,2 30,26 2,26" stroke="#0A84FF" stroke-width="2" fill="rgba(10,132,255,0.08)"/>
+          <polygon points="16,3 29,27 3,27" stroke="#8E8E96" stroke-width="1.75" fill="none"/>
         </svg>
-        <span>PrismFiles • Released under MIT License</span>
+        <span>PrismFiles • Released under MIT license</span>
       </div>
 
       <div class="footer-links">
-        <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener">GitHub repository</a>
         <a href="https://github.com/sohamisOPP/Prismfiles-/releases" target="_blank" rel="noopener">Releases</a>
         <a href="https://github.com/sohamisOPP/Prismfiles-/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
       </div>
@@ -1366,7 +1308,7 @@
   </footer>
 
   <!-- Toast Component -->
-  <div class="toast" id="toast">Checksum copied to clipboard!</div>
+  <div class="toast" id="toast">Checksum copied to clipboard</div>
 
   <!-- Interactive Demo Scripts -->
   <script>
@@ -1386,20 +1328,18 @@
       }
     }
 
-    // Interactive Donut Wheel Canvas
+    // Interactive Donut Wheel Canvas (Pass 8: The Moment)
     const wheelCanvas = document.getElementById('wheel-canvas');
     const wheelCtx = wheelCanvas.getContext('2d');
     const formats = ['WEBP', 'AVIF', 'PNG', 'JPEG', 'SVG', '7Z', 'ZIP', 'MP4', 'FLAC', 'PDF'];
     let currentRotation = 0;
     let selectedIndex = 0;
-    let isDragging = false;
-    let startAngle = 0;
 
     function drawDonutWheel() {
       const cx = wheelCanvas.width / 2;
       const cy = wheelCanvas.height / 2;
-      const outerR = 110;
-      const innerR = 55;
+      const outerR = 106;
+      const innerR = 54;
       const count = formats.length;
       const sweep = (2 * Math.PI) / count;
 
@@ -1417,8 +1357,8 @@
         wheelCtx.fillStyle = isSel ? '#262628' : (i % 2 === 0 ? '#161616' : '#101010');
         wheelCtx.fill();
 
-        wheelCtx.strokeStyle = isSel ? '#F0F0F0' : '#262628';
-        wheelCtx.lineWidth = isSel ? 2 : 1;
+        wheelCtx.strokeStyle = isSel ? '#F0F0F2' : '#262628';
+        wheelCtx.lineWidth = isSel ? 1.5 : 1;
         wheelCtx.stroke();
 
         // Upright text
@@ -1428,8 +1368,8 @@
         const ty = cy + textR * Math.sin(midAngle);
 
         wheelCtx.save();
-        wheelCtx.fillStyle = isSel ? '#FFFFFF' : '#8E8E93';
-        wheelCtx.font = isSel ? 'bold 11px Inter, sans-serif' : '10px Inter, sans-serif';
+        wheelCtx.fillStyle = isSel ? '#FFFFFF' : '#8E8E96';
+        wheelCtx.font = isSel ? '600 11px Inter, sans-serif' : '500 10px Inter, sans-serif';
         wheelCtx.textAlign = 'center';
         wheelCtx.textBaseline = 'middle';
         wheelCtx.fillText(formats[i], tx, ty);
@@ -1449,7 +1389,7 @@
       const y = e.clientY - rect.top - wheelCanvas.height / 2;
       const dist = Math.sqrt(x * x + y * y);
 
-      if (dist >= 55 && dist <= 110) {
+      if (dist >= 54 && dist <= 106) {
         let angle = Math.atan2(y, x) - currentRotation;
         while (angle < 0) angle += Math.PI * 2;
         const sweep = (2 * Math.PI) / formats.length;
@@ -1460,16 +1400,16 @@
 
     drawDonutWheel();
 
-    // Interactive 3D Cushion Treemap Canvas
+    // Interactive 3D Cushion Treemap Canvas (Pass 8: The Moment)
     const treemapCanvas = document.getElementById('treemap-canvas');
     const tCtx = treemapCanvas.getContext('2d');
     const treemapNodes = [
-      { name: 'DCIM', size: '14.2 GB', x: 0, y: 0, w: 170, h: 150, color: '#2C4251' },
-      { name: 'Movies', size: '9.4 GB', x: 175, y: 0, w: 115, h: 90, color: '#1C3F3A' },
-      { name: 'Music', size: '4.8 GB', x: 175, y: 95, w: 115, h: 55, color: '#38324F' },
-      { name: 'Downloads', size: '8.1 GB', x: 0, y: 155, w: 120, h: 105, color: '#4D3B2F' },
-      { name: 'APKs', size: '3.6 GB', x: 125, y: 155, w: 85, h: 105, color: '#26384C' },
-      { name: 'Archives', size: '2.1 GB', x: 215, y: 155, w: 75, h: 105, color: '#42323D' }
+      { name: 'DCIM', size: '14.2 GB', x: 0, y: 0, w: 168, h: 144, color: '#2C4251' },
+      { name: 'Movies', size: '9.4 GB', x: 174, y: 0, w: 114, h: 86, color: '#1C3F3A' },
+      { name: 'Music', size: '4.8 GB', x: 174, y: 92, w: 114, h: 52, color: '#38324F' },
+      { name: 'Downloads', size: '8.1 GB', x: 0, y: 150, w: 118, h: 100, color: '#4D3B2F' },
+      { name: 'APKs', size: '3.6 GB', x: 124, y: 150, w: 84, h: 100, color: '#26384C' },
+      { name: 'Archives', size: '2.1 GB', x: 214, y: 150, w: 74, h: 100, color: '#42323D' }
     ];
 
     function drawTreemap(hoverIdx = -1) {
@@ -1478,23 +1418,23 @@
       treemapNodes.forEach((n, idx) => {
         const isHover = (idx === hoverIdx);
         const grad = tCtx.createLinearGradient(n.x, n.y, n.x + n.w, n.y + n.h);
-        grad.addColorStop(0, isHover ? '#406078' : n.color);
-        grad.addColorStop(1, '#08080C');
+        grad.addColorStop(0, isHover ? '#3A546A' : n.color);
+        grad.addColorStop(1, '#0A0A0E');
 
         tCtx.fillStyle = grad;
         tCtx.beginPath();
-        tCtx.roundRect(n.x, n.y, n.w, n.h, 4);
+        tCtx.roundRect(n.x, n.y, n.w, n.h, 3);
         tCtx.fill();
 
-        tCtx.strokeStyle = isHover ? '#F0F0F0' : '#0A0A0A';
-        tCtx.lineWidth = isHover ? 2 : 1;
+        tCtx.strokeStyle = isHover ? '#F0F0F2' : '#0A0A0A';
+        tCtx.lineWidth = isHover ? 1.5 : 1;
         tCtx.stroke();
 
-        tCtx.fillStyle = '#F0F0F0';
+        tCtx.fillStyle = '#F0F0F2';
         tCtx.font = '500 11px Inter, sans-serif';
         tCtx.fillText(n.name, n.x + 8, n.y + 18);
 
-        tCtx.fillStyle = '#8E8E93';
+        tCtx.fillStyle = '#8E8E96';
         tCtx.font = '10px JetBrains Mono, monospace';
         tCtx.fillText(n.size, n.x + 8, n.y + 32);
       });
@@ -1517,7 +1457,7 @@
       drawTreemap(found);
       const tip = document.getElementById('treemap-tooltip');
       if (found !== -1) {
-        tip.textContent = `${treemapNodes[found].name} • ${treemapNodes[found].size} (Click to drill down)`;
+        tip.textContent = `${treemapNodes[found].name} • ${treemapNodes[found].size}`;
       } else {
         tip.textContent = 'Hover over tiles to inspect storage';
       }
@@ -1535,7 +1475,7 @@
       navigator.clipboard.writeText(hash).then(() => {
         const toast = document.getElementById('toast');
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
+        setTimeout(() => toast.classList.remove('show'), 2000);
       });
     }
 
@@ -1559,7 +1499,7 @@
         heroDownloadText.textContent = 'Download x86_64 APK (18.1 MB)';
         heroDownloadBtn.href = 'PrismFiles-x86_64.apk';
       } else {
-        archText.textContent = 'Universal Android Package (All Devices)';
+        archText.textContent = 'Universal Android package';
         heroDownloadText.textContent = 'Download Universal APK (43.8 MB)';
         heroDownloadBtn.href = 'PrismFiles.apk';
       }
