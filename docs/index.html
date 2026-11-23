@@ -6,6 +6,7 @@
   <title>PrismFiles — Offline Mobile File Manager & Format Converter</title>
   <meta name="description" content="100% offline, privacy-first Android file manager, archive extractor, and universal multi-format converter powered by Rust NDK.">
   <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -102,6 +103,22 @@
       font-weight: 600;
       font-size: 1rem;
       letter-spacing: -0.01em;
+    }
+
+    .brand-logo-img {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .btn-logo-img {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      object-fit: contain;
+      flex-shrink: 0;
     }
 
     .prism-icon {
@@ -892,10 +909,7 @@
   <header>
     <div class="nav-container">
       <a href="#" class="brand-logo">
-        <svg class="prism-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="16,3 29,27 3,27" stroke="#F0F0F2" stroke-width="1.75" fill="none"/>
-          <line x1="16" y1="3" x2="16" y2="27" stroke="#8E8E96" stroke-width="1.25" stroke-dasharray="2 2"/>
-        </svg>
+        <img src="assets/icon.png" alt="PrismFiles logo" class="brand-logo-img" width="22" height="22">
         <span>PrismFiles</span>
       </a>
 
@@ -909,7 +923,8 @@
 
       <div class="nav-actions">
         <a href="#downloads" class="btn-header-cta">
-          <span>Get APK</span>
+          <img src="assets/icon.png" alt="PrismFiles logo" class="btn-logo-img" width="16" height="16">
+          <span>PrismFiles</span>
         </a>
       </div>
     </div>
@@ -1293,9 +1308,7 @@
   <footer>
     <div class="footer-container">
       <div class="footer-brand">
-        <svg class="prism-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="16,3 29,27 3,27" stroke="#8E8E96" stroke-width="1.75" fill="none"/>
-        </svg>
+        <img src="assets/icon.png" alt="PrismFiles logo" class="brand-logo-img" width="20" height="20">
         <span>PrismFiles • Released under MIT license</span>
       </div>
 
