@@ -79,9 +79,22 @@
       line-height: 1.5;
       overflow-x: hidden;
       selection-background-color: var(--accent-selection);
+      position: relative;
     }
 
-    /* Quiet Ambient Dot Grid */
+    /* React Bits: WebGL2 Interactive DotGrid Canvas */
+    .bg-canvas-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.95;
+      will-change: transform;
+    }
+
+    /* Quiet Ambient Dot Grid (Fallback if WebGL2 disabled) */
     .bg-grid-overlay {
       position: fixed;
       inset: 0;
@@ -89,7 +102,83 @@
       z-index: 0;
       background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
       background-size: 24px 24px;
+      display: none;
       will-change: transform;
+    }
+
+    /* Hero Prism Refraction Caustic Lens */
+    .hero-prism-lens {
+      position: absolute;
+      top: 50%;
+      right: 14%;
+      transform: translate(24%, -50%);
+      width: 540px;
+      height: 540px;
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 50%;
+      filter: blur(76px);
+      opacity: 0.65;
+      will-change: transform, opacity;
+      transition: opacity 0.4s ease;
+    }
+
+    .prism-conic-beam {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 190deg at 50% 50%,
+        rgba(10, 132, 255, 0.24) 0deg,
+        rgba(48, 209, 88, 0.17) 100deg,
+        rgba(212, 160, 23, 0.15) 190deg,
+        rgba(191, 90, 242, 0.19) 280deg,
+        rgba(10, 132, 255, 0.24) 360deg
+      );
+      animation: prismSpin 28s linear infinite;
+    }
+
+    .prism-radial-beam {
+      position: absolute;
+      inset: 15%;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 50% 50%,
+        rgba(10, 132, 255, 0.2) 0%,
+        rgba(48, 209, 88, 0.1) 45%,
+        transparent 70%
+      );
+      animation: prismBreathe 7s ease-in-out infinite alternate;
+    }
+
+    .prism-specular-spark {
+      position: absolute;
+      top: 25%;
+      left: 30%;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.28) 0%,
+        transparent 65%
+      );
+      animation: prismSpark 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes prismSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes prismBreathe {
+      0% { transform: scale(0.92) translate(0, 0); opacity: 0.6; }
+      100% { transform: scale(1.12) translate(-14px, 12px); opacity: 0.9; }
+    }
+
+    @keyframes prismSpark {
+      0% { transform: translate(0, 0) scale(0.8); opacity: 0.3; }
+      100% { transform: translate(25px, -18px) scale(1.2); opacity: 0.7; }
     }
 
     a {
@@ -346,6 +435,7 @@
       align-items: center;
       transform-style: preserve-3d;
       will-change: transform;
+      z-index: 5;
     }
 
     .phone-frame {
@@ -604,6 +694,7 @@
       margin: 0 auto;
       padding: 96px 24px;
       position: relative;
+      z-index: 5;
     }
 
     .section-header {
@@ -633,10 +724,7 @@
       line-height: 1.6;
     }
 
-    /* =========================================================
-       React Bits: Spotlight Card Effect (.spotlight-card)
-       Instrument-grade dark radial cursor glow with hairline ring
-       ========================================================= */
+    /* React Bits: Spotlight Card Effect (.spotlight-card) */
     .spotlight-card {
       position: relative;
       background: var(--bg-surface);
@@ -650,7 +738,6 @@
       transition: border-color 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Subtle radial interior illumination */
     .spotlight-card::before {
       content: '';
       position: absolute;
@@ -666,7 +753,6 @@
       transition: opacity 0.3s ease;
     }
 
-    /* Subtle radial border stroke highlight */
     .spotlight-card::after {
       content: '';
       position: absolute;
@@ -757,7 +843,9 @@
 
     /* Download Showcase Hub */
     .download-section {
-      background: #08080A;
+      background: rgba(8, 8, 10, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-top: 1px solid var(--border-subtle);
       border-bottom: 1px solid var(--border-subtle);
     }
@@ -953,6 +1041,8 @@
 
     /* Footer */
     footer {
+      position: relative;
+      z-index: 5;
       border-top: 1px solid var(--border-subtle);
       background: var(--bg-black);
       padding: 48px 24px;
@@ -1022,6 +1112,12 @@
         grid-template-columns: 1fr;
         padding-top: 48px;
       }
+      .hero-prism-lens {
+        right: 50%;
+        transform: translate(50%, -40%);
+        width: 380px;
+        height: 380px;
+      }
       .bento-grid {
         grid-template-columns: 1fr;
       }
@@ -1051,7 +1147,11 @@
   </style>
 </head>
 <body>
+  <!-- Fallback static dot grid -->
   <div class="bg-grid-overlay"></div>
+
+  <!-- React Bits: WebGL2 Interactive DotGrid Background Canvas -->
+  <canvas id="bg-dot-grid" class="bg-canvas-overlay"></canvas>
 
   <!-- Header -->
   <header>
@@ -1080,6 +1180,13 @@
 
   <!-- Hero Section -->
   <section class="hero-section">
+    <!-- Ambient Prism Refraction Caustic behind the 3D phone mockup -->
+    <div class="hero-prism-lens" id="hero-prism-lens" aria-hidden="true">
+      <div class="prism-conic-beam"></div>
+      <div class="prism-radial-beam"></div>
+      <div class="prism-specular-spark"></div>
+    </div>
+
     <div class="hero-content">
       <div class="hero-tag">
         <span class="status-dot"></span>
@@ -1515,20 +1622,516 @@
       });
     });
 
-    // Parallax scrub on background dot grid
-    gsap.to('.bg-grid-overlay', {
-      scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1.2,
-      },
-      backgroundPositionY: '96px',
-      ease: 'none'
-    });
+    // ========================================================
+    // 2. React Bits: WebGL2 Interactive DotGrid Background Engine
+    // ========================================================
+    function initDotGridBackground() {
+      const canvas = document.getElementById('bg-dot-grid');
+      if (!canvas) return;
+
+      const gl = canvas.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false });
+      if (!gl) {
+        // Fallback for environments without WebGL2
+        const fallback = document.querySelector('.bg-grid-overlay');
+        if (fallback) fallback.style.display = 'block';
+        return;
+      }
+
+      const VERTEX_SHADER = `#version 300 es
+      precision highp float;
+      layout(location = 0) in vec2 aCorner;
+      layout(location = 1) in vec4 aMotion;
+      layout(location = 2) in vec2 aState;
+
+      uniform vec2 uResolution;
+      uniform float uSize;
+      uniform float uSwell;
+      uniform float uStretch;
+      uniform float uGlow;
+
+      out vec2 vLocal;
+      out vec2 vPoint;
+      out float vLength;
+      out float vRadius;
+      out float vEnergy;
+
+      void main() {
+        float energy = aState.x;
+        float radius = 0.5 * uSize * aState.y * (1.0 + uSwell * energy);
+        float speed = length(aMotion.zw);
+        float angle = speed > 0.001 ? atan(aMotion.w, aMotion.z) : 0.0;
+        float axis = floor(angle / 1.5707963 + 0.5) * 1.5707963;
+        angle = axis + (angle - axis) * smoothstep(8.0, 70.0, speed);
+        vec2 dir = vec2(cos(angle), sin(angle));
+        float halfLength = min(uSize * 2.0, speed * uStretch * 0.02);
+        float pad = radius * (1.0 + uGlow * energy * 2.5) + 2.0;
+        vec2 local = aCorner * vec2(halfLength + pad, pad);
+        vec2 point = aMotion.xy + dir * local.x + vec2(-dir.y, dir.x) * local.y;
+        vLocal = local;
+        vPoint = point;
+        vLength = halfLength;
+        vRadius = radius;
+        vEnergy = energy;
+        vec2 clip = point / uResolution * 2.0 - 1.0;
+        gl_Position = vec4(clip.x, -clip.y, 0.0, 1.0);
+      }`;
+
+      const FRAGMENT_SHADER = `#version 300 es
+      precision highp float;
+      in vec2 vLocal;
+      in vec2 vPoint;
+      in float vLength;
+      in float vRadius;
+      in float vEnergy;
+
+      uniform vec2 uResolution;
+      uniform vec3 uBase;
+      uniform vec3 uActive;
+      uniform float uGlow;
+      uniform float uOpacity;
+      uniform float uFade;
+
+      out vec4 outColor;
+
+      float smootherstep01(float t) {
+        t = clamp(t, 0.0, 1.0);
+        return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+      }
+
+      void main() {
+        float d = length(vec2(max(abs(vLocal.x) - vLength, 0.0), vLocal.y)) - vRadius;
+        float aa = max(fwidth(d), 0.0001);
+        float body = clamp(0.5 - d / aa, 0.0, 1.0);
+        float halo = uGlow * vEnergy * 0.5 * exp(-max(d, 0.0) / max(vRadius * 1.3, 0.6));
+        float alpha = body + (1.0 - body) * halo;
+        vec3 color = mix(uBase, uActive, clamp(vEnergy * 1.25, 0.0, 1.0));
+        float fade = 1.0;
+        if (uFade > 0.0) {
+          vec2 edge = min(vPoint, uResolution - vPoint) / (uFade * 0.4 * min(uResolution.x, uResolution.y));
+          fade = smootherstep01(edge.x) * smootherstep01(edge.y);
+        }
+        alpha *= uOpacity * fade;
+        outColor = vec4(color * alpha, alpha);
+      }`;
+
+      function compileShader(type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(shader));
+          return null;
+        }
+        return shader;
+      }
+
+      const program = gl.createProgram();
+      const vs = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER);
+      const fs = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
+      if (!vs || !fs) return;
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+
+      const uniforms = {};
+      ['uResolution', 'uSize', 'uSwell', 'uStretch', 'uGlow', 'uBase', 'uActive', 'uOpacity', 'uFade'].forEach(name => {
+        uniforms[name] = gl.getUniformLocation(program, name);
+      });
+
+      const vao = gl.createVertexArray();
+      gl.bindVertexArray(vao);
+      const cornerBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, cornerBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+      const instanceBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, instanceBuffer);
+      gl.enableVertexAttribArray(1);
+      gl.vertexAttribPointer(1, 4, gl.FLOAT, false, 24, 0);
+      gl.vertexAttribDivisor(1, 1);
+      gl.enableVertexAttribArray(2);
+      gl.vertexAttribPointer(2, 2, gl.FLOAT, false, 24, 16);
+      gl.vertexAttribDivisor(2, 1);
+      gl.bindVertexArray(null);
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const settings = {
+        dotSize: 3.2,
+        gap: 26,
+        baseColor: [0.12, 0.12, 0.15],      // Graphite #1F1F26
+        activeColor: [0.94, 0.94, 0.96],    // Laser White #F0F0F5
+        proximity: 130,
+        strength: 1.15,
+        bounce: 0.6,
+        tension: 0.42,
+        returnDuration: 0.85,
+        shockRadius: 360,
+        shockStrength: 5.5,
+        swell: 0.9,
+        stretch: 0.6,
+        glow: 0.55,
+        fade: 0.15,
+        opacity: 0.9
+      };
+
+      const view = { width: 0, height: 0, ratio: 1 };
+      const grid = { count: 0, cols: 1, rows: 1, cell: 1, centerX: 0, centerY: 0, reach: 1 };
+      let rest = new Float32Array(0);
+      let offset = new Float32Array(0);
+      let velocity = new Float32Array(0);
+      let force = new Float32Array(0);
+      let next = new Float32Array(0);
+      let wave = new Float32Array(0);
+      let energy = new Float32Array(0);
+      let instances = new Float32Array(0);
+      const pointer = { x: -1000, y: -1000, vx: 0, vy: 0, time: 0, inside: false, presence: 0 };
+      const shocks = [];
+      let introStart = performance.now();
+      let raf = 0;
+      let last = 0;
+
+      function smootherstep(t) {
+        const x = Math.min(1, Math.max(0, t));
+        return x * x * x * (x * (x * 6 - 15) + 10);
+      }
+
+      function rebuild() {
+        const cell = Math.max(2, settings.dotSize + settings.gap);
+        const cols = Math.max(1, Math.floor((view.width + settings.gap) / cell));
+        const rows = Math.max(1, Math.floor((view.height + settings.gap) / cell));
+        const startX = (view.width - (cols * cell - settings.gap)) / 2 + settings.dotSize / 2;
+        const startY = (view.height - (rows * cell - settings.gap)) / 2 + settings.dotSize / 2;
+        const count = cols * rows;
+
+        rest = new Float32Array(count * 2);
+        offset = new Float32Array(count * 2);
+        velocity = new Float32Array(count * 2);
+        force = new Float32Array(count * 2);
+        next = new Float32Array(count * 2);
+        wave = new Float32Array(count * 4);
+        energy = new Float32Array(count);
+        instances = new Float32Array(count * 6);
+
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols; col++) {
+            const index = (row * cols + col) * 2;
+            rest[index] = startX + col * cell;
+            rest[index + 1] = startY + row * cell;
+          }
+        }
+
+        Object.assign(grid, {
+          count,
+          cols,
+          rows,
+          cell,
+          centerX: view.width / 2,
+          centerY: view.height / 2,
+          reach: Math.hypot(view.width, view.height) / 2
+        });
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, instanceBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, instances.byteLength, gl.DYNAMIC_DRAW);
+      }
+
+      function resize() {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        Object.assign(view, { width, height, ratio });
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        rebuild();
+        wake();
+      }
+
+      function step(dt, now) {
+        const motion = reduced ? 0 : 1;
+        const zeta = 1 - 0.85 * Math.min(1, Math.max(0, settings.bounce));
+        const omega = 4 / (zeta * Math.max(0.2, settings.returnDuration));
+        const stiffness = omega * omega;
+        const damping = 2 * zeta * omega;
+        const radius = Math.max(1, settings.proximity);
+        const speed = Math.hypot(pointer.vx, pointer.vy);
+        const drive = pointer.inside ? 6500 * Math.tanh(speed / 900) * settings.strength * motion : 0;
+        const dirX = speed > 0.001 ? pointer.vx / speed : 0;
+        const dirY = speed > 0.001 ? pointer.vy / speed : 0;
+        const width = grid.cell * 1.4;
+        const travel = 650;
+
+        const active = shocks.map(shock => {
+          const front = ((now - shock.start) / 1000) * travel;
+          const power = smootherstep(1 - front / Math.max(1, settings.shockRadius));
+          return { ...shock, front, amplitude: power * settings.shockStrength * grid.cell * 0.24 * motion };
+        });
+
+        const coupling = (Math.max(0, settings.tension) * 900) ** 2 / (grid.cell * grid.cell);
+        const viscosity = Math.sqrt(coupling) * 0.06;
+        const limit = Math.sqrt(stiffness + 8 * coupling) + damping + 8 * viscosity;
+        const steps = Math.min(24, Math.max(1, Math.ceil(dt / Math.min(1 / 120, 1.2 / limit))));
+        const h = dt / steps;
+
+        for (let i = 0; i < grid.count; i++) {
+          const index = i * 2;
+          const rx = rest[index];
+          const ry = rest[index + 1];
+          let ax = 0;
+          let ay = 0;
+
+          if (drive > 0) {
+            const ex = rx + offset[index] - pointer.x;
+            const ey = ry + offset[index + 1] - pointer.y;
+            const distance = Math.hypot(ex, ey);
+            if (distance < radius) {
+              const weight = smootherstep(1 - distance / radius) * drive;
+              const nx = distance > 0.001 ? ex / distance : 0;
+              const ny = distance > 0.001 ? ey / distance : 0;
+              ax += weight * (dirX + nx * 0.6);
+              ay += weight * (dirY + ny * 0.6);
+            }
+          }
+
+          let wx = 0, wy = 0, wvx = 0, wvy = 0;
+          for (const shock of active) {
+            if (shock.amplitude <= 0) continue;
+            const ex = rx - shock.x;
+            const ey = ry - shock.y;
+            const distance = Math.hypot(ex, ey);
+            const u = (distance - shock.front) / width;
+            if (Math.abs(u) < 3 && distance > 0.001) {
+              const nx = ex / distance;
+              const ny = ey / distance;
+              const profile = Math.exp(-u * u);
+              const push = shock.amplitude * profile;
+              const rate = ((shock.amplitude * 2 * u * profile) / width) * travel;
+              wx += nx * push;
+              wy += ny * push;
+              wvx += nx * rate;
+              wvy += ny * rate;
+              ax += nx * push * stiffness * 0.35;
+              ay += ny * push * stiffness * 0.35;
+            }
+          }
+
+          force[index] = ax;
+          force[index + 1] = ay;
+          const target = i * 4;
+          wave[target] = wx;
+          wave[target + 1] = wy;
+          wave[target + 2] = wvx;
+          wave[target + 3] = wvy;
+        }
+
+        const { cols, rows } = grid;
+        const stride = cols * 2;
+        for (let n = 0; n < steps; n++) {
+          for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+              const index = (row * cols + col) * 2;
+              let ax = force[index] - stiffness * offset[index] - damping * velocity[index];
+              let ay = force[index + 1] - stiffness * offset[index + 1] - damping * velocity[index + 1];
+              if (coupling > 0) {
+                let lx = -4 * offset[index];
+                let ly = -4 * offset[index + 1];
+                let mx = -4 * velocity[index];
+                let my = -4 * velocity[index + 1];
+                if (col > 0) {
+                  lx += offset[index - 2];
+                  ly += offset[index - 1];
+                  mx += velocity[index - 2];
+                  my += velocity[index - 1];
+                }
+                if (col < cols - 1) {
+                  lx += offset[index + 2];
+                  ly += offset[index + 3];
+                  mx += velocity[index + 2];
+                  my += velocity[index + 3];
+                }
+                if (row > 0) {
+                  lx += offset[index - stride];
+                  ly += offset[index - stride + 1];
+                  mx += velocity[index - stride];
+                  my += velocity[index - stride + 1];
+                }
+                if (row < rows - 1) {
+                  lx += offset[index + stride];
+                  ly += offset[index + stride + 1];
+                  mx += velocity[index + stride];
+                  my += velocity[index + stride + 1];
+                }
+                ax += coupling * lx + viscosity * mx;
+                ay += coupling * ly + viscosity * my;
+              }
+              next[index] = velocity[index] + ax * h;
+              next[index + 1] = velocity[index + 1] + ay * h;
+            }
+          }
+          for (let i = 0; i < offset.length; i++) {
+            velocity[i] = next[i];
+            offset[i] += velocity[i] * h;
+          }
+        }
+
+        for (let i = 0; i < grid.count; i++) {
+          const index = i * 2;
+          const target = i * 4;
+          energy[i] = Math.min(
+            1,
+            (Math.hypot(velocity[index] + wave[target + 2], velocity[index + 1] + wave[target + 3]) / 380) * 0.85 +
+              (Math.hypot(offset[index] + wave[target], offset[index + 1] + wave[target + 1]) / (grid.cell * 2.2)) * 0.35
+          );
+        }
+
+        for (let i = shocks.length - 1; i >= 0; i--) {
+          if (active[i].front > settings.shockRadius + width * 3) shocks.splice(i, 1);
+        }
+
+        const decay = 1 - Math.exp(-dt / 0.08);
+        pointer.vx -= pointer.vx * decay;
+        pointer.vy -= pointer.vy * decay;
+        const presenceTarget = pointer.inside ? 1 : 0;
+        pointer.presence += (presenceTarget - pointer.presence) * (1 - Math.exp(-dt / 0.2));
+      }
+
+      function render(now) {
+        const radius = Math.max(1, settings.proximity);
+        const introAge = introStart === null ? Infinity : (now - introStart) / 1000;
+        const introFront = introAge * grid.reach * 1.35;
+        const introBand = grid.cell * 4;
+
+        for (let i = 0; i < grid.count; i++) {
+          const index = i * 2;
+          const source = i * 4;
+          const x = rest[index] + offset[index] + wave[source];
+          const y = rest[index + 1] + offset[index + 1] + wave[source + 1];
+
+          let glowing = energy[i];
+          if (pointer.presence > 0.001) {
+            const distance = Math.hypot(x - pointer.x, y - pointer.y);
+            if (distance < radius) {
+              glowing = Math.max(glowing, smootherstep(1 - distance / radius) * 0.45 * pointer.presence);
+            }
+          }
+
+          let scale = 1;
+          if (introStart !== null) {
+            const distance = Math.hypot(rest[index] - grid.centerX, rest[index + 1] - grid.centerY);
+            const appear = Math.min(1, Math.max(0, (introFront - distance) / introBand));
+            scale = appear >= 1 ? 1 : Math.max(0, appear * appear * (3.0 - 2.0 * appear));
+            glowing = Math.max(glowing, Math.sin(appear * Math.PI) * 0.5);
+          }
+
+          const target = i * 6;
+          instances[target] = x;
+          instances[target + 1] = y;
+          instances[target + 2] = velocity[index] + wave[source + 2];
+          instances[target + 3] = velocity[index + 1] + wave[source + 3];
+          instances[target + 4] = glowing;
+          instances[target + 5] = scale;
+        }
+
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+        gl.useProgram(program);
+
+        gl.uniform2f(uniforms.uResolution, view.width, view.height);
+        gl.uniform1f(uniforms.uSize, settings.dotSize);
+        gl.uniform1f(uniforms.uSwell, reduced ? 0 : settings.swell);
+        gl.uniform1f(uniforms.uStretch, reduced ? 0 : settings.stretch);
+        gl.uniform1f(uniforms.uGlow, settings.glow);
+        gl.uniform3f(uniforms.uBase, settings.baseColor[0], settings.baseColor[1], settings.baseColor[2]);
+        gl.uniform3f(uniforms.uActive, settings.activeColor[0], settings.activeColor[1], settings.activeColor[2]);
+        gl.uniform1f(uniforms.uOpacity, settings.opacity);
+        gl.uniform1f(uniforms.uFade, settings.fade);
+
+        gl.bindVertexArray(vao);
+        gl.bindBuffer(gl.ARRAY_BUFFER, instanceBuffer);
+        gl.bufferSubData(gl.ARRAY_BUFFER, 0, instances);
+        gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, grid.count);
+        gl.bindVertexArray(null);
+      }
+
+      function settled(now) {
+        if (shocks.length) return false;
+        if (introStart !== null) {
+          if ((now - introStart) / 1000 < 1.8) return false;
+          introStart = null;
+        }
+        if (Math.abs(pointer.vx) + Math.abs(pointer.vy) > 1.2) return false;
+        const presenceTarget = pointer.inside ? 1 : 0;
+        if (Math.abs(presenceTarget - pointer.presence) > 0.003) return false;
+        for (let i = 0; i < offset.length; i++) {
+          if (Math.abs(offset[i]) > 0.02 || Math.abs(velocity[i]) > 0.5) return false;
+        }
+        return true;
+      }
+
+      function frame(now) {
+        raf = 0;
+        const dt = Math.min(0.05, (now - last) / 1000 || 0);
+        last = now;
+        step(dt, now);
+        render(now);
+        if (!settled(now)) {
+          raf = requestAnimationFrame(frame);
+        }
+      }
+
+      function wake() {
+        if (raf) return;
+        last = performance.now();
+        raf = requestAnimationFrame(frame);
+      }
+
+      window.addEventListener('pointermove', (e) => {
+        const time = e.timeStamp || performance.now();
+        if (pointer.inside && pointer.time) {
+          const elapsed = Math.max(4, time - pointer.time) / 1000;
+          const vx = (e.clientX - pointer.x) / elapsed;
+          const vy = (e.clientY - pointer.y) / elapsed;
+          pointer.vx += (vx - pointer.vx) * 0.6;
+          pointer.vy += (vy - pointer.vy) * 0.6;
+        }
+        pointer.x = e.clientX;
+        pointer.y = e.clientY;
+        pointer.time = time;
+        pointer.inside = true;
+        wake();
+      }, { passive: true });
+
+      window.addEventListener('pointerdown', (e) => {
+        if (reduced) return;
+        shocks.push({ x: e.clientX, y: e.clientY, start: performance.now() });
+        if (shocks.length > 6) shocks.shift();
+        wake();
+      }, { passive: true });
+
+      window.addEventListener('mouseleave', () => {
+        pointer.inside = false;
+        wake();
+      });
+
+      // Transmit Lenis scroll momentum into grid physics
+      lenis.on('scroll', (e) => {
+        if (Math.abs(e.velocity) > 0.4) {
+          pointer.vy += e.velocity * 35;
+          wake();
+        }
+      });
+
+      window.addEventListener('resize', resize);
+      resize();
+    }
+    initDotGridBackground();
 
     // ========================================================
-    // 2. React Bits: Spotlight Card Effect
+    // 3. React Bits: Spotlight Card Effect
     // ========================================================
     function initSpotlightCards() {
       const cards = document.querySelectorAll('.spotlight-card');
@@ -1550,7 +2153,7 @@
     initSpotlightCards();
 
     // ========================================================
-    // 3. React Bits: Decrypted Text Scramble Reveal
+    // 4. React Bits: Decrypted Text Scramble Reveal
     // ========================================================
     function initDecryptedText() {
       const el = document.getElementById('hero-title');
@@ -1560,7 +2163,6 @@
       let progress = 0;
       const len = targetText.length;
 
-      // Scramble timer
       const interval = setInterval(() => {
         el.textContent = targetText
           .split('')
@@ -1571,7 +2173,7 @@
           })
           .join('');
 
-        progress += 0.8; // speed
+        progress += 0.8;
         if (progress >= len) {
           clearInterval(interval);
           el.textContent = targetText;
@@ -1580,7 +2182,7 @@
     }
 
     // ========================================================
-    // 4. React Bits: Magnetic Elements (Buttons & Center Dial)
+    // 5. React Bits: Magnetic Elements (Buttons & Center Dial)
     // ========================================================
     function initMagneticButtons() {
       if (window.matchMedia('(hover: hover)').matches) {
@@ -1608,7 +2210,7 @@
     initMagneticButtons();
 
     // ========================================================
-    // 5. GSAP Entrance Timelines & ScrollTrigger Batches
+    // 6. GSAP Entrance Timelines & ScrollTrigger Batches
     // ========================================================
     const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
@@ -1626,14 +2228,24 @@
         rotationX: 8, 
         duration: 1.2, 
         ease: 'expo.out' 
-      }, '-=0.9');
+      }, '-=0.9')
+      .from('.hero-prism-lens', {
+        opacity: 0,
+        scale: 0.8,
+        duration: 1.4,
+        ease: 'power2.out'
+      }, '-=1.1');
 
-    // Phone Frame Interactive 3D Cursor Tilt
+    // Phone Frame Interactive 3D Cursor Tilt & Prism Optical Parallax
     const mockupContainer = document.querySelector('.mockup-container');
     const phoneFrame = document.querySelector('.phone-frame');
+    const prismLens = document.getElementById('hero-prism-lens');
+
     if (mockupContainer && phoneFrame && window.innerWidth > 960) {
       const tiltX = gsap.quickTo(phoneFrame, "rotationY", { duration: 0.8, ease: "power3.out" });
       const tiltY = gsap.quickTo(phoneFrame, "rotationX", { duration: 0.8, ease: "power3.out" });
+      const prismShiftX = prismLens ? gsap.quickTo(prismLens, "x", { duration: 1.1, ease: "power2.out" }) : null;
+      const prismShiftY = prismLens ? gsap.quickTo(prismLens, "y", { duration: 1.1, ease: "power2.out" }) : null;
 
       mockupContainer.addEventListener('mousemove', (e) => {
         const rect = mockupContainer.getBoundingClientRect();
@@ -1641,11 +2253,20 @@
         const normY = (e.clientY - rect.top) / rect.height - 0.5;
         tiltX(normX * 16);
         tiltY(-normY * 16);
+
+        if (prismShiftX && prismShiftY) {
+          prismShiftX(-normX * 40);
+          prismShiftY(-normY * 40);
+        }
       });
 
       mockupContainer.addEventListener('mouseleave', () => {
         tiltX(0);
         tiltY(0);
+        if (prismShiftX && prismShiftY) {
+          prismShiftX(0);
+          prismShiftY(0);
+        }
       });
     }
 
@@ -1717,7 +2338,7 @@
     });
 
     // ========================================================
-    // 6. React Bits: CountUp Metric Numbers
+    // 7. React Bits: CountUp Metric Numbers
     // ========================================================
     function initCountUp() {
       document.querySelectorAll('.counter-val').forEach(counter => {
@@ -1745,7 +2366,7 @@
     initCountUp();
 
     // ========================================================
-    // 7. Tab Switching inside phone mockup (with GSAP Fade)
+    // 8. Tab Switching inside phone mockup (with GSAP Fade)
     // ========================================================
     function switchPhoneTab(tabName) {
       document.querySelectorAll('.phone-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1766,7 +2387,7 @@
     }
 
     // ========================================================
-    // 8. Interactive Donut Wheel Canvas + GSAP Rotary Physics
+    // 9. Interactive Donut Wheel Canvas + GSAP Rotary Physics
     // ========================================================
     const wheelCanvas = document.getElementById('wheel-canvas');
     const wheelCtx = wheelCanvas.getContext('2d');
@@ -1870,7 +2491,6 @@
       currentRotation = initialRotation + delta;
       wheelState.rotation = currentRotation;
       
-      // Compute closest index
       const sweep = (2 * Math.PI) / formats.length;
       let norm = (-currentRotation + Math.PI / 2) % (Math.PI * 2);
       if (norm < 0) norm += Math.PI * 2;
@@ -1932,7 +2552,7 @@
     drawDonutWheel();
 
     // ========================================================
-    // 9. Interactive 3D Cushion Treemap Canvas
+    // 10. Interactive 3D Cushion Treemap Canvas
     // ========================================================
     const treemapCanvas = document.getElementById('treemap-canvas');
     const tCtx = treemapCanvas.getContext('2d');
@@ -2004,7 +2624,7 @@
     drawTreemap();
 
     // ========================================================
-    // 10. Clipboard Copy Helper
+    // 11. Clipboard Copy Helper
     // ========================================================
     function copyHash(hash) {
       navigator.clipboard.writeText(hash).then(() => {
@@ -2015,7 +2635,7 @@
     }
 
     // ========================================================
-    // 11. Android Architecture Detection
+    // 12. Android Architecture Detection
     // ========================================================
     function detectArchitecture() {
       const ua = navigator.userAgent.toLowerCase();
