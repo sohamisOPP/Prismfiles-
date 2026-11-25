@@ -2707,60 +2707,111 @@
       return -Math.PI / 2 - (idx + 0.5) * sweep;
     }
 
+    const WHEEL_SIZE = 240;
+    let wheelDpr = Math.min(window.devicePixelRatio || 1, 3);
+
+    function syncWheelCanvasResolution() {
+      wheelDpr = Math.min(window.devicePixelRatio || 1, 3);
+      const targetPx = Math.round(WHEEL_SIZE * wheelDpr);
+      if (wheelCanvas.width !== targetPx || wheelCanvas.height !== targetPx) {
+        wheelCanvas.width = targetPx;
+        wheelCanvas.height = targetPx;
+      }
+      wheelCtx.setTransform(wheelDpr, 0, 0, wheelDpr, 0, 0);
+    }
+    syncWheelCanvasResolution();
+    window.addEventListener('resize', () => {
+      syncWheelCanvasResolution();
+      drawDonutWheel();
+    });
+
     function drawDonutWheel() {
-      const cx = wheelCanvas.width / 2;
-      const cy = wheelCanvas.height / 2;
-      const outerR = 106;
+      const cx = WHEEL_SIZE / 2;
+      const cy = WHEEL_SIZE / 2;
+      const outerR = 104;
       const innerR = 54;
 
-      wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+      wheelCtx.clearRect(0, 0, WHEEL_SIZE, WHEEL_SIZE);
 
-      for (let i = 0; i < count; i++) {
-        const segAngle = currentRotation + i * sweep;
-        const isSel = (i === selectedIndex);
-        const isHov = (i === hoveredIndex && !isSel);
+      // Draw unselected & hovered sectors first so the selected sector border never gets clipped by neighbors
+      for (let pass = 0; pass < 2; pass++) {
+        for (let i = 0; i < count; i++) {
+          const isSel = (i === selectedIndex);
+          if ((pass === 0 && isSel) || (pass === 1 && !isSel)) continue;
 
-        wheelCtx.beginPath();
-        wheelCtx.arc(cx, cy, outerR, segAngle, segAngle + sweep);
-        wheelCtx.arc(cx, cy, innerR, segAngle + sweep, segAngle, true);
-        wheelCtx.closePath();
+          const segAngle = currentRotation + i * sweep;
+          const isHov = (i === hoveredIndex && !isSel);
 
-        if (isSel) {
-          wheelCtx.fillStyle = '#26262E';
-        } else if (isHov) {
-          wheelCtx.fillStyle = '#1D1D22';
-        } else {
-          wheelCtx.fillStyle = (i % 2 === 0 ? '#141416' : '#0F0F11');
+          wheelCtx.beginPath();
+          wheelCtx.arc(cx, cy, outerR, segAngle, segAngle + sweep);
+          wheelCtx.arc(cx, cy, innerR, segAngle + sweep, segAngle, true);
+          wheelCtx.closePath();
+
+          if (isSel) {
+            const grad = wheelCtx.createRadialGradient(cx, cy, innerR, cx, cy, outerR);
+            grad.addColorStop(0, 'rgba(48, 209, 88, 0.14)');
+            grad.addColorStop(1, 'rgba(48, 209, 88, 0.28)');
+            wheelCtx.fillStyle = '#222624';
+            wheelCtx.fill();
+            wheelCtx.fillStyle = grad;
+            wheelCtx.fill();
+
+            wheelCtx.save();
+            wheelCtx.shadowColor = 'rgba(48, 209, 88, 0.45)';
+            wheelCtx.shadowBlur = 10;
+            wheelCtx.strokeStyle = '#30D158';
+            wheelCtx.lineWidth = 2;
+            wheelCtx.lineJoin = 'round';
+            wheelCtx.stroke();
+            wheelCtx.restore();
+          } else {
+            wheelCtx.fillStyle = isHov ? '#1D1D22' : (i % 2 === 0 ? '#141416' : '#0F0F11');
+            wheelCtx.fill();
+            wheelCtx.strokeStyle = isHov ? '#8E8E96' : '#222226';
+            wheelCtx.lineWidth = 1;
+            wheelCtx.stroke();
+          }
+
+          // Upright text orientation
+          const midAngle = segAngle + sweep / 2;
+          const textR = (outerR + innerR) / 2;
+          const tx = cx + textR * Math.cos(midAngle);
+          const ty = cy + textR * Math.sin(midAngle);
+
+          wheelCtx.save();
+          wheelCtx.fillStyle = isSel ? '#FFFFFF' : (isHov ? '#D1D1D6' : '#8E8E96');
+          wheelCtx.font = isSel ? '600 11px Inter, sans-serif' : '500 10px Inter, sans-serif';
+          wheelCtx.textAlign = 'center';
+          wheelCtx.textBaseline = 'middle';
+          wheelCtx.fillText(formats[i], tx, ty);
+          wheelCtx.restore();
         }
-        wheelCtx.fill();
-
-        wheelCtx.strokeStyle = isSel ? '#30D158' : (isHov ? '#8E8E96' : '#222226');
-        wheelCtx.lineWidth = isSel ? 1.75 : 1;
-        wheelCtx.stroke();
-
-        // Upright text orientation
-        const midAngle = segAngle + sweep / 2;
-        const textR = (outerR + innerR) / 2;
-        const tx = cx + textR * Math.cos(midAngle);
-        const ty = cy + textR * Math.sin(midAngle);
-
-        wheelCtx.save();
-        wheelCtx.fillStyle = isSel ? '#FFFFFF' : (isHov ? '#D1D1D6' : '#8E8E96');
-        wheelCtx.font = isSel ? '600 11px Inter, sans-serif' : '500 10px Inter, sans-serif';
-        wheelCtx.textAlign = 'center';
-        wheelCtx.textBaseline = 'middle';
-        wheelCtx.fillText(formats[i], tx, ty);
-        wheelCtx.restore();
       }
 
-      // Top selection arrow / needle notch
+      // Precision rounded emerald indicator at 12 o'clock
       wheelCtx.save();
+      const tipY = cy - outerR + 4;
+      const baseY = cy - outerR - 7;
+      const halfW = 5.5;
+      wheelCtx.shadowColor = 'rgba(48, 209, 88, 0.7)';
+      wheelCtx.shadowBlur = 8;
       wheelCtx.fillStyle = '#30D158';
       wheelCtx.beginPath();
-      wheelCtx.moveTo(cx - 5, cy - outerR - 2);
-      wheelCtx.lineTo(cx + 5, cy - outerR - 2);
-      wheelCtx.lineTo(cx, cy - outerR + 5);
+      wheelCtx.moveTo(cx - halfW + 1.5, baseY);
+      wheelCtx.lineTo(cx + halfW - 1.5, baseY);
+      wheelCtx.quadraticCurveTo(cx + halfW, baseY, cx + halfW - 0.6, baseY + 2.2);
+      wheelCtx.lineTo(cx + 0.9, tipY - 1);
+      wheelCtx.quadraticCurveTo(cx, tipY + 0.6, cx - 0.9, tipY - 1);
+      wheelCtx.lineTo(cx - halfW + 0.6, baseY + 2.2);
+      wheelCtx.quadraticCurveTo(cx - halfW, baseY, cx - halfW + 1.5, baseY);
       wheelCtx.closePath();
+      wheelCtx.fill();
+
+      // Subtle crisp inner highlight
+      wheelCtx.shadowBlur = 0;
+      wheelCtx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+      wheelCtx.beginPath();
+      wheelCtx.arc(cx, baseY + 3.2, 1.15, 0, Math.PI * 2);
       wheelCtx.fill();
       wheelCtx.restore();
     }
