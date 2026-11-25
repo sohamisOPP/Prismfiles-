@@ -1322,6 +1322,84 @@
       .steps-container {
         grid-template-columns: 1fr;
       }
+
+      /* Mobile Phone Mockup Aura & Deep Aurora Caustic Animation */
+      .phone-frame {
+        box-shadow: 0 16px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(48, 209, 88, 0.12), 0 0 50px rgba(10, 132, 255, 0.1), 0 0 1px rgba(255, 255, 255, 0.15) inset;
+        border-color: #282830;
+      }
+      .phone-screen-content {
+        position: relative;
+        background: transparent;
+      }
+      .phone-mobile-bg-aura {
+        display: block !important;
+      }
+    }
+
+    /* Ambient Aurora Caustic inside phone screen on mobile */
+    .phone-mobile-bg-aura {
+      display: none;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      border-radius: 0 0 32px 32px;
+    }
+    .phone-mobile-bg-aura .aura-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(32px);
+      opacity: 0.38;
+      will-change: transform;
+    }
+    .phone-mobile-bg-aura .aura-orb-1 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(48, 209, 88, 0.5) 0%, rgba(10, 132, 255, 0.2) 60%, transparent 80%);
+      top: -30px;
+      left: -40px;
+      animation: phoneAuraPulse1 9s ease-in-out infinite alternate;
+    }
+    .phone-mobile-bg-aura .aura-orb-2 {
+      width: 190px;
+      height: 190px;
+      background: radial-gradient(circle, rgba(10, 132, 255, 0.45) 0%, rgba(191, 90, 242, 0.25) 50%, transparent 80%);
+      bottom: 20px;
+      right: -30px;
+      animation: phoneAuraPulse2 11s ease-in-out infinite alternate;
+    }
+    .phone-mobile-bg-aura .aura-orb-3 {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(212, 160, 23, 0.35) 0%, rgba(48, 209, 88, 0.2) 50%, transparent 80%);
+      top: 42%;
+      left: 20%;
+      animation: phoneAuraPulse3 8s ease-in-out infinite alternate;
+    }
+    .phone-mobile-bg-aura .aura-grid-mesh {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 16px 16px;
+      opacity: 0.45;
+    }
+
+    @keyframes phoneAuraPulse1 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(35px, 45px) scale(1.18); }
+      100% { transform: translate(-15px, 80px) scale(0.92); }
+    }
+    @keyframes phoneAuraPulse2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-40px, -50px) scale(1.15); }
+      100% { transform: translate(20px, -70px) scale(0.88); }
+    }
+    @keyframes phoneAuraPulse3 {
+      0% { transform: translate(0, 0) scale(0.85); opacity: 0.25; }
+      50% { transform: translate(25px, -30px) scale(1.2); opacity: 0.45; }
+      100% { transform: translate(-20px, 30px) scale(1); opacity: 0.3; }
     }
 
     @media (max-width: 640px) {
@@ -1422,6 +1500,14 @@
         </div>
 
         <div class="phone-screen-content">
+          <!-- Ambient Aurora Caustic inside phone screen on mobile only -->
+          <div class="phone-mobile-bg-aura" aria-hidden="true">
+            <div class="aura-orb aura-orb-1"></div>
+            <div class="aura-orb aura-orb-2"></div>
+            <div class="aura-orb aura-orb-3"></div>
+            <div class="aura-grid-mesh"></div>
+          </div>
+
           <div class="phone-tabs-bar">
             <button class="phone-tab-btn active" onclick="switchPhoneTab('donut')">Donut wheel</button>
             <button class="phone-tab-btn" onclick="switchPhoneTab('treemap')">3D treemap</button>
@@ -2060,6 +2146,25 @@
       }
 
       function resize() {
+        const isMobile = window.innerWidth <= 960;
+        if (isMobile) {
+          // Optimized high-performance settings tailored specifically for mobile
+          settings.dotSize = 3.6;
+          settings.gap = 28;
+          settings.glow = 0.85;
+          settings.opacity = 0.98;
+          settings.activeColor = [0.19, 0.82, 0.35]; // Vivid emerald glow on touch
+          settings.proximity = 110;
+        } else {
+          // Desktop defaults
+          settings.dotSize = 3.2;
+          settings.gap = 26;
+          settings.glow = 0.55;
+          settings.opacity = 0.9;
+          settings.activeColor = [0.94, 0.94, 0.96];
+          settings.proximity = 130;
+        }
+
         const ratio = Math.min(window.devicePixelRatio || 1, 2);
         const width = window.innerWidth;
         const height = window.innerHeight;
@@ -2337,8 +2442,34 @@
         // Skip shockwave if clicking inside the interactive demo area
         const demo = document.getElementById('interactive-demo');
         if (demo && demo.contains(e.target)) return;
+        pointer.x = e.clientX;
+        pointer.y = e.clientY;
+        pointer.inside = true;
         shocks.push({ x: e.clientX, y: e.clientY, start: performance.now() });
         if (shocks.length > 6) shocks.shift();
+        wake();
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (isWindowScrolling || !e.touches || e.touches.length === 0) return;
+        const touch = e.touches[0];
+        const time = e.timeStamp || performance.now();
+        if (pointer.inside && pointer.time) {
+          const elapsed = Math.max(4, time - pointer.time) / 1000;
+          const vx = (touch.clientX - pointer.x) / elapsed;
+          const vy = (touch.clientY - pointer.y) / elapsed;
+          pointer.vx += (vx - pointer.vx) * 0.6;
+          pointer.vy += (vy - pointer.vy) * 0.6;
+        }
+        pointer.x = touch.clientX;
+        pointer.y = touch.clientY;
+        pointer.time = time;
+        pointer.inside = true;
+        wake();
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => {
+        pointer.inside = false;
         wake();
       }, { passive: true });
 
