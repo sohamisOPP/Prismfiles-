@@ -4,11 +4,12 @@
 
 ---
 
-## Download Android APK
+## Website & Download Android APK
 
-Install PrismFiles directly on any Android device (Android 7.0+ / API 24–35+):
-- **Direct Repository Download:** [PrismFiles.apk](PrismFiles.apk) or [release/PrismFiles.apk](release/PrismFiles.apk)
-- **GitHub Releases:** [Download PrismFiles APK v1.0.0](https://github.com/sohamisOPP/OPfile/releases/tag/v1.0.0)
+- **Official Website:** [https://prismfiles.pages.dev](https://prismfiles.pages.dev)
+- **Install PrismFiles directly on any Android device (Android 7.0+ / API 24–35+):**
+  - **Direct Repository Download:** [PrismFiles.apk](PrismFiles.apk) or [release/PrismFiles.apk](release/PrismFiles.apk)
+  - **GitHub Releases:** [Download PrismFiles APK v1.0.0](https://github.com/sohamisOPP/Prismfiles-/releases/tag/v1.0.0)
 
 ---
 
