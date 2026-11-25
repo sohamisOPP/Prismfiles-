@@ -280,6 +280,10 @@ class MainActivity : AppCompatActivity() {
             showSortDialog()
         }
 
+        findViewById<View?>(R.id.btn_support_dev)?.setOnClickListener {
+            showSupportDevDialog()
+        }
+
         findViewById<View?>(R.id.btn_overflow_menu)?.setOnClickListener { v ->
             showTopOverflowMenu(v)
         }
@@ -432,6 +436,7 @@ class MainActivity : AppCompatActivity() {
         popup.menu.add(0, 5, 4, "New Folder").setIcon(R.drawable.ic_folder)
         popup.menu.add(0, 6, 5, "Refresh").setIcon(R.drawable.ic_refresh)
         popup.menu.add(0, 7, 6, "Utilities").setIcon(R.drawable.ic_build)
+        popup.menu.add(0, 8, 7, "Support the Dev").setIcon(R.drawable.ic_support)
 
         popup.setForceShowIcon(true)
 
@@ -476,6 +481,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 7 -> {
                     startActivity(Intent(this, ToolsActivity::class.java))
+                    true
+                }
+                8 -> {
+                    showSupportDevDialog()
                     true
                 }
                 else -> false
@@ -1344,6 +1353,47 @@ class MainActivity : AppCompatActivity() {
         }
 
         v.findViewById<View>(R.id.btn_donut_cancel).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showSupportDevDialog() {
+        val upiId = "9979260790@fam"
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val v = LayoutInflater.from(this).inflate(R.layout.dialog_support_dev, null)
+        dialog.setContentView(v)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setWindowAnimations(R.style.Animation_PrismFiles_Dialog)
+        val dialogWidth = (resources.displayMetrics.widthPixels * 0.88f).toInt()
+        dialog.window?.setLayout(dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        v.findViewById<TextView>(R.id.tv_support_upi_id)?.text = upiId
+
+        val copyUpi: () -> Unit = {
+            val cm = getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            cm.setPrimaryClip(android.content.ClipData.newPlainText("PrismFiles UPI ID", upiId))
+            Toast.makeText(this, "UPI ID copied: $upiId", Toast.LENGTH_SHORT).show()
+        }
+
+        v.findViewById<View>(R.id.btn_copy_upi_row)?.setOnClickListener {
+            copyUpi()
+        }
+
+        v.findViewById<View>(R.id.btn_open_upi_app)?.setOnClickListener {
+            val upiUri = Uri.parse("upi://pay?pa=${Uri.encode(upiId)}&pn=${Uri.encode("PrismFiles Dev")}&tn=${Uri.encode("Support PrismFiles")}&cu=INR")
+            val intent = Intent(Intent.ACTION_VIEW, upiUri)
+            try {
+                startActivity(Intent.createChooser(intent, "Support via UPI"))
+                dialog.dismiss()
+            } catch (_: Exception) {
+                copyUpi()
+                Toast.makeText(this, "No UPI app found; copied $upiId to clipboard", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        v.findViewById<View>(R.id.btn_support_close)?.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()

@@ -292,6 +292,190 @@
       width: 100%;
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .btn-support-dev {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-primary);
+      padding: 6px 13px;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-support-dev svg {
+      color: var(--accent-emerald);
+    }
+
+    .btn-support-dev:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--text-secondary);
+    }
+
+    /* Support Modal */
+    .support-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .support-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .support-modal {
+      width: 100%;
+      max-width: 400px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
+      transform: translateY(8px) scale(0.98);
+      transition: transform 0.2s ease;
+    }
+
+    .support-modal-backdrop.open .support-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .support-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .support-modal-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .support-modal-title svg {
+      color: var(--accent-emerald);
+    }
+
+    .support-modal-close {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .support-modal-close:hover {
+      background: var(--bg-surface-hover);
+      color: var(--text-primary);
+    }
+
+    .support-modal-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .support-upi-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+
+    .support-upi-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .support-upi-val {
+      font-family: var(--font-mono);
+      font-size: 0.925rem;
+      color: var(--text-primary);
+      user-select: all;
+    }
+
+    .support-modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-support-copy,
+    .btn-support-upi {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn-support-copy {
+      background: var(--bg-surface-raised);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-primary);
+    }
+
+    .btn-support-copy:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--text-secondary);
+    }
+
+    .btn-support-upi {
+      background: var(--text-primary);
+      border: 1px solid var(--text-primary);
+      color: var(--bg-black);
+    }
+
+    .btn-support-upi:hover {
+      opacity: 0.9;
+    }
+
 
     /* React Bits: Magnetic Button Component */
     .magnetic-btn {
@@ -1169,13 +1353,19 @@
         <span>PrismFiles</span>
       </a>
 
-      <nav class="nav-links">
-        <a href="#features">Architecture</a>
-        <a href="#interactive-demo">Interactive demo</a>
-        <a href="#comparison">Security</a>
-        <a href="#downloads">Downloads</a>
-        <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener">GitHub</a>
-      </nav>
+      <div class="nav-right">
+        <nav class="nav-links">
+          <a href="#features">Architecture</a>
+          <a href="#interactive-demo">Interactive demo</a>
+          <a href="#comparison">Security</a>
+          <a href="#downloads">Downloads</a>
+          <a href="https://github.com/sohamisOPP/Prismfiles-" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+        <button type="button" class="btn-support-dev magnetic-btn" id="btn-support-dev" onclick="openSupportModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span>Support the dev</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -1410,13 +1600,13 @@
         <div class="badge-recommended">Recommended</div>
         <div class="card-arch-name">Universal APK</div>
         <div class="card-arch-desc">Works on all Android devices, all chipsets, and all processors.</div>
-        <div class="card-arch-size"><span class="counter-val" data-count="43.8" data-decimals="1" data-suffix=" MB">43.8 MB</span> • v1.0.0</div>
+        <div class="card-arch-size"><span class="counter-val" data-count="43.9" data-decimals="1" data-suffix=" MB">43.9 MB</span> • v1.0.0</div>
         <a href="PrismFiles.apk" download class="btn-card-download magnetic-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download universal</span>
         </a>
-        <div class="hash-copy-row" onclick="copyHash('99eb3b716b670bac3b198a90d46910c446df3586bd4facd8c062121f92f369f5')">
-          <span>SHA-256: 99eb3b...9f5</span>
+        <div class="hash-copy-row" onclick="copyHash('23ce90449ed7f8755d33918d8d5b4ac7083f7c4497014e84fd159df4b248134d')">
+          <span>SHA-256: 23ce90...34d</span>
           <span>Copy</span>
         </div>
       </div>
@@ -1430,8 +1620,8 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download ARM64</span>
         </a>
-        <div class="hash-copy-row" onclick="copyHash('062c91252d6bb21d5d1034847108325ff99cffe291fd71595e189244cbd2ef4f')">
-          <span>SHA-256: 062c91...f4f</span>
+        <div class="hash-copy-row" onclick="copyHash('a4f389fa345c382ed1e4af759bd227043d858a38fc4eccf079483dcd01e3a624')">
+          <span>SHA-256: a4f389...624</span>
           <span>Copy</span>
         </div>
       </div>
@@ -1445,8 +1635,8 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download ARMv7</span>
         </a>
-        <div class="hash-copy-row" onclick="copyHash('741c669f14eda1998a908e15a1707db945854796d1b91901c0db11832c82aa44')">
-          <span>SHA-256: 741c66...a44</span>
+        <div class="hash-copy-row" onclick="copyHash('d0b0859aac84bf1094d73be6479f4ab043100cdb2bb8ac3f895d36242a55362d')">
+          <span>SHA-256: d0b085...62d</span>
           <span>Copy</span>
         </div>
       </div>
@@ -1460,8 +1650,8 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download x86_64</span>
         </a>
-        <div class="hash-copy-row" onclick="copyHash('83b2f40838f826f1d8a2d6fc3ac53e7a9b07b751be87f88b4035805a425d7704')">
-          <span>SHA-256: 83b2f4...704</span>
+        <div class="hash-copy-row" onclick="copyHash('e569536e20375585ecf52aaf717cf5da0da30d08d85b2380d99d2ad3287f566a')">
+          <span>SHA-256: e56953...66a</span>
           <span>Copy</span>
         </div>
       </div>
@@ -1576,6 +1766,34 @@
       </div>
     </div>
   </footer>
+
+  <!-- Support the Dev Modal -->
+  <div class="support-modal-backdrop" id="support-modal" role="dialog" aria-modal="true" aria-labelledby="support-modal-title" onclick="if (event.target === this) closeSupportModal()">
+    <div class="support-modal">
+      <div class="support-modal-header">
+        <div class="support-modal-title" id="support-modal-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span>Support the Developer</span>
+        </div>
+        <button type="button" class="support-modal-close" onclick="closeSupportModal()" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <p class="support-modal-desc">
+        PrismFiles is 100% free, ad-free, and open-source. If it helps your workflow, you can support development directly via UPI.
+      </p>
+      <div class="support-upi-box">
+        <div>
+          <div class="support-upi-label">UPI ID</div>
+          <div class="support-upi-val" id="support-upi-id">9979260790@fam</div>
+        </div>
+      </div>
+      <div class="support-modal-actions">
+        <button type="button" class="btn-support-copy" onclick="copyUpiId()">Copy UPI ID</button>
+        <a href="upi://pay?pa=9979260790@fam&pn=PrismFiles%20Dev&tn=Support%20PrismFiles&cu=INR" class="btn-support-upi">Open UPI App</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast Component -->
   <div class="toast" id="toast">Checksum copied to clipboard</div>
@@ -2858,16 +3076,42 @@
     drawTreemap();
 
     // ========================================================
-    // 11. Clipboard Copy Helper
+    // 11. Clipboard Copy & Support Modal Helpers
     // ========================================================
+    function showSiteToast(message) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
     function copyHash(hash) {
       navigator.clipboard.writeText(hash).then(() => {
-        const toast = document.getElementById('toast');
-        toast.textContent = 'Checksum copied to clipboard';
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2200);
+        showSiteToast('Checksum copied to clipboard');
       });
     }
+
+    function openSupportModal() {
+      const modal = document.getElementById('support-modal');
+      if (modal) modal.classList.add('open');
+    }
+
+    function closeSupportModal() {
+      const modal = document.getElementById('support-modal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function copyUpiId() {
+      const upiId = '9979260790@fam';
+      navigator.clipboard.writeText(upiId).then(() => {
+        showSiteToast('UPI ID copied: ' + upiId);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSupportModal();
+    });
 
     // ========================================================
     // 12. Android Architecture Detection
@@ -2892,7 +3136,7 @@
         heroDownloadBtn.href = 'PrismFiles-x86_64.apk';
       } else {
         archText.textContent = 'Universal Android package';
-        heroDownloadText.textContent = 'Download Universal APK (43.8 MB)';
+        heroDownloadText.textContent = 'Download Universal APK (43.9 MB)';
         heroDownloadBtn.href = 'PrismFiles.apk';
       }
     }
